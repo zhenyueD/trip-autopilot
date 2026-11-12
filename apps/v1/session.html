@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="referrer" content="no-referrer">
+  <link rel="icon" href="data:,">
+  <title>原子旅行 · 单会话旅行手册</title>
+  <link rel="stylesheet" href="./design-tokens.css?v=20261112-2">
+  <link rel="stylesheet" href="./session.css?v=20261112-2">
+  <script defer src="./session-contract.js?v=20261112-1"></script>
+  <script defer src="./handbook-presentation.js?v=20261112-2"></script>
+  <script defer src="./session.js?v=20261112-2"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到旅行内容</a>
+  <header class="topbar">
+    <a class="brand" href="./session.html" aria-label="原子旅行单会话首页"><span class="brand-route" aria-hidden="true"></span><span>原子旅行<small>TRIP AUTOPILOT</small></span></a>
+    <div class="topbar-actions"><span id="connection" class="connection">正在连接 7392</span><button id="new-trip" class="text-button" type="button" hidden>新的旅行</button></div>
+  </header>
+  <main id="main">
+    <div id="error" class="error" role="alert" hidden></div>
+    <section id="intake" class="intake-section" aria-labelledby="intake-title">
+      <div class="hero-copy">
+        <p class="eyebrow">一句需求，一册可执行的旅行</p>
+        <h1 id="intake-title">把目的地交给时间，<br><em>把安排交给我们。</em></h1>
+        <p>生成过程、真实手册与每次修改都留在同一段会话里。方案不自动预订，不自动付款。</p>
+        <div class="hero-proof"><span>真实生成</span><span>原文手册</span><span>修订留痕</span></div>
+      </div>
+      <form id="intake-form" class="intake-form">
+        <div class="form-heading"><span>旅行需求</span><small>带 * 为必填</small></div>
+        <label class="field field-wide" for="destination">目的地 *<input id="destination" name="destination" required maxlength="2000" placeholder="例如：法国南部与意大利北部"></label>
+        <div class="field-grid">
+          <label class="field" for="start-date">开始日期 *<input id="start-date" name="start_date" type="date" required></label>
+          <label class="field" for="end-date">结束日期 *<input id="end-date" name="end_date" type="date" required></label>
+          <label class="field" for="travelers">人数 *<input id="travelers" name="travelers" type="number" min="1" max="100" step="1" value="2" required></label>
+          <label class="field" for="pace">旅行节奏 *<select id="pace" name="pace" required><option value="舒缓">舒缓</option><option value="适中" selected>适中</option><option value="紧凑">紧凑</option></select></label>
+        </div>
+        <label class="field field-wide" for="composition">同行构成 *<input id="composition" name="composition" required maxlength="2000" placeholder="例如：两位成人；或夫妻与两位 70 岁父母"></label>
+        <label class="field field-wide" for="preferences">偏好与必须照顾的事<textarea id="preferences" name="preferences" rows="3" maxlength="2000" placeholder="例如：不自驾，每天留午休；喜欢建筑、当地饮食，不想赶景点"></textarea></label>
+        <label class="field field-wide" for="brief">补充说明<textarea id="brief" name="brief" rows="3" maxlength="6000" placeholder="出发地、已订安排、预算边界或其他希望（可选）"></textarea></label>
+        <button id="create-trip" class="primary-button" type="submit" disabled>生成我的旅行手册 <span aria-hidden="true">→</span></button>
+        <p class="form-note">提交即开始真实模型生成。请只提交一次；状态会自动更新。</p>
+      </form>
+    </section>
+
+    <section id="progress-section" class="progress-section" aria-labelledby="progress-title" hidden>
+      <div class="progress-heading"><div><p class="eyebrow">同一段会话 · 实时状态</p><h1 id="progress-title">正在准备你的旅行手册</h1></div><span id="status-badge" class="status-badge">等待服务</span></div>
+      <p id="progress-copy" class="progress-copy">任务已提交，正在读取真实进度。</p>
+      <div class="progress-track" aria-hidden="true"><span id="progress-bar"></span></div>
+      <dl id="progress-metrics" class="progress-metrics"></dl>
+      <p id="last-activity" class="last-activity"></p>
+    </section>
+
+    <section id="receipt-section" class="receipt-section" aria-labelledby="receipt-title" hidden>
+      <div class="section-heading"><div><p class="eyebrow">后端原件 · 不做形状改写</p><h2 id="receipt-title">本版修订回执</h2></div><span id="receipt-version" class="version-badge"></span></div>
+      <div id="receipt-content" class="receipt-content"></div>
+      <details id="diff-details" class="diff-details"><summary>查看真实 unified diff</summary><pre id="diff-content"></pre></details>
+      <div id="receipt-actions" class="receipt-actions"></div>
+    </section>
+
+    <section id="handbook-section" class="handbook-section" aria-labelledby="handbook-title" hidden>
+      <div class="section-heading"><div><p class="eyebrow">当前已保存版本</p><h2 id="handbook-title">你的旅行手册</h2></div><div class="document-actions"><a id="open-handbook" class="secondary-button" target="_blank" rel="noopener noreferrer">打开原始手册</a><a id="open-pdf" class="primary-button" target="_blank" rel="noopener noreferrer">打开 PDF</a></div></div>
+      <div class="handbook-viewbar"><p id="document-meta" class="document-meta"></p><div class="handbook-mode-control" role="group" aria-label="手册阅读层级"><button id="handbook-overview" type="button" aria-pressed="true" aria-controls="handbook-frame" disabled>第一眼</button><button id="handbook-deep" type="button" aria-pressed="false" aria-controls="handbook-frame" disabled>完整手册</button></div></div>
+      <p class="handbook-view-note">第一眼只重组原文；完整手册保留全部安排、来源与核查记录。切换不会调用模型。</p>
+      <p id="handbook-error" class="handbook-error" role="alert" hidden></p>
+      <iframe id="handbook-frame" title="7392 返回的原始旅行手册" loading="lazy"></iframe>
+    </section>
+
+    <section id="revision-section" class="revision-section" aria-labelledby="revision-title" hidden>
+      <div><p class="eyebrow">一句话修订</p><h2 id="revision-title">只改你想改的地方。</h2><p>原手册保留到新版保存成功。提交后会收到新的 diff、判断、备选与下一步。</p></div>
+      <form id="revision-form" class="revision-form"><label for="revision-input">这次想调整什么？</label><textarea id="revision-input" rows="3" maxlength="4000" required placeholder="例如：第三天太赶了，放慢一点；保留已经确定的住宿。"></textarea><button id="revise-trip" class="primary-button" type="submit">提交这次修订 <span aria-hidden="true">→</span></button><p class="form-note">一次点击只发送一次；未确认结果时不会自动重试。</p></form>
+    </section>
+  </main>
+  <footer class="footer"><span>原子旅行 · 单会话工作区</span><span>7392 实时 API · 不使用静态样本</span></footer>
+</body>
+</html>

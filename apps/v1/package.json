@@ -1,0 +1,19 @@
+{
+  "name": "atom-travel-v1",
+  "version": "0.1.0",
+  "private": true,
+  "description": "原子旅行 V1 — 可解释的局部再生（AI-native 旅游 agent 原型）",
+  "scripts": {
+    "dev": "python3 session_proxy.py",
+    "dev:studio": "python3 server.py",
+    "test:session": "node --test session-contract.test.js handbook-assets.test.js"
+  },
+  "main": "app.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@awesome.me/webawesome": "^3.14.0"
+  }
+}

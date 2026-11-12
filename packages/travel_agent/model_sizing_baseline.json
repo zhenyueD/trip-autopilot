@@ -1,0 +1,4976 @@
+{
+  "schema_version": 1,
+  "source_cohorts": [
+    "c5-assembly-2026-11-01",
+    "c5-assembly-second-2026-11-02",
+    "c6-fullchain-generalization-2026-11-02"
+  ],
+  "quantile_method": "nearest_rank: sorted observed values at ceil(p*n); no interpolation",
+  "token_semantics": "Provider output includes reasoning; total=input+output. Visible output=output-reasoning.",
+  "censoring_policy": "Length-truncated calls remain consumed-token observations, not complete-demand measurements. Quantiles may understate future demand.",
+  "missing_usage_policy": "Unknown is null and excluded from quantile n; never replaced with zero.",
+  "default_policy": "25% engineering margin, round up to 1000 tokens, retain recorded configuration floor. No proxy p90 for unobserved stages.",
+  "limitations": [
+    "Small, non-independent sample of replays/retries, all observed models deepseek-v4-pro; no future success guarantee.",
+    "Semantic/schema failures with complete output remain usage observations, not accepted product results.",
+    "elapsed_ms is recorded call elapsed time; it is not a socket-read timeout or a recommended timeout. No timeout defaults changed.",
+    "Unmeasured stages retain known configuration only; C5/C6 do not validate their limits.",
+    "Registry defaults cover model transports and named stages. Explicit legacy per-call token limits remain operation configuration, not additional C5/C6 measurements."
+  ],
+  "accounting": {
+    "physical_calls": 14,
+    "cohort_calls": {
+      "c5-assembly-2026-11-01": 6,
+      "c5-assembly-second-2026-11-02": 5,
+      "c6-fullchain-generalization-2026-11-02": 3
+    },
+    "usage_known_calls": 13,
+    "usage_unknown_calls": 1,
+    "censored_calls": 3,
+    "totals": {
+      "reasoning_tokens": {
+        "known_subtotal": 189752,
+        "unknown_calls": 1
+      },
+      "output_tokens": {
+        "known_subtotal": 227093,
+        "unknown_calls": 1
+      },
+      "input_tokens": {
+        "known_subtotal": 355785,
+        "unknown_calls": 1
+      },
+      "total_tokens": {
+        "known_subtotal": 582878,
+        "unknown_calls": 1
+      },
+      "visible_output_tokens": {
+        "known_subtotal": 37341,
+        "unknown_calls": 1
+      },
+      "elapsed_ms": {
+        "known_subtotal": 3039773,
+        "unknown_calls": 0
+      }
+    },
+    "currency_cost": null,
+    "currency_cost_status": "unknown",
+    "new_product_calls": 0,
+    "new_network_calls": 0,
+    "new_database_calls": 0
+  },
+  "stages": {
+    "assembly": {
+      "stage": "assembly",
+      "measurement_status": "observed_consumption",
+      "physical_calls": 8,
+      "censored_calls": 2,
+      "config_floor": 36000,
+      "config_floor_provenance": {
+        "config_floor": 36000,
+        "source": "packages/travel_agent/itinerary_assembly_model.py",
+        "source_line": 175,
+        "source_end_line": 179,
+        "source_sha256_before_change": "cdf673744a613b265f239ba58ea07a0d849a78eff2ed7bb60f42e74222f1a8bc",
+        "source_excerpt": "                else:\n                    settings['max_tokens'] = 32000\n                if self.settings_override:\n                    if (len(self.settings_override) != 1 or\n                            set(self.settings_override) - {'max_tokens', 'reasoning_effort'}):"
+      },
+      "recommended_max_tokens": 36000,
+      "p90_plus_margin": 31000,
+      "margin_fraction": 0.25,
+      "round_up_multiple": 1000,
+      "baseline_floor": 36000,
+      "basis": "max(recorded_config_floor, ceil(observed_output_p90 * 1.25 / 1000) * 1000)",
+      "statistics": {
+        "reasoning_tokens": {
+          "n": 7,
+          "unknown": 1,
+          "censored_observations": 2,
+          "p50": {
+            "value": 12493,
+            "rank": 4,
+            "sources": [
+              {
+                "run_id": "c5-assembly-2026-11-01",
+                "request_id": "c5-3-241bc71b55cd96e6c65937e4",
+                "response_path": "research/c5-assembly-2026-11-01/runtime/model-artifacts/c5-3-241bc71b55cd96e6c65937e4-response.json",
+                "response_sha256": "2ffd8e90063b07172c8f6878aad39316dc4312129b5d98268443d2c1a34c8eaa",
+                "censored": false
+              }
+            ]
+          },
+          "p90": {
+            "value": 20129,
+            "rank": 7,
+            "sources": [
+              {
+                "run_id": "c6-A-assembly-01",
+                "request_id": "c6-A-assembly-01-assemble",
+                "response_path": "research/c6-fullchain-generalization-2026-11-02/runtime/model-artifacts/c6-A-assembly-01-assemble-response.json",
+                "response_sha256": "00dbc6c75f01bf03703e18b664851dc516d0d542ee3ef83fb13292e50cc64322",
+                "censored": true
+              }
+            ]
+          },
+          "max": {
+            "value": 20129,
+            "rank": 7,
+            "sources": [
+              {
+                "run_id": "c6-A-assembly-01",
+                "request_id": "c6-A-assembly-01-assemble",
+                "response_path": "research/c6-fullchain-generalization-2026-11-02/runtime/model-artifacts/c6-A-assembly-01-assemble-response.json",
+                "response_sha256": "00dbc6c75f01bf03703e18b664851dc516d0d542ee3ef83fb13292e50cc64322",
+                "censored": true
+              }
+            ]
+          }
+        },
+        "output_tokens": {
+          "n": 7,
+          "unknown": 1,
+          "censored_observations": 2,
+          "p50": {
+            "value": 16779,
+            "rank": 4,
+            "sources": [
+              {
+                "run_id": "c6-A-assembly-02",
+                "request_id": "c6-A-assembly-02-assemble",
+                "response_path": "research/c6-fullchain-generalization-2026-11-02/runtime/model-artifacts/c6-A-assembly-02-assemble-response.json",
+                "response_sha256": "bb8b3af37e445154ef01330ec353e0869f8a21d847c06a055804f0122caa5665",
+                "censored": false
+              }
+            ]
+          },
+          "p90": {
+            "value": 24006,
+            "rank": 7,
+            "sources": [
+              {
+                "run_id": "c6-A-assembly-01",
+                "request_id": "c6-A-assembly-01-assemble",
+                "response_path": "research/c6-fullchain-generalization-2026-11-02/runtime/model-artifacts/c6-A-assembly-01-assemble-response.json",
+                "response_sha256": "00dbc6c75f01bf03703e18b664851dc516d0d542ee3ef83fb13292e50cc64322",
+                "censored": true
+              }
+            ]
+          },
+          "max": {
+            "value": 24006,
+            "rank": 7,
+            "sources": [
+              {
+                "run_id": "c6-A-assembly-01",
+                "request_id": "c6-A-assembly-01-assemble",
+                "response_path": "research/c6-fullchain-generalization-2026-11-02/runtime/model-artifacts/c6-A-assembly-01-assemble-response.json",
+                "response_sha256": "00dbc6c75f01bf03703e18b664851dc516d0d542ee3ef83fb13292e50cc64322",
+                "censored": true
+              }
+            ]
+          }
+        },
+        "input_tokens": {
+          "n": 7,
+          "unknown": 1,
+          "censored_observations": 2,
+          "p50": {
+            "value": 21362,
+            "rank": 4,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-3-aa291342bf5ed62a27f1f18b",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-3-aa291342bf5ed62a27f1f18b-response.json",
+                "response_sha256": "5f57cbca5f739d0efc322c88caced41f5ce7fa1057e1e3fc3e99338cd98392f2",
+                "censored": false
+              }
+            ]
+          },
+          "p90": {
+            "value": 22521,
+            "rank": 7,
+            "sources": [
+              {
+                "run_id": "c6-A-assembly-01",
+                "request_id": "c6-A-assembly-01-assemble",
+                "response_path": "research/c6-fullchain-generalization-2026-11-02/runtime/model-artifacts/c6-A-assembly-01-assemble-response.json",
+                "response_sha256": "00dbc6c75f01bf03703e18b664851dc516d0d542ee3ef83fb13292e50cc64322",
+                "censored": true
+              },
+              {
+                "run_id": "c6-A-assembly-02",
+                "request_id": "c6-A-assembly-02-assemble",
+                "response_path": "research/c6-fullchain-generalization-2026-11-02/runtime/model-artifacts/c6-A-assembly-02-assemble-response.json",
+                "response_sha256": "bb8b3af37e445154ef01330ec353e0869f8a21d847c06a055804f0122caa5665",
+                "censored": false
+              }
+            ]
+          },
+          "max": {
+            "value": 22521,
+            "rank": 7,
+            "sources": [
+              {
+                "run_id": "c6-A-assembly-01",
+                "request_id": "c6-A-assembly-01-assemble",
+                "response_path": "research/c6-fullchain-generalization-2026-11-02/runtime/model-artifacts/c6-A-assembly-01-assemble-response.json",
+                "response_sha256": "00dbc6c75f01bf03703e18b664851dc516d0d542ee3ef83fb13292e50cc64322",
+                "censored": true
+              },
+              {
+                "run_id": "c6-A-assembly-02",
+                "request_id": "c6-A-assembly-02-assemble",
+                "response_path": "research/c6-fullchain-generalization-2026-11-02/runtime/model-artifacts/c6-A-assembly-02-assemble-response.json",
+                "response_sha256": "bb8b3af37e445154ef01330ec353e0869f8a21d847c06a055804f0122caa5665",
+                "censored": false
+              }
+            ]
+          }
+        },
+        "total_tokens": {
+          "n": 7,
+          "unknown": 1,
+          "censored_observations": 2,
+          "p50": {
+            "value": 39300,
+            "rank": 4,
+            "sources": [
+              {
+                "run_id": "c6-A-assembly-02",
+                "request_id": "c6-A-assembly-02-assemble",
+                "response_path": "research/c6-fullchain-generalization-2026-11-02/runtime/model-artifacts/c6-A-assembly-02-assemble-response.json",
+                "response_sha256": "bb8b3af37e445154ef01330ec353e0869f8a21d847c06a055804f0122caa5665",
+                "censored": false
+              }
+            ]
+          },
+          "p90": {
+            "value": 46527,
+            "rank": 7,
+            "sources": [
+              {
+                "run_id": "c6-A-assembly-01",
+                "request_id": "c6-A-assembly-01-assemble",
+                "response_path": "research/c6-fullchain-generalization-2026-11-02/runtime/model-artifacts/c6-A-assembly-01-assemble-response.json",
+                "response_sha256": "00dbc6c75f01bf03703e18b664851dc516d0d542ee3ef83fb13292e50cc64322",
+                "censored": true
+              }
+            ]
+          },
+          "max": {
+            "value": 46527,
+            "rank": 7,
+            "sources": [
+              {
+                "run_id": "c6-A-assembly-01",
+                "request_id": "c6-A-assembly-01-assemble",
+                "response_path": "research/c6-fullchain-generalization-2026-11-02/runtime/model-artifacts/c6-A-assembly-01-assemble-response.json",
+                "response_sha256": "00dbc6c75f01bf03703e18b664851dc516d0d542ee3ef83fb13292e50cc64322",
+                "censored": true
+              }
+            ]
+          }
+        },
+        "visible_output_tokens": {
+          "n": 7,
+          "unknown": 1,
+          "censored_observations": 2,
+          "p50": {
+            "value": 3877,
+            "rank": 4,
+            "sources": [
+              {
+                "run_id": "c6-A-assembly-01",
+                "request_id": "c6-A-assembly-01-assemble",
+                "response_path": "research/c6-fullchain-generalization-2026-11-02/runtime/model-artifacts/c6-A-assembly-01-assemble-response.json",
+                "response_sha256": "00dbc6c75f01bf03703e18b664851dc516d0d542ee3ef83fb13292e50cc64322",
+                "censored": true
+              }
+            ]
+          },
+          "p90": {
+            "value": 4361,
+            "rank": 7,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-2-13e33571a8319d5300721ec5",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-2-13e33571a8319d5300721ec5-response.json",
+                "response_sha256": "ad1953bb6adcc8befbe7ba8fc4fceb0f0f6099c88ad30eea174e2298f2991baf",
+                "censored": false
+              }
+            ]
+          },
+          "max": {
+            "value": 4361,
+            "rank": 7,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-2-13e33571a8319d5300721ec5",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-2-13e33571a8319d5300721ec5-response.json",
+                "response_sha256": "ad1953bb6adcc8befbe7ba8fc4fceb0f0f6099c88ad30eea174e2298f2991baf",
+                "censored": false
+              }
+            ]
+          }
+        },
+        "elapsed_ms": {
+          "n": 8,
+          "unknown": 0,
+          "censored_observations": 2,
+          "p50": {
+            "value": 179377,
+            "rank": 4,
+            "sources": [
+              {
+                "run_id": "c5-assembly-2026-11-01",
+                "request_id": "c5-3-241bc71b55cd96e6c65937e4",
+                "response_path": "research/c5-assembly-2026-11-01/runtime/model-artifacts/c5-3-241bc71b55cd96e6c65937e4-response.json",
+                "response_sha256": "2ffd8e90063b07172c8f6878aad39316dc4312129b5d98268443d2c1a34c8eaa",
+                "censored": false
+              }
+            ]
+          },
+          "p90": {
+            "value": 323016,
+            "rank": 8,
+            "sources": [
+              {
+                "run_id": "c6-A-assembly-01",
+                "request_id": "c6-A-assembly-01-assemble",
+                "response_path": "research/c6-fullchain-generalization-2026-11-02/runtime/model-artifacts/c6-A-assembly-01-assemble-response.json",
+                "response_sha256": "00dbc6c75f01bf03703e18b664851dc516d0d542ee3ef83fb13292e50cc64322",
+                "censored": true
+              }
+            ]
+          },
+          "max": {
+            "value": 323016,
+            "rank": 8,
+            "sources": [
+              {
+                "run_id": "c6-A-assembly-01",
+                "request_id": "c6-A-assembly-01-assemble",
+                "response_path": "research/c6-fullchain-generalization-2026-11-02/runtime/model-artifacts/c6-A-assembly-01-assemble-response.json",
+                "response_sha256": "00dbc6c75f01bf03703e18b664851dc516d0d542ee3ef83fb13292e50cc64322",
+                "censored": true
+              }
+            ]
+          }
+        }
+      },
+      "uncensored_statistics": {
+        "reasoning_tokens": {
+          "n": 5,
+          "unknown": 1,
+          "censored_observations": 0,
+          "p50": {
+            "value": 12493,
+            "rank": 3,
+            "sources": [
+              {
+                "run_id": "c5-assembly-2026-11-01",
+                "request_id": "c5-3-241bc71b55cd96e6c65937e4",
+                "response_path": "research/c5-assembly-2026-11-01/runtime/model-artifacts/c5-3-241bc71b55cd96e6c65937e4-response.json",
+                "response_sha256": "2ffd8e90063b07172c8f6878aad39316dc4312129b5d98268443d2c1a34c8eaa",
+                "censored": false
+              }
+            ]
+          },
+          "p90": {
+            "value": 17627,
+            "rank": 5,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-2-13e33571a8319d5300721ec5",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-2-13e33571a8319d5300721ec5-response.json",
+                "response_sha256": "ad1953bb6adcc8befbe7ba8fc4fceb0f0f6099c88ad30eea174e2298f2991baf",
+                "censored": false
+              }
+            ]
+          },
+          "max": {
+            "value": 17627,
+            "rank": 5,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-2-13e33571a8319d5300721ec5",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-2-13e33571a8319d5300721ec5-response.json",
+                "response_sha256": "ad1953bb6adcc8befbe7ba8fc4fceb0f0f6099c88ad30eea174e2298f2991baf",
+                "censored": false
+              }
+            ]
+          }
+        },
+        "output_tokens": {
+          "n": 5,
+          "unknown": 1,
+          "censored_observations": 0,
+          "p50": {
+            "value": 16779,
+            "rank": 3,
+            "sources": [
+              {
+                "run_id": "c6-A-assembly-02",
+                "request_id": "c6-A-assembly-02-assemble",
+                "response_path": "research/c6-fullchain-generalization-2026-11-02/runtime/model-artifacts/c6-A-assembly-02-assemble-response.json",
+                "response_sha256": "bb8b3af37e445154ef01330ec353e0869f8a21d847c06a055804f0122caa5665",
+                "censored": false
+              }
+            ]
+          },
+          "p90": {
+            "value": 21988,
+            "rank": 5,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-2-13e33571a8319d5300721ec5",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-2-13e33571a8319d5300721ec5-response.json",
+                "response_sha256": "ad1953bb6adcc8befbe7ba8fc4fceb0f0f6099c88ad30eea174e2298f2991baf",
+                "censored": false
+              }
+            ]
+          },
+          "max": {
+            "value": 21988,
+            "rank": 5,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-2-13e33571a8319d5300721ec5",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-2-13e33571a8319d5300721ec5-response.json",
+                "response_sha256": "ad1953bb6adcc8befbe7ba8fc4fceb0f0f6099c88ad30eea174e2298f2991baf",
+                "censored": false
+              }
+            ]
+          }
+        },
+        "input_tokens": {
+          "n": 5,
+          "unknown": 1,
+          "censored_observations": 0,
+          "p50": {
+            "value": 21362,
+            "rank": 3,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-3-aa291342bf5ed62a27f1f18b",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-3-aa291342bf5ed62a27f1f18b-response.json",
+                "response_sha256": "5f57cbca5f739d0efc322c88caced41f5ce7fa1057e1e3fc3e99338cd98392f2",
+                "censored": false
+              }
+            ]
+          },
+          "p90": {
+            "value": 22521,
+            "rank": 5,
+            "sources": [
+              {
+                "run_id": "c6-A-assembly-02",
+                "request_id": "c6-A-assembly-02-assemble",
+                "response_path": "research/c6-fullchain-generalization-2026-11-02/runtime/model-artifacts/c6-A-assembly-02-assemble-response.json",
+                "response_sha256": "bb8b3af37e445154ef01330ec353e0869f8a21d847c06a055804f0122caa5665",
+                "censored": false
+              }
+            ]
+          },
+          "max": {
+            "value": 22521,
+            "rank": 5,
+            "sources": [
+              {
+                "run_id": "c6-A-assembly-02",
+                "request_id": "c6-A-assembly-02-assemble",
+                "response_path": "research/c6-fullchain-generalization-2026-11-02/runtime/model-artifacts/c6-A-assembly-02-assemble-response.json",
+                "response_sha256": "bb8b3af37e445154ef01330ec353e0869f8a21d847c06a055804f0122caa5665",
+                "censored": false
+              }
+            ]
+          }
+        },
+        "total_tokens": {
+          "n": 5,
+          "unknown": 1,
+          "censored_observations": 0,
+          "p50": {
+            "value": 39300,
+            "rank": 3,
+            "sources": [
+              {
+                "run_id": "c6-A-assembly-02",
+                "request_id": "c6-A-assembly-02-assemble",
+                "response_path": "research/c6-fullchain-generalization-2026-11-02/runtime/model-artifacts/c6-A-assembly-02-assemble-response.json",
+                "response_sha256": "bb8b3af37e445154ef01330ec353e0869f8a21d847c06a055804f0122caa5665",
+                "censored": false
+              }
+            ]
+          },
+          "p90": {
+            "value": 43983,
+            "rank": 5,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-2-13e33571a8319d5300721ec5",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-2-13e33571a8319d5300721ec5-response.json",
+                "response_sha256": "ad1953bb6adcc8befbe7ba8fc4fceb0f0f6099c88ad30eea174e2298f2991baf",
+                "censored": false
+              }
+            ]
+          },
+          "max": {
+            "value": 43983,
+            "rank": 5,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-2-13e33571a8319d5300721ec5",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-2-13e33571a8319d5300721ec5-response.json",
+                "response_sha256": "ad1953bb6adcc8befbe7ba8fc4fceb0f0f6099c88ad30eea174e2298f2991baf",
+                "censored": false
+              }
+            ]
+          }
+        },
+        "visible_output_tokens": {
+          "n": 5,
+          "unknown": 1,
+          "censored_observations": 0,
+          "p50": {
+            "value": 4144,
+            "rank": 3,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-3-aa291342bf5ed62a27f1f18b",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-3-aa291342bf5ed62a27f1f18b-response.json",
+                "response_sha256": "5f57cbca5f739d0efc322c88caced41f5ce7fa1057e1e3fc3e99338cd98392f2",
+                "censored": false
+              }
+            ]
+          },
+          "p90": {
+            "value": 4361,
+            "rank": 5,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-2-13e33571a8319d5300721ec5",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-2-13e33571a8319d5300721ec5-response.json",
+                "response_sha256": "ad1953bb6adcc8befbe7ba8fc4fceb0f0f6099c88ad30eea174e2298f2991baf",
+                "censored": false
+              }
+            ]
+          },
+          "max": {
+            "value": 4361,
+            "rank": 5,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-2-13e33571a8319d5300721ec5",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-2-13e33571a8319d5300721ec5-response.json",
+                "response_sha256": "ad1953bb6adcc8befbe7ba8fc4fceb0f0f6099c88ad30eea174e2298f2991baf",
+                "censored": false
+              }
+            ]
+          }
+        },
+        "elapsed_ms": {
+          "n": 6,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": 179377,
+            "rank": 3,
+            "sources": [
+              {
+                "run_id": "c5-assembly-2026-11-01",
+                "request_id": "c5-3-241bc71b55cd96e6c65937e4",
+                "response_path": "research/c5-assembly-2026-11-01/runtime/model-artifacts/c5-3-241bc71b55cd96e6c65937e4-response.json",
+                "response_sha256": "2ffd8e90063b07172c8f6878aad39316dc4312129b5d98268443d2c1a34c8eaa",
+                "censored": false
+              }
+            ]
+          },
+          "p90": {
+            "value": 290357,
+            "rank": 6,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-2-13e33571a8319d5300721ec5",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-2-13e33571a8319d5300721ec5-response.json",
+                "response_sha256": "ad1953bb6adcc8befbe7ba8fc4fceb0f0f6099c88ad30eea174e2298f2991baf",
+                "censored": false
+              }
+            ]
+          },
+          "max": {
+            "value": 290357,
+            "rank": 6,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-2-13e33571a8319d5300721ec5",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-2-13e33571a8319d5300721ec5-response.json",
+                "response_sha256": "ad1953bb6adcc8befbe7ba8fc4fceb0f0f6099c88ad30eea174e2298f2991baf",
+                "censored": false
+              }
+            ]
+          }
+        }
+      },
+      "source_request_ids": [
+        "c5-1-8f66e1db3636930255c5cb2a",
+        "c5-2-137920d623631c79dbfcd43d",
+        "c5-3-241bc71b55cd96e6c65937e4",
+        "c5-second-1-43f4117d5ca210acbc12293d",
+        "c5-second-2-13e33571a8319d5300721ec5",
+        "c5-second-3-aa291342bf5ed62a27f1f18b",
+        "c6-A-assembly-01-assemble",
+        "c6-A-assembly-02-assemble"
+      ]
+    },
+    "review": {
+      "stage": "review",
+      "measurement_status": "observed_consumption",
+      "physical_calls": 4,
+      "censored_calls": 1,
+      "config_floor": 32000,
+      "config_floor_provenance": {
+        "config_floor": 32000,
+        "source": "packages/travel_agent/itinerary_assembly_model.py",
+        "source_line": 175,
+        "source_end_line": 180,
+        "source_sha256_before_change": "cdf673744a613b265f239ba58ea07a0d849a78eff2ed7bb60f42e74222f1a8bc",
+        "source_excerpt": "                else:\n                    settings['max_tokens'] = 32000\n                if self.settings_override:\n                    if (len(self.settings_override) != 1 or\n                            set(self.settings_override) - {'max_tokens', 'reasoning_effort'}):\n                        raise ValueError('A retry may override only one permitted configuration field')"
+      },
+      "recommended_max_tokens": 40000,
+      "p90_plus_margin": 40000,
+      "margin_fraction": 0.25,
+      "round_up_multiple": 1000,
+      "baseline_floor": 40000,
+      "basis": "max(recorded_config_floor, ceil(observed_output_p90 * 1.25 / 1000) * 1000)",
+      "statistics": {
+        "reasoning_tokens": {
+          "n": 4,
+          "unknown": 0,
+          "censored_observations": 1,
+          "p50": {
+            "value": 20556,
+            "rank": 2,
+            "sources": [
+              {
+                "run_id": "c5-assembly-2026-11-01",
+                "request_id": "c5-6-9d62dfef1db1e8096e5c2d8a",
+                "response_path": "research/c5-assembly-2026-11-01/runtime/model-artifacts/c5-6-9d62dfef1db1e8096e5c2d8a-response.json",
+                "response_sha256": "79c6d077be5bb38bd8fe2b2673c05170096a4fab52df81a49bd9fa83cf8281f0",
+                "censored": false
+              }
+            ]
+          },
+          "p90": {
+            "value": 28178,
+            "rank": 4,
+            "sources": [
+              {
+                "run_id": "c6-A-assembly-02",
+                "request_id": "c6-A-assembly-02-review",
+                "response_path": "research/c6-fullchain-generalization-2026-11-02/runtime/model-artifacts/c6-A-assembly-02-review-response.json",
+                "response_sha256": "f1d2c84ed33197467c8a7564d1d245139158c5a2d88be6f954b3320a57cb39ca",
+                "censored": false
+              }
+            ]
+          },
+          "max": {
+            "value": 28178,
+            "rank": 4,
+            "sources": [
+              {
+                "run_id": "c6-A-assembly-02",
+                "request_id": "c6-A-assembly-02-review",
+                "response_path": "research/c6-fullchain-generalization-2026-11-02/runtime/model-artifacts/c6-A-assembly-02-review-response.json",
+                "response_sha256": "f1d2c84ed33197467c8a7564d1d245139158c5a2d88be6f954b3320a57cb39ca",
+                "censored": false
+              }
+            ]
+          }
+        },
+        "output_tokens": {
+          "n": 4,
+          "unknown": 0,
+          "censored_observations": 1,
+          "p50": {
+            "value": 24456,
+            "rank": 2,
+            "sources": [
+              {
+                "run_id": "c5-assembly-2026-11-01",
+                "request_id": "c5-6-9d62dfef1db1e8096e5c2d8a",
+                "response_path": "research/c5-assembly-2026-11-01/runtime/model-artifacts/c5-6-9d62dfef1db1e8096e5c2d8a-response.json",
+                "response_sha256": "79c6d077be5bb38bd8fe2b2673c05170096a4fab52df81a49bd9fa83cf8281f0",
+                "censored": false
+              }
+            ]
+          },
+          "p90": {
+            "value": 31582,
+            "rank": 4,
+            "sources": [
+              {
+                "run_id": "c6-A-assembly-02",
+                "request_id": "c6-A-assembly-02-review",
+                "response_path": "research/c6-fullchain-generalization-2026-11-02/runtime/model-artifacts/c6-A-assembly-02-review-response.json",
+                "response_sha256": "f1d2c84ed33197467c8a7564d1d245139158c5a2d88be6f954b3320a57cb39ca",
+                "censored": false
+              }
+            ]
+          },
+          "max": {
+            "value": 31582,
+            "rank": 4,
+            "sources": [
+              {
+                "run_id": "c6-A-assembly-02",
+                "request_id": "c6-A-assembly-02-review",
+                "response_path": "research/c6-fullchain-generalization-2026-11-02/runtime/model-artifacts/c6-A-assembly-02-review-response.json",
+                "response_sha256": "f1d2c84ed33197467c8a7564d1d245139158c5a2d88be6f954b3320a57cb39ca",
+                "censored": false
+              }
+            ]
+          }
+        },
+        "input_tokens": {
+          "n": 4,
+          "unknown": 0,
+          "censored_observations": 1,
+          "p50": {
+            "value": 46696,
+            "rank": 2,
+            "sources": [
+              {
+                "run_id": "c5-assembly-2026-11-01",
+                "request_id": "c5-6-9d62dfef1db1e8096e5c2d8a",
+                "response_path": "research/c5-assembly-2026-11-01/runtime/model-artifacts/c5-6-9d62dfef1db1e8096e5c2d8a-response.json",
+                "response_sha256": "79c6d077be5bb38bd8fe2b2673c05170096a4fab52df81a49bd9fa83cf8281f0",
+                "censored": false
+              }
+            ]
+          },
+          "p90": {
+            "value": 69845,
+            "rank": 4,
+            "sources": [
+              {
+                "run_id": "c5-assembly-2026-11-01",
+                "request_id": "c5-5-35b7057220578f3786a52a10",
+                "response_path": "research/c5-assembly-2026-11-01/runtime/model-artifacts/c5-5-35b7057220578f3786a52a10-response.json",
+                "response_sha256": "b71beea01f7f3504c347f6812de50cebff67c9f1cc080cad6d1616288e0d9bb7",
+                "censored": true
+              }
+            ]
+          },
+          "max": {
+            "value": 69845,
+            "rank": 4,
+            "sources": [
+              {
+                "run_id": "c5-assembly-2026-11-01",
+                "request_id": "c5-5-35b7057220578f3786a52a10",
+                "response_path": "research/c5-assembly-2026-11-01/runtime/model-artifacts/c5-5-35b7057220578f3786a52a10-response.json",
+                "response_sha256": "b71beea01f7f3504c347f6812de50cebff67c9f1cc080cad6d1616288e0d9bb7",
+                "censored": true
+              }
+            ]
+          }
+        },
+        "total_tokens": {
+          "n": 4,
+          "unknown": 0,
+          "censored_observations": 1,
+          "p50": {
+            "value": 71152,
+            "rank": 2,
+            "sources": [
+              {
+                "run_id": "c5-assembly-2026-11-01",
+                "request_id": "c5-6-9d62dfef1db1e8096e5c2d8a",
+                "response_path": "research/c5-assembly-2026-11-01/runtime/model-artifacts/c5-6-9d62dfef1db1e8096e5c2d8a-response.json",
+                "response_sha256": "79c6d077be5bb38bd8fe2b2673c05170096a4fab52df81a49bd9fa83cf8281f0",
+                "censored": false
+              }
+            ]
+          },
+          "p90": {
+            "value": 95292,
+            "rank": 4,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-5-b5cefd29ecb4ea5a4332e72e",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-5-b5cefd29ecb4ea5a4332e72e-response.json",
+                "response_sha256": "3c4c16c42182dd11abd28179d5cb2d2195809a000735bc76956915a6415416d6",
+                "censored": false
+              }
+            ]
+          },
+          "max": {
+            "value": 95292,
+            "rank": 4,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-5-b5cefd29ecb4ea5a4332e72e",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-5-b5cefd29ecb4ea5a4332e72e-response.json",
+                "response_sha256": "3c4c16c42182dd11abd28179d5cb2d2195809a000735bc76956915a6415416d6",
+                "censored": false
+              }
+            ]
+          }
+        },
+        "visible_output_tokens": {
+          "n": 4,
+          "unknown": 0,
+          "censored_observations": 1,
+          "p50": {
+            "value": 3404,
+            "rank": 2,
+            "sources": [
+              {
+                "run_id": "c6-A-assembly-02",
+                "request_id": "c6-A-assembly-02-review",
+                "response_path": "research/c6-fullchain-generalization-2026-11-02/runtime/model-artifacts/c6-A-assembly-02-review-response.json",
+                "response_sha256": "f1d2c84ed33197467c8a7564d1d245139158c5a2d88be6f954b3320a57cb39ca",
+                "censored": false
+              }
+            ]
+          },
+          "p90": {
+            "value": 5037,
+            "rank": 4,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-5-b5cefd29ecb4ea5a4332e72e",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-5-b5cefd29ecb4ea5a4332e72e-response.json",
+                "response_sha256": "3c4c16c42182dd11abd28179d5cb2d2195809a000735bc76956915a6415416d6",
+                "censored": false
+              }
+            ]
+          },
+          "max": {
+            "value": 5037,
+            "rank": 4,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-5-b5cefd29ecb4ea5a4332e72e",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-5-b5cefd29ecb4ea5a4332e72e-response.json",
+                "response_sha256": "3c4c16c42182dd11abd28179d5cb2d2195809a000735bc76956915a6415416d6",
+                "censored": false
+              }
+            ]
+          }
+        },
+        "elapsed_ms": {
+          "n": 4,
+          "unknown": 0,
+          "censored_observations": 1,
+          "p50": {
+            "value": 252939,
+            "rank": 2,
+            "sources": [
+              {
+                "run_id": "c5-assembly-2026-11-01",
+                "request_id": "c5-6-9d62dfef1db1e8096e5c2d8a",
+                "response_path": "research/c5-assembly-2026-11-01/runtime/model-artifacts/c5-6-9d62dfef1db1e8096e5c2d8a-response.json",
+                "response_sha256": "79c6d077be5bb38bd8fe2b2673c05170096a4fab52df81a49bd9fa83cf8281f0",
+                "censored": false
+              }
+            ]
+          },
+          "p90": {
+            "value": 505625,
+            "rank": 4,
+            "sources": [
+              {
+                "run_id": "c6-A-assembly-02",
+                "request_id": "c6-A-assembly-02-review",
+                "response_path": "research/c6-fullchain-generalization-2026-11-02/runtime/model-artifacts/c6-A-assembly-02-review-response.json",
+                "response_sha256": "f1d2c84ed33197467c8a7564d1d245139158c5a2d88be6f954b3320a57cb39ca",
+                "censored": false
+              }
+            ]
+          },
+          "max": {
+            "value": 505625,
+            "rank": 4,
+            "sources": [
+              {
+                "run_id": "c6-A-assembly-02",
+                "request_id": "c6-A-assembly-02-review",
+                "response_path": "research/c6-fullchain-generalization-2026-11-02/runtime/model-artifacts/c6-A-assembly-02-review-response.json",
+                "response_sha256": "f1d2c84ed33197467c8a7564d1d245139158c5a2d88be6f954b3320a57cb39ca",
+                "censored": false
+              }
+            ]
+          }
+        }
+      },
+      "uncensored_statistics": {
+        "reasoning_tokens": {
+          "n": 3,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": 20791,
+            "rank": 2,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-5-b5cefd29ecb4ea5a4332e72e",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-5-b5cefd29ecb4ea5a4332e72e-response.json",
+                "response_sha256": "3c4c16c42182dd11abd28179d5cb2d2195809a000735bc76956915a6415416d6",
+                "censored": false
+              }
+            ]
+          },
+          "p90": {
+            "value": 28178,
+            "rank": 3,
+            "sources": [
+              {
+                "run_id": "c6-A-assembly-02",
+                "request_id": "c6-A-assembly-02-review",
+                "response_path": "research/c6-fullchain-generalization-2026-11-02/runtime/model-artifacts/c6-A-assembly-02-review-response.json",
+                "response_sha256": "f1d2c84ed33197467c8a7564d1d245139158c5a2d88be6f954b3320a57cb39ca",
+                "censored": false
+              }
+            ]
+          },
+          "max": {
+            "value": 28178,
+            "rank": 3,
+            "sources": [
+              {
+                "run_id": "c6-A-assembly-02",
+                "request_id": "c6-A-assembly-02-review",
+                "response_path": "research/c6-fullchain-generalization-2026-11-02/runtime/model-artifacts/c6-A-assembly-02-review-response.json",
+                "response_sha256": "f1d2c84ed33197467c8a7564d1d245139158c5a2d88be6f954b3320a57cb39ca",
+                "censored": false
+              }
+            ]
+          }
+        },
+        "output_tokens": {
+          "n": 3,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": 25828,
+            "rank": 2,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-5-b5cefd29ecb4ea5a4332e72e",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-5-b5cefd29ecb4ea5a4332e72e-response.json",
+                "response_sha256": "3c4c16c42182dd11abd28179d5cb2d2195809a000735bc76956915a6415416d6",
+                "censored": false
+              }
+            ]
+          },
+          "p90": {
+            "value": 31582,
+            "rank": 3,
+            "sources": [
+              {
+                "run_id": "c6-A-assembly-02",
+                "request_id": "c6-A-assembly-02-review",
+                "response_path": "research/c6-fullchain-generalization-2026-11-02/runtime/model-artifacts/c6-A-assembly-02-review-response.json",
+                "response_sha256": "f1d2c84ed33197467c8a7564d1d245139158c5a2d88be6f954b3320a57cb39ca",
+                "censored": false
+              }
+            ]
+          },
+          "max": {
+            "value": 31582,
+            "rank": 3,
+            "sources": [
+              {
+                "run_id": "c6-A-assembly-02",
+                "request_id": "c6-A-assembly-02-review",
+                "response_path": "research/c6-fullchain-generalization-2026-11-02/runtime/model-artifacts/c6-A-assembly-02-review-response.json",
+                "response_sha256": "f1d2c84ed33197467c8a7564d1d245139158c5a2d88be6f954b3320a57cb39ca",
+                "censored": false
+              }
+            ]
+          }
+        },
+        "input_tokens": {
+          "n": 3,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": 46696,
+            "rank": 2,
+            "sources": [
+              {
+                "run_id": "c5-assembly-2026-11-01",
+                "request_id": "c5-6-9d62dfef1db1e8096e5c2d8a",
+                "response_path": "research/c5-assembly-2026-11-01/runtime/model-artifacts/c5-6-9d62dfef1db1e8096e5c2d8a-response.json",
+                "response_sha256": "79c6d077be5bb38bd8fe2b2673c05170096a4fab52df81a49bd9fa83cf8281f0",
+                "censored": false
+              }
+            ]
+          },
+          "p90": {
+            "value": 69464,
+            "rank": 3,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-5-b5cefd29ecb4ea5a4332e72e",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-5-b5cefd29ecb4ea5a4332e72e-response.json",
+                "response_sha256": "3c4c16c42182dd11abd28179d5cb2d2195809a000735bc76956915a6415416d6",
+                "censored": false
+              }
+            ]
+          },
+          "max": {
+            "value": 69464,
+            "rank": 3,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-5-b5cefd29ecb4ea5a4332e72e",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-5-b5cefd29ecb4ea5a4332e72e-response.json",
+                "response_sha256": "3c4c16c42182dd11abd28179d5cb2d2195809a000735bc76956915a6415416d6",
+                "censored": false
+              }
+            ]
+          }
+        },
+        "total_tokens": {
+          "n": 3,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": 71152,
+            "rank": 2,
+            "sources": [
+              {
+                "run_id": "c5-assembly-2026-11-01",
+                "request_id": "c5-6-9d62dfef1db1e8096e5c2d8a",
+                "response_path": "research/c5-assembly-2026-11-01/runtime/model-artifacts/c5-6-9d62dfef1db1e8096e5c2d8a-response.json",
+                "response_sha256": "79c6d077be5bb38bd8fe2b2673c05170096a4fab52df81a49bd9fa83cf8281f0",
+                "censored": false
+              }
+            ]
+          },
+          "p90": {
+            "value": 95292,
+            "rank": 3,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-5-b5cefd29ecb4ea5a4332e72e",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-5-b5cefd29ecb4ea5a4332e72e-response.json",
+                "response_sha256": "3c4c16c42182dd11abd28179d5cb2d2195809a000735bc76956915a6415416d6",
+                "censored": false
+              }
+            ]
+          },
+          "max": {
+            "value": 95292,
+            "rank": 3,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-5-b5cefd29ecb4ea5a4332e72e",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-5-b5cefd29ecb4ea5a4332e72e-response.json",
+                "response_sha256": "3c4c16c42182dd11abd28179d5cb2d2195809a000735bc76956915a6415416d6",
+                "censored": false
+              }
+            ]
+          }
+        },
+        "visible_output_tokens": {
+          "n": 3,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": 3900,
+            "rank": 2,
+            "sources": [
+              {
+                "run_id": "c5-assembly-2026-11-01",
+                "request_id": "c5-6-9d62dfef1db1e8096e5c2d8a",
+                "response_path": "research/c5-assembly-2026-11-01/runtime/model-artifacts/c5-6-9d62dfef1db1e8096e5c2d8a-response.json",
+                "response_sha256": "79c6d077be5bb38bd8fe2b2673c05170096a4fab52df81a49bd9fa83cf8281f0",
+                "censored": false
+              }
+            ]
+          },
+          "p90": {
+            "value": 5037,
+            "rank": 3,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-5-b5cefd29ecb4ea5a4332e72e",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-5-b5cefd29ecb4ea5a4332e72e-response.json",
+                "response_sha256": "3c4c16c42182dd11abd28179d5cb2d2195809a000735bc76956915a6415416d6",
+                "censored": false
+              }
+            ]
+          },
+          "max": {
+            "value": 5037,
+            "rank": 3,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-5-b5cefd29ecb4ea5a4332e72e",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-5-b5cefd29ecb4ea5a4332e72e-response.json",
+                "response_sha256": "3c4c16c42182dd11abd28179d5cb2d2195809a000735bc76956915a6415416d6",
+                "censored": false
+              }
+            ]
+          }
+        },
+        "elapsed_ms": {
+          "n": 3,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": 394869,
+            "rank": 2,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-5-b5cefd29ecb4ea5a4332e72e",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-5-b5cefd29ecb4ea5a4332e72e-response.json",
+                "response_sha256": "3c4c16c42182dd11abd28179d5cb2d2195809a000735bc76956915a6415416d6",
+                "censored": false
+              }
+            ]
+          },
+          "p90": {
+            "value": 505625,
+            "rank": 3,
+            "sources": [
+              {
+                "run_id": "c6-A-assembly-02",
+                "request_id": "c6-A-assembly-02-review",
+                "response_path": "research/c6-fullchain-generalization-2026-11-02/runtime/model-artifacts/c6-A-assembly-02-review-response.json",
+                "response_sha256": "f1d2c84ed33197467c8a7564d1d245139158c5a2d88be6f954b3320a57cb39ca",
+                "censored": false
+              }
+            ]
+          },
+          "max": {
+            "value": 505625,
+            "rank": 3,
+            "sources": [
+              {
+                "run_id": "c6-A-assembly-02",
+                "request_id": "c6-A-assembly-02-review",
+                "response_path": "research/c6-fullchain-generalization-2026-11-02/runtime/model-artifacts/c6-A-assembly-02-review-response.json",
+                "response_sha256": "f1d2c84ed33197467c8a7564d1d245139158c5a2d88be6f954b3320a57cb39ca",
+                "censored": false
+              }
+            ]
+          }
+        }
+      },
+      "source_request_ids": [
+        "c5-5-35b7057220578f3786a52a10",
+        "c5-6-9d62dfef1db1e8096e5c2d8a",
+        "c5-second-5-b5cefd29ecb4ea5a4332e72e",
+        "c6-A-assembly-02-review"
+      ]
+    },
+    "revision": {
+      "stage": "revision",
+      "measurement_status": "observed_consumption",
+      "physical_calls": 2,
+      "censored_calls": 0,
+      "config_floor": 12000,
+      "config_floor_provenance": {
+        "config_floor": 12000,
+        "source": "packages/travel_agent/intent_revision_model.py",
+        "source_line": 40,
+        "source_end_line": 47,
+        "source_sha256_before_change": "6b9da7c67a61688c969a0bba5700e81663121d334779bc8991991ac7b9235e2f",
+        "source_excerpt": "            client = AsyncOpenAI(api_key=api_key, base_url='https://api.deepseek.com',\n                                 max_retries=0, http_client=http)\n            model = build_strong_reasoning_model(DeepSeekProvider(openai_client=client))\n            settings = strong_reasoning_settings()\n            if self.max_tokens is not None:\n                if type(self.max_tokens) is not int or not 1 <= self.max_tokens <= 24000:\n                    raise ValueError('Revision generation cap must be at most 24000')\n                settings['max_tokens'] = self.max_tokens",
+        "inherited_default_source": {
+          "path": "packages/travel_agent/strong_reasoning.py",
+          "line": 24,
+          "excerpt": "        tool_choice='auto', top_p=0.95, max_tokens=12000, timeout=TIMEOUT_SECONDS)"
+        }
+      },
+      "recommended_max_tokens": 12000,
+      "p90_plus_margin": 7000,
+      "margin_fraction": 0.25,
+      "round_up_multiple": 1000,
+      "baseline_floor": 12000,
+      "basis": "max(recorded_config_floor, ceil(observed_output_p90 * 1.25 / 1000) * 1000)",
+      "statistics": {
+        "reasoning_tokens": {
+          "n": 2,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": 3898,
+            "rank": 1,
+            "sources": [
+              {
+                "run_id": "c5-assembly-2026-11-01",
+                "request_id": "c5-4-1a70646c23bc0c76e996851a",
+                "response_path": "research/c5-assembly-2026-11-01/runtime/model-artifacts/c5-4-1a70646c23bc0c76e996851a-response.json",
+                "response_sha256": "40d30fa35b294fba3424c74afbfff624656c27d45e614af453c301e8ff80f4af",
+                "censored": false
+              }
+            ]
+          },
+          "p90": {
+            "value": 4217,
+            "rank": 2,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-4-745b966f0499cf77d1f01e67",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-4-745b966f0499cf77d1f01e67-response.json",
+                "response_sha256": "957f8e83e38df75adb475e1ebdd6f07dcee8838a1d7483bcb8d548fbf38f2f70",
+                "censored": false
+              }
+            ]
+          },
+          "max": {
+            "value": 4217,
+            "rank": 2,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-4-745b966f0499cf77d1f01e67",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-4-745b966f0499cf77d1f01e67-response.json",
+                "response_sha256": "957f8e83e38df75adb475e1ebdd6f07dcee8838a1d7483bcb8d548fbf38f2f70",
+                "censored": false
+              }
+            ]
+          }
+        },
+        "output_tokens": {
+          "n": 2,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": 4530,
+            "rank": 1,
+            "sources": [
+              {
+                "run_id": "c5-assembly-2026-11-01",
+                "request_id": "c5-4-1a70646c23bc0c76e996851a",
+                "response_path": "research/c5-assembly-2026-11-01/runtime/model-artifacts/c5-4-1a70646c23bc0c76e996851a-response.json",
+                "response_sha256": "40d30fa35b294fba3424c74afbfff624656c27d45e614af453c301e8ff80f4af",
+                "censored": false
+              }
+            ]
+          },
+          "p90": {
+            "value": 4873,
+            "rank": 2,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-4-745b966f0499cf77d1f01e67",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-4-745b966f0499cf77d1f01e67-response.json",
+                "response_sha256": "957f8e83e38df75adb475e1ebdd6f07dcee8838a1d7483bcb8d548fbf38f2f70",
+                "censored": false
+              }
+            ]
+          },
+          "max": {
+            "value": 4873,
+            "rank": 2,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-4-745b966f0499cf77d1f01e67",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-4-745b966f0499cf77d1f01e67-response.json",
+                "response_sha256": "957f8e83e38df75adb475e1ebdd6f07dcee8838a1d7483bcb8d548fbf38f2f70",
+                "censored": false
+              }
+            ]
+          }
+        },
+        "input_tokens": {
+          "n": 2,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": 5927,
+            "rank": 1,
+            "sources": [
+              {
+                "run_id": "c5-assembly-2026-11-01",
+                "request_id": "c5-4-1a70646c23bc0c76e996851a",
+                "response_path": "research/c5-assembly-2026-11-01/runtime/model-artifacts/c5-4-1a70646c23bc0c76e996851a-response.json",
+                "response_sha256": "40d30fa35b294fba3424c74afbfff624656c27d45e614af453c301e8ff80f4af",
+                "censored": false
+              }
+            ]
+          },
+          "p90": {
+            "value": 12856,
+            "rank": 2,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-4-745b966f0499cf77d1f01e67",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-4-745b966f0499cf77d1f01e67-response.json",
+                "response_sha256": "957f8e83e38df75adb475e1ebdd6f07dcee8838a1d7483bcb8d548fbf38f2f70",
+                "censored": false
+              }
+            ]
+          },
+          "max": {
+            "value": 12856,
+            "rank": 2,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-4-745b966f0499cf77d1f01e67",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-4-745b966f0499cf77d1f01e67-response.json",
+                "response_sha256": "957f8e83e38df75adb475e1ebdd6f07dcee8838a1d7483bcb8d548fbf38f2f70",
+                "censored": false
+              }
+            ]
+          }
+        },
+        "total_tokens": {
+          "n": 2,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": 10457,
+            "rank": 1,
+            "sources": [
+              {
+                "run_id": "c5-assembly-2026-11-01",
+                "request_id": "c5-4-1a70646c23bc0c76e996851a",
+                "response_path": "research/c5-assembly-2026-11-01/runtime/model-artifacts/c5-4-1a70646c23bc0c76e996851a-response.json",
+                "response_sha256": "40d30fa35b294fba3424c74afbfff624656c27d45e614af453c301e8ff80f4af",
+                "censored": false
+              }
+            ]
+          },
+          "p90": {
+            "value": 17729,
+            "rank": 2,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-4-745b966f0499cf77d1f01e67",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-4-745b966f0499cf77d1f01e67-response.json",
+                "response_sha256": "957f8e83e38df75adb475e1ebdd6f07dcee8838a1d7483bcb8d548fbf38f2f70",
+                "censored": false
+              }
+            ]
+          },
+          "max": {
+            "value": 17729,
+            "rank": 2,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-4-745b966f0499cf77d1f01e67",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-4-745b966f0499cf77d1f01e67-response.json",
+                "response_sha256": "957f8e83e38df75adb475e1ebdd6f07dcee8838a1d7483bcb8d548fbf38f2f70",
+                "censored": false
+              }
+            ]
+          }
+        },
+        "visible_output_tokens": {
+          "n": 2,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": 632,
+            "rank": 1,
+            "sources": [
+              {
+                "run_id": "c5-assembly-2026-11-01",
+                "request_id": "c5-4-1a70646c23bc0c76e996851a",
+                "response_path": "research/c5-assembly-2026-11-01/runtime/model-artifacts/c5-4-1a70646c23bc0c76e996851a-response.json",
+                "response_sha256": "40d30fa35b294fba3424c74afbfff624656c27d45e614af453c301e8ff80f4af",
+                "censored": false
+              }
+            ]
+          },
+          "p90": {
+            "value": 656,
+            "rank": 2,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-4-745b966f0499cf77d1f01e67",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-4-745b966f0499cf77d1f01e67-response.json",
+                "response_sha256": "957f8e83e38df75adb475e1ebdd6f07dcee8838a1d7483bcb8d548fbf38f2f70",
+                "censored": false
+              }
+            ]
+          },
+          "max": {
+            "value": 656,
+            "rank": 2,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-4-745b966f0499cf77d1f01e67",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-4-745b966f0499cf77d1f01e67-response.json",
+                "response_sha256": "957f8e83e38df75adb475e1ebdd6f07dcee8838a1d7483bcb8d548fbf38f2f70",
+                "censored": false
+              }
+            ]
+          }
+        },
+        "elapsed_ms": {
+          "n": 2,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": 57006,
+            "rank": 1,
+            "sources": [
+              {
+                "run_id": "c5-assembly-2026-11-01",
+                "request_id": "c5-4-1a70646c23bc0c76e996851a",
+                "response_path": "research/c5-assembly-2026-11-01/runtime/model-artifacts/c5-4-1a70646c23bc0c76e996851a-response.json",
+                "response_sha256": "40d30fa35b294fba3424c74afbfff624656c27d45e614af453c301e8ff80f4af",
+                "censored": false
+              }
+            ]
+          },
+          "p90": {
+            "value": 72554,
+            "rank": 2,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-4-745b966f0499cf77d1f01e67",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-4-745b966f0499cf77d1f01e67-response.json",
+                "response_sha256": "957f8e83e38df75adb475e1ebdd6f07dcee8838a1d7483bcb8d548fbf38f2f70",
+                "censored": false
+              }
+            ]
+          },
+          "max": {
+            "value": 72554,
+            "rank": 2,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-4-745b966f0499cf77d1f01e67",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-4-745b966f0499cf77d1f01e67-response.json",
+                "response_sha256": "957f8e83e38df75adb475e1ebdd6f07dcee8838a1d7483bcb8d548fbf38f2f70",
+                "censored": false
+              }
+            ]
+          }
+        }
+      },
+      "uncensored_statistics": {
+        "reasoning_tokens": {
+          "n": 2,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": 3898,
+            "rank": 1,
+            "sources": [
+              {
+                "run_id": "c5-assembly-2026-11-01",
+                "request_id": "c5-4-1a70646c23bc0c76e996851a",
+                "response_path": "research/c5-assembly-2026-11-01/runtime/model-artifacts/c5-4-1a70646c23bc0c76e996851a-response.json",
+                "response_sha256": "40d30fa35b294fba3424c74afbfff624656c27d45e614af453c301e8ff80f4af",
+                "censored": false
+              }
+            ]
+          },
+          "p90": {
+            "value": 4217,
+            "rank": 2,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-4-745b966f0499cf77d1f01e67",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-4-745b966f0499cf77d1f01e67-response.json",
+                "response_sha256": "957f8e83e38df75adb475e1ebdd6f07dcee8838a1d7483bcb8d548fbf38f2f70",
+                "censored": false
+              }
+            ]
+          },
+          "max": {
+            "value": 4217,
+            "rank": 2,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-4-745b966f0499cf77d1f01e67",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-4-745b966f0499cf77d1f01e67-response.json",
+                "response_sha256": "957f8e83e38df75adb475e1ebdd6f07dcee8838a1d7483bcb8d548fbf38f2f70",
+                "censored": false
+              }
+            ]
+          }
+        },
+        "output_tokens": {
+          "n": 2,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": 4530,
+            "rank": 1,
+            "sources": [
+              {
+                "run_id": "c5-assembly-2026-11-01",
+                "request_id": "c5-4-1a70646c23bc0c76e996851a",
+                "response_path": "research/c5-assembly-2026-11-01/runtime/model-artifacts/c5-4-1a70646c23bc0c76e996851a-response.json",
+                "response_sha256": "40d30fa35b294fba3424c74afbfff624656c27d45e614af453c301e8ff80f4af",
+                "censored": false
+              }
+            ]
+          },
+          "p90": {
+            "value": 4873,
+            "rank": 2,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-4-745b966f0499cf77d1f01e67",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-4-745b966f0499cf77d1f01e67-response.json",
+                "response_sha256": "957f8e83e38df75adb475e1ebdd6f07dcee8838a1d7483bcb8d548fbf38f2f70",
+                "censored": false
+              }
+            ]
+          },
+          "max": {
+            "value": 4873,
+            "rank": 2,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-4-745b966f0499cf77d1f01e67",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-4-745b966f0499cf77d1f01e67-response.json",
+                "response_sha256": "957f8e83e38df75adb475e1ebdd6f07dcee8838a1d7483bcb8d548fbf38f2f70",
+                "censored": false
+              }
+            ]
+          }
+        },
+        "input_tokens": {
+          "n": 2,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": 5927,
+            "rank": 1,
+            "sources": [
+              {
+                "run_id": "c5-assembly-2026-11-01",
+                "request_id": "c5-4-1a70646c23bc0c76e996851a",
+                "response_path": "research/c5-assembly-2026-11-01/runtime/model-artifacts/c5-4-1a70646c23bc0c76e996851a-response.json",
+                "response_sha256": "40d30fa35b294fba3424c74afbfff624656c27d45e614af453c301e8ff80f4af",
+                "censored": false
+              }
+            ]
+          },
+          "p90": {
+            "value": 12856,
+            "rank": 2,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-4-745b966f0499cf77d1f01e67",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-4-745b966f0499cf77d1f01e67-response.json",
+                "response_sha256": "957f8e83e38df75adb475e1ebdd6f07dcee8838a1d7483bcb8d548fbf38f2f70",
+                "censored": false
+              }
+            ]
+          },
+          "max": {
+            "value": 12856,
+            "rank": 2,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-4-745b966f0499cf77d1f01e67",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-4-745b966f0499cf77d1f01e67-response.json",
+                "response_sha256": "957f8e83e38df75adb475e1ebdd6f07dcee8838a1d7483bcb8d548fbf38f2f70",
+                "censored": false
+              }
+            ]
+          }
+        },
+        "total_tokens": {
+          "n": 2,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": 10457,
+            "rank": 1,
+            "sources": [
+              {
+                "run_id": "c5-assembly-2026-11-01",
+                "request_id": "c5-4-1a70646c23bc0c76e996851a",
+                "response_path": "research/c5-assembly-2026-11-01/runtime/model-artifacts/c5-4-1a70646c23bc0c76e996851a-response.json",
+                "response_sha256": "40d30fa35b294fba3424c74afbfff624656c27d45e614af453c301e8ff80f4af",
+                "censored": false
+              }
+            ]
+          },
+          "p90": {
+            "value": 17729,
+            "rank": 2,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-4-745b966f0499cf77d1f01e67",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-4-745b966f0499cf77d1f01e67-response.json",
+                "response_sha256": "957f8e83e38df75adb475e1ebdd6f07dcee8838a1d7483bcb8d548fbf38f2f70",
+                "censored": false
+              }
+            ]
+          },
+          "max": {
+            "value": 17729,
+            "rank": 2,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-4-745b966f0499cf77d1f01e67",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-4-745b966f0499cf77d1f01e67-response.json",
+                "response_sha256": "957f8e83e38df75adb475e1ebdd6f07dcee8838a1d7483bcb8d548fbf38f2f70",
+                "censored": false
+              }
+            ]
+          }
+        },
+        "visible_output_tokens": {
+          "n": 2,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": 632,
+            "rank": 1,
+            "sources": [
+              {
+                "run_id": "c5-assembly-2026-11-01",
+                "request_id": "c5-4-1a70646c23bc0c76e996851a",
+                "response_path": "research/c5-assembly-2026-11-01/runtime/model-artifacts/c5-4-1a70646c23bc0c76e996851a-response.json",
+                "response_sha256": "40d30fa35b294fba3424c74afbfff624656c27d45e614af453c301e8ff80f4af",
+                "censored": false
+              }
+            ]
+          },
+          "p90": {
+            "value": 656,
+            "rank": 2,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-4-745b966f0499cf77d1f01e67",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-4-745b966f0499cf77d1f01e67-response.json",
+                "response_sha256": "957f8e83e38df75adb475e1ebdd6f07dcee8838a1d7483bcb8d548fbf38f2f70",
+                "censored": false
+              }
+            ]
+          },
+          "max": {
+            "value": 656,
+            "rank": 2,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-4-745b966f0499cf77d1f01e67",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-4-745b966f0499cf77d1f01e67-response.json",
+                "response_sha256": "957f8e83e38df75adb475e1ebdd6f07dcee8838a1d7483bcb8d548fbf38f2f70",
+                "censored": false
+              }
+            ]
+          }
+        },
+        "elapsed_ms": {
+          "n": 2,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": 57006,
+            "rank": 1,
+            "sources": [
+              {
+                "run_id": "c5-assembly-2026-11-01",
+                "request_id": "c5-4-1a70646c23bc0c76e996851a",
+                "response_path": "research/c5-assembly-2026-11-01/runtime/model-artifacts/c5-4-1a70646c23bc0c76e996851a-response.json",
+                "response_sha256": "40d30fa35b294fba3424c74afbfff624656c27d45e614af453c301e8ff80f4af",
+                "censored": false
+              }
+            ]
+          },
+          "p90": {
+            "value": 72554,
+            "rank": 2,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-4-745b966f0499cf77d1f01e67",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-4-745b966f0499cf77d1f01e67-response.json",
+                "response_sha256": "957f8e83e38df75adb475e1ebdd6f07dcee8838a1d7483bcb8d548fbf38f2f70",
+                "censored": false
+              }
+            ]
+          },
+          "max": {
+            "value": 72554,
+            "rank": 2,
+            "sources": [
+              {
+                "run_id": "c5-assembly-second-2026-11-02",
+                "request_id": "c5-second-4-745b966f0499cf77d1f01e67",
+                "response_path": "research/c5-assembly-second-2026-11-02/runtime/model-artifacts/c5-second-4-745b966f0499cf77d1f01e67-response.json",
+                "response_sha256": "957f8e83e38df75adb475e1ebdd6f07dcee8838a1d7483bcb8d548fbf38f2f70",
+                "censored": false
+              }
+            ]
+          }
+        }
+      },
+      "source_request_ids": [
+        "c5-4-1a70646c23bc0c76e996851a",
+        "c5-second-4-745b966f0499cf77d1f01e67"
+      ]
+    },
+    "comparison": {
+      "stage": "comparison",
+      "measurement_status": "unmeasured",
+      "physical_calls": 0,
+      "censored_calls": 0,
+      "config_floor": 12000,
+      "config_floor_provenance": {
+        "config_floor": 12000,
+        "source": "packages/travel_agent/comparison_card_model.py",
+        "source_line": 172,
+        "source_end_line": 176,
+        "source_sha256_before_change": "f0058323eb39221c51f609eaecadbb88963e592b0670931ab28eb3fe1382b10e",
+        "source_excerpt": "            provider = DeepSeekProvider(openai_client=client)\n            model = build_strong_reasoning_model(provider)\n            agent = Agent(model, output_type=boundary_output_type(ComparisonCard, request_id=request_id, artifacts=artifacts), retries=0,\n                          system_prompt=SYSTEM_PROMPT,\n                          model_settings=strong_reasoning_settings())",
+        "inherited_default_source": {
+          "path": "packages/travel_agent/strong_reasoning.py",
+          "line": 24,
+          "excerpt": "        tool_choice='auto', top_p=0.95, max_tokens=12000, timeout=TIMEOUT_SECONDS)"
+        }
+      },
+      "recommended_max_tokens": 12000,
+      "p90_plus_margin": null,
+      "margin_fraction": null,
+      "round_up_multiple": null,
+      "baseline_floor": 12000,
+      "basis": "recorded_config_floor_only_no_C5_C6_measurement",
+      "statistics": {
+        "reasoning_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "output_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "input_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "total_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "visible_output_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "elapsed_ms": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        }
+      },
+      "uncensored_statistics": {
+        "reasoning_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "output_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "input_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "total_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "visible_output_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "elapsed_ms": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        }
+      },
+      "source_request_ids": []
+    },
+    "intent_questions": {
+      "stage": "intent_questions",
+      "measurement_status": "unmeasured",
+      "physical_calls": 0,
+      "censored_calls": 0,
+      "config_floor": 12000,
+      "config_floor_provenance": {
+        "config_floor": 12000,
+        "source": "packages/travel_agent/intent_questions_model.py",
+        "source_line": 102,
+        "source_end_line": 106,
+        "source_sha256_before_change": "1919f687023b099a7746e8a46853e7a277dbdca4ce6f263cfbd3c6c923828dc9",
+        "source_excerpt": "            client = AsyncOpenAI(api_key=api_key, base_url='https://api.deepseek.com',\n                                 max_retries=0, http_client=http)\n            model = build_strong_reasoning_model(DeepSeekProvider(openai_client=client))\n            agent = Agent(model, output_type=boundary_output_type(IntentQuestions, request_id=request_id, artifacts=artifacts), retries=0,\n                          system_prompt=SYSTEM_PROMPT, model_settings=strong_reasoning_settings())",
+        "inherited_default_source": {
+          "path": "packages/travel_agent/strong_reasoning.py",
+          "line": 24,
+          "excerpt": "        tool_choice='auto', top_p=0.95, max_tokens=12000, timeout=TIMEOUT_SECONDS)"
+        }
+      },
+      "recommended_max_tokens": 12000,
+      "p90_plus_margin": null,
+      "margin_fraction": null,
+      "round_up_multiple": null,
+      "baseline_floor": 12000,
+      "basis": "recorded_config_floor_only_no_C5_C6_measurement",
+      "statistics": {
+        "reasoning_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "output_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "input_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "total_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "visible_output_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "elapsed_ms": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        }
+      },
+      "uncensored_statistics": {
+        "reasoning_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "output_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "input_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "total_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "visible_output_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "elapsed_ms": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        }
+      },
+      "source_request_ids": []
+    },
+    "supply_planner": {
+      "stage": "supply_planner",
+      "measurement_status": "unmeasured",
+      "physical_calls": 0,
+      "censored_calls": 0,
+      "config_floor": 12000,
+      "config_floor_provenance": {
+        "config_floor": 12000,
+        "source": "packages/travel_agent/supply_layered_plan.py",
+        "source_line": 119,
+        "source_end_line": 123,
+        "source_sha256_before_change": "3f072a6b18218d2a9d4c53f8d0d9c5160d672a7b94e0093d17101025b7d1368b",
+        "source_excerpt": "                return recorded_model_output(canonical, LayeredPlan, request_id=request_id,\n                                             artifacts=artifacts, preserve_raw=False)\n\n            output_type = Annotated[LayeredPlan, BeforeValidator(normalize_output)]\n            agent = Agent(model, output_type=output_type, retries=0, system_prompt=SYSTEM_PROMPT,",
+        "inherited_default_source": {
+          "path": "packages/travel_agent/strong_reasoning.py",
+          "line": 24,
+          "excerpt": "        tool_choice='auto', top_p=0.95, max_tokens=12000, timeout=TIMEOUT_SECONDS)"
+        }
+      },
+      "recommended_max_tokens": 12000,
+      "p90_plus_margin": null,
+      "margin_fraction": null,
+      "round_up_multiple": null,
+      "baseline_floor": 12000,
+      "basis": "recorded_config_floor_only_no_C5_C6_measurement",
+      "statistics": {
+        "reasoning_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "output_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "input_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "total_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "visible_output_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "elapsed_ms": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        }
+      },
+      "uncensored_statistics": {
+        "reasoning_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "output_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "input_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "total_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "visible_output_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "elapsed_ms": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        }
+      },
+      "source_request_ids": []
+    },
+    "supply_candidates": {
+      "stage": "supply_candidates",
+      "measurement_status": "unmeasured",
+      "physical_calls": 0,
+      "censored_calls": 0,
+      "config_floor": 24000,
+      "config_floor_provenance": {
+        "config_floor": 24000,
+        "source": "packages/travel_agent/supply_candidates_model.py",
+        "source_line": 28,
+        "source_end_line": 30,
+        "source_sha256_before_change": "ecf77c357d90f3ad20b827f342de4a148d916fbe9a22631dc0a17dafa4247205",
+        "source_excerpt": "\ndef candidate_reasoning_settings():\n    \"\"\"Leave shared planning/C1 controls intact; reserve room for candidate output.\"\"\""
+      },
+      "recommended_max_tokens": 24000,
+      "p90_plus_margin": null,
+      "margin_fraction": null,
+      "round_up_multiple": null,
+      "baseline_floor": 24000,
+      "basis": "recorded_config_floor_only_no_C5_C6_measurement",
+      "statistics": {
+        "reasoning_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "output_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "input_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "total_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "visible_output_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "elapsed_ms": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        }
+      },
+      "uncensored_statistics": {
+        "reasoning_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "output_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "input_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "total_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "visible_output_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "elapsed_ms": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        }
+      },
+      "source_request_ids": []
+    },
+    "supply_source_identity": {
+      "stage": "supply_source_identity",
+      "measurement_status": "unmeasured",
+      "physical_calls": 0,
+      "censored_calls": 0,
+      "config_floor": 24000,
+      "config_floor_provenance": {
+        "config_floor": 24000,
+        "source": "packages/travel_agent/supply_source_identity.py",
+        "source_line": 325,
+        "source_end_line": 327,
+        "source_sha256_before_change": "9afb6f500f8ada03a19f76c3d211311af3ef188616cc4fcf6c0105e2618d41da",
+        "source_excerpt": "                                             artifacts=artifacts, preserve_raw=False)\n\n            output_type = Annotated[SourceIdentityBatch, BeforeValidator(preserve_raw)]"
+      },
+      "recommended_max_tokens": 24000,
+      "p90_plus_margin": null,
+      "margin_fraction": null,
+      "round_up_multiple": null,
+      "baseline_floor": 24000,
+      "basis": "recorded_config_floor_only_no_C5_C6_measurement",
+      "statistics": {
+        "reasoning_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "output_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "input_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "total_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "visible_output_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "elapsed_ms": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        }
+      },
+      "uncensored_statistics": {
+        "reasoning_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "output_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "input_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "total_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "visible_output_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "elapsed_ms": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        }
+      },
+      "source_request_ids": []
+    },
+    "supply_claim_review": {
+      "stage": "supply_claim_review",
+      "measurement_status": "unmeasured",
+      "physical_calls": 0,
+      "censored_calls": 0,
+      "config_floor": 6000,
+      "config_floor_provenance": {
+        "config_floor": 6000,
+        "source": "packages/travel_agent/supply_claim_review.py",
+        "source_line": 83,
+        "source_end_line": 88,
+        "source_sha256_before_change": "6c48e5abdc89db86d631572b7e7e38255b16da6f1bb02d289a9ce31e21a2333e",
+        "source_excerpt": "        private_json(artifacts / f'{request_id}-selection.json', payload)\n        usage, row = {'usage_complete': True}, {}\n        def caller(messages, **options):\n            return asyncio.run(self._call(messages, options, request_id, artifacts))\n        raw = _invoke(caller, REVIEW_PROMPT, payload, usage, row, 'critic',\n                      lambda value: private_json(artifacts / f'{request_id}-usage.json', value),",
+        "inherited_default_source": {
+          "path": "packages/travel_agent/writer_critic.py",
+          "line": 489,
+          "excerpt": "max_tokens=3000 if phase == scope else 16000 if phase == writer else 6000; phase=critic"
+        }
+      },
+      "recommended_max_tokens": 6000,
+      "p90_plus_margin": null,
+      "margin_fraction": null,
+      "round_up_multiple": null,
+      "baseline_floor": 6000,
+      "basis": "recorded_config_floor_only_no_C5_C6_measurement",
+      "statistics": {
+        "reasoning_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "output_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "input_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "total_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "visible_output_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "elapsed_ms": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        }
+      },
+      "uncensored_statistics": {
+        "reasoning_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "output_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "input_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "total_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "visible_output_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "elapsed_ms": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        }
+      },
+      "source_request_ids": []
+    },
+    "writer": {
+      "stage": "writer",
+      "measurement_status": "unmeasured",
+      "physical_calls": 0,
+      "censored_calls": 0,
+      "config_floor": 16000,
+      "config_floor_provenance": {
+        "config_floor": 16000,
+        "source": "packages/travel_agent/writer_critic.py",
+        "source_line": 489,
+        "source_end_line": 494,
+        "source_sha256_before_change": "0f861f5576c4fb14b08f4499362921df866562c1e9df1c6f3b9cc71b808d12fa",
+        "source_excerpt": "        raw, metrics = caller(request_messages, max_tokens=3000 if phase == 'scope' else\n                              16000 if phase == 'writer' else 6000,\n                              # The structured wrapper reserves up to 25% for\n                              # repair/fallback inside its own overall deadline.\n                              timeout=min(phase_timeout, remaining / 1.25) if remaining is not None else phase_timeout,\n                              reasoning_effort='none' if phase == 'scope' else 'low', **options)"
+      },
+      "recommended_max_tokens": 16000,
+      "p90_plus_margin": null,
+      "margin_fraction": null,
+      "round_up_multiple": null,
+      "baseline_floor": 16000,
+      "basis": "recorded_config_floor_only_no_C5_C6_measurement",
+      "statistics": {
+        "reasoning_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "output_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "input_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "total_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "visible_output_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "elapsed_ms": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        }
+      },
+      "uncensored_statistics": {
+        "reasoning_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "output_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "input_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "total_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "visible_output_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "elapsed_ms": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        }
+      },
+      "source_request_ids": []
+    },
+    "scope": {
+      "stage": "scope",
+      "measurement_status": "unmeasured",
+      "physical_calls": 0,
+      "censored_calls": 0,
+      "config_floor": 3000,
+      "config_floor_provenance": {
+        "config_floor": 3000,
+        "source": "packages/travel_agent/writer_critic.py",
+        "source_line": 489,
+        "source_end_line": 494,
+        "source_sha256_before_change": "0f861f5576c4fb14b08f4499362921df866562c1e9df1c6f3b9cc71b808d12fa",
+        "source_excerpt": "        raw, metrics = caller(request_messages, max_tokens=3000 if phase == 'scope' else\n                              16000 if phase == 'writer' else 6000,\n                              # The structured wrapper reserves up to 25% for\n                              # repair/fallback inside its own overall deadline.\n                              timeout=min(phase_timeout, remaining / 1.25) if remaining is not None else phase_timeout,\n                              reasoning_effort='none' if phase == 'scope' else 'low', **options)"
+      },
+      "recommended_max_tokens": 3000,
+      "p90_plus_margin": null,
+      "margin_fraction": null,
+      "round_up_multiple": null,
+      "baseline_floor": 3000,
+      "basis": "recorded_config_floor_only_no_C5_C6_measurement",
+      "statistics": {
+        "reasoning_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "output_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "input_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "total_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "visible_output_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "elapsed_ms": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        }
+      },
+      "uncensored_statistics": {
+        "reasoning_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "output_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "input_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "total_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "visible_output_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "elapsed_ms": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        }
+      },
+      "source_request_ids": []
+    },
+    "critic": {
+      "stage": "critic",
+      "measurement_status": "unmeasured",
+      "physical_calls": 0,
+      "censored_calls": 0,
+      "config_floor": 6000,
+      "config_floor_provenance": {
+        "config_floor": 6000,
+        "source": "packages/travel_agent/writer_critic.py",
+        "source_line": 489,
+        "source_end_line": 494,
+        "source_sha256_before_change": "0f861f5576c4fb14b08f4499362921df866562c1e9df1c6f3b9cc71b808d12fa",
+        "source_excerpt": "        raw, metrics = caller(request_messages, max_tokens=3000 if phase == 'scope' else\n                              16000 if phase == 'writer' else 6000,\n                              # The structured wrapper reserves up to 25% for\n                              # repair/fallback inside its own overall deadline.\n                              timeout=min(phase_timeout, remaining / 1.25) if remaining is not None else phase_timeout,\n                              reasoning_effort='none' if phase == 'scope' else 'low', **options)"
+      },
+      "recommended_max_tokens": 6000,
+      "p90_plus_margin": null,
+      "margin_fraction": null,
+      "round_up_multiple": null,
+      "baseline_floor": 6000,
+      "basis": "recorded_config_floor_only_no_C5_C6_measurement",
+      "statistics": {
+        "reasoning_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "output_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "input_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "total_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "visible_output_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "elapsed_ms": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        }
+      },
+      "uncensored_statistics": {
+        "reasoning_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "output_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "input_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "total_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "visible_output_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "elapsed_ms": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        }
+      },
+      "source_request_ids": []
+    },
+    "json": {
+      "stage": "json",
+      "measurement_status": "unmeasured",
+      "physical_calls": 0,
+      "censored_calls": 0,
+      "config_floor": 6500,
+      "config_floor_provenance": {
+        "config_floor": 6500,
+        "source": "packages/travel_agent/model.py",
+        "source_line": 632,
+        "source_end_line": 634,
+        "source_sha256_before_change": "39db35e4b177b121039c522070b4fd9709e2b2b3552d79b8a8c99d58c92f63f4",
+        "source_excerpt": "\ndef call_json(messages, *, vision=False, max_tokens=6500, timeout=90, reasoning_effort=None,\n              response_schema=None, model_role=None, stream_observability=False,"
+      },
+      "recommended_max_tokens": 6500,
+      "p90_plus_margin": null,
+      "margin_fraction": null,
+      "round_up_multiple": null,
+      "baseline_floor": 6500,
+      "basis": "recorded_config_floor_only_no_C5_C6_measurement",
+      "statistics": {
+        "reasoning_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "output_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "input_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "total_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "visible_output_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "elapsed_ms": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        }
+      },
+      "uncensored_statistics": {
+        "reasoning_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "output_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "input_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "total_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "visible_output_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "elapsed_ms": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        }
+      },
+      "source_request_ids": []
+    },
+    "strong_reasoning": {
+      "stage": "strong_reasoning",
+      "measurement_status": "unmeasured",
+      "physical_calls": 0,
+      "censored_calls": 0,
+      "config_floor": 12000,
+      "config_floor_provenance": {
+        "config_floor": 12000,
+        "source": "packages/travel_agent/strong_reasoning.py",
+        "source_line": 20,
+        "source_end_line": 24,
+        "source_sha256_before_change": "f96babec4174538c0ea6b3b3cd92b22bbf8a23a97adf84dcea87e273a6cbdb73",
+        "source_excerpt": "def strong_reasoning_settings() -> OpenAIChatModelSettings:\n    # DeepSeek requires its explicit body toggle and native max_tokens field.\n    return OpenAIChatModelSettings(\n        thinking=REASONING_EFFORT, extra_body={'thinking': {'type': 'enabled'}},\n        tool_choice='auto', top_p=0.95, max_tokens=12000, timeout=TIMEOUT_SECONDS)"
+      },
+      "recommended_max_tokens": 12000,
+      "p90_plus_margin": null,
+      "margin_fraction": null,
+      "round_up_multiple": null,
+      "baseline_floor": 12000,
+      "basis": "recorded_config_floor_only_no_C5_C6_measurement",
+      "statistics": {
+        "reasoning_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "output_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "input_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "total_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "visible_output_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "elapsed_ms": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        }
+      },
+      "uncensored_statistics": {
+        "reasoning_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "output_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "input_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "total_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "visible_output_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "elapsed_ms": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        }
+      },
+      "source_request_ids": []
+    },
+    "native_tools": {
+      "stage": "native_tools",
+      "measurement_status": "unmeasured",
+      "physical_calls": 0,
+      "censored_calls": 0,
+      "config_floor": 2048,
+      "config_floor_provenance": {
+        "config_floor": 2048,
+        "source": "packages/travel_agent/autopilot_model.py",
+        "source_line": 229,
+        "source_end_line": 231,
+        "source_sha256_before_change": "baeb93e4b4904e854bb377abc1c00296566f65c0ff244ccd2aa2339029482a48",
+        "source_excerpt": "def call_tools(messages, *, tools, timeout=30, max_tokens=2048,\n               max_input_tokens=32768, max_input_bytes=MAX_REQUEST_BYTES,\n               reasoning_effort=None, transport=None, config=None, measure=None):",
+        "measurement_status": "unmeasured",
+        "note": "Transport default only; explicit per-call limits are operation configuration and are not measured by C5/C6."
+      },
+      "recommended_max_tokens": 2048,
+      "p90_plus_margin": null,
+      "margin_fraction": null,
+      "round_up_multiple": null,
+      "baseline_floor": 2048,
+      "basis": "recorded_config_floor_only_no_C5_C6_measurement",
+      "statistics": {
+        "reasoning_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "output_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "input_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "total_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "visible_output_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "elapsed_ms": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        }
+      },
+      "uncensored_statistics": {
+        "reasoning_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "output_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "input_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "total_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "visible_output_tokens": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        },
+        "elapsed_ms": {
+          "n": 0,
+          "unknown": 0,
+          "censored_observations": 0,
+          "p50": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "p90": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          },
+          "max": {
+            "value": null,
+            "rank": null,
+            "sources": []
+          }
+        }
+      },
+      "source_request_ids": []
+    }
+  }
+}

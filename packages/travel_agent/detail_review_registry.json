@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "by_content_sha256": {
+    "89da451f42cad59ba2de2bb9bde8168b3b61862c7e8959aeef2102019c7f9ca5": {
+      "source_status": "withdrawn",
+      "withdrawal_reason": "All 31 timetable fragments are unusable. This exact source is excluded from revision and answer evidence until a separately verified replacement is available.",
+      "blocked_fields": ["time"],
+      "reviewed_at": "2026-10-11",
+      "reason_codes": [
+        "source_version_mismatch",
+        "historical_pdf_not_acquired",
+        "historical_cell_coordinates_missing",
+        "event_role_unresolved"
+      ],
+      "reason": "The current primary PDF is a different revision and cannot verify the historical fragments. Their direction, day type, station binding and event role remain unknown. Re-extraction cannot establish the missing source semantics.",
+      "evidence": {
+        "audit_ref": "research/detail-optimize-2026-10-11/x60/field-audit.json",
+        "audit_summary_ref": "research/detail-optimize-2026-10-11/x60/AUDIT.md",
+        "source_sha256": "b58b6eefb090b66d8d94900127245ca690a4beb5883c52e3562e2faa6b8debf9",
+        "fixture_bytes_sha256": "b9b391f18d52d74681dbc1509ac02fc55d56549b9cedf399367a132ca39ad208",
+        "comparison_role": "diagnostic_only_not_historical_verification"
+      }
+    }
+  }
+}
