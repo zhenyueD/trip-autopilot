@@ -33,14 +33,25 @@ The first-eye layer is at most 3 pages — why this design, a real map with the 
 
 | Path | What it is |
 |---|---|
-| `packages/travel_agent/` | The single-session agent: drafting, tool-checked facts, ledger, revision, completeness gate |
+| `core/packages-core.tar.gz.enc` | The engine, encrypted (see below): the single-session agent — drafting, tool-checked facts, evidence ledger, revision, completeness gate — plus the earlier research/verification pipeline |
 | `apps/v1/` | The product frontend (conversation, progress, handbook, revision receipt) |
-| `research/manus-frontend-baseline-2026-11-06/` | An adopted open-source-grade frontend shell, rewired to the live backend |
 | `tools/` | Service entry points (API on :7392), PDF rendering |
+| `tests/` | Test suites for the agent, API, document and presentation layers |
 | `docs/` | Product contracts, battle reports, acceptance records |
 | `samples/` | Real outputs: a West Lake winter handbook, a 9-day South of France handbook (3-page first-eye layer + full edition) |
 
+### The core is encrypted — on purpose
+
+The interface, contracts, acceptance records, tests and real outputs in this repo are open. The engine source itself is the author's working IP, so it ships as an AES-256-CBC (PBKDF2) encrypted archive: `core/packages-core.tar.gz.enc`. The passphrase is shared separately by the author with authorized reviewers and testers. With it:
+
+```bash
+openssl enc -d -aes-256-cbc -pbkdf2 -in core/packages-core.tar.gz.enc -out core.tar.gz
+tar -xzf core.tar.gz   # restores packages/
+```
+
 ## Run it
+
+(First decrypt the core archive as shown above, so `packages/` exists.)
 
 ```bash
 # backend (single-session agent service)

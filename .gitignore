@@ -5,3 +5,7 @@ node_modules/
 *.env
 api-sessions/
 .DS_Store
+
+# core engine ships encrypted only
+packages/
+*.tar.gz
