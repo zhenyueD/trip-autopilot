@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "case": "yangzhou-cached-revision-demo",
+  "business_version": "v3",
+  "recorded_at": "2026-11-18",
+  "display_pack": "readme-showcase-20261118",
+  "origin": "existing v2 isolated copy -> one live user correction -> saved v3",
+  "content_modified": false,
+  "runtime_changed": false,
+  "new_product_calls_for_packaging": 0,
+  "scope": "historical saved result and live correction demonstration; not fresh itinerary acceptance",
+  "quality": {
+    "full_pdf_pages": 18,
+    "first_eye_pdf_pages": 3,
+    "photos": "3/4; shopping activity missing",
+    "presentation_status": "degraded",
+    "api_delivery_status": "ready",
+    "status_mismatch_known": true
+  },
+  "limits": [
+    "No new validation of all travel facts",
+    "No claim of first-pass itinerary generation",
+    "Correction waited 494.628 seconds including an internal retry"
+  ],
+  "files": [
+    {
+      "path": "../media/workspace-v3.png",
+      "sha256": "3c1d4d82a240962839955a4efc1ff838c6ce815f2c94f5a600f0d81f22f93a7e",
+      "bytes": 139425
+    },
+    {
+      "path": "../media/first-eye-v3.png",
+      "sha256": "a445f5fa462e5290c588391eeedbe665c83e707e16572d20e5fc5c72ede6d643",
+      "bytes": 739332
+    },
+    {
+      "path": "../media/trip-autopilot-demo.mp4",
+      "sha256": "331446fafa09b33b762ea6dc72d9b1729ce8958d3fd9b35397826e8eaea753f1",
+      "bytes": 6931551
+    },
+    {
+      "path": "../examples/yangzhou-v3-full.pdf",
+      "sha256": "94a2ba832df0c00489f861de6d195dec580b69cd7d6eba98cdda5d7ea9481629",
+      "bytes": 2655030
+    },
+    {
+      "path": "../examples/yangzhou-v3-first-eye.pdf",
+      "sha256": "70fef5c1dd27235074e855c0bb8bb5b7cab770300773704306cdc16c5dc8f724",
+      "bytes": 1451794
+    },
+    {
+      "path": "../examples/yangzhou-v3.html",
+      "sha256": "ebb9d3737af7009b1642b8ca954c63ef8a9638cf77424d3a3d4d3f89c4cd4ad0",
+      "bytes": 3929355
+    }
+  ]
+}
