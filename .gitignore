@@ -15,3 +15,13 @@ core.tar.gz
 packages/
 node_modules/
 .DS_Store
+
+# Decrypted/current local artifacts
+core/*.tar.gz
+core/*.zip
+research/
+captures/
+browser-profile/
+
+# Additional decrypted regression files remain private; tracked public tests stay tracked.
+/tests/

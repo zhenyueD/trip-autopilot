@@ -1,3 +1,5 @@
+> 历史说明保留。本次版本以 [当前 README](../README.md)、[运行说明](RUNNING.md) 和 [发布记录](RELEASE-2026-11-18.md) 为准；下文旧包/地址/验收不能当作本版状态。
+
 ---
 type: delivery-note
 date: 2026-11-18

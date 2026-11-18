@@ -12,13 +12,14 @@ from unittest.mock import patch
 from packages.travel_agent.single_session_agent import SingleSessionAgent
 from packages.travel_agent.supply_cache import SupplyCache
 from tests.test_single_session_agent import call, URL, MODULE
+from tests.first_eye_fixtures import with_budget
 
 
 def handbook(prose):
     data = dict(version=1, days=[dict(id='day-1', title='Offline day',
                 date='2026-12-01', summary='Synthetic rest day',
                 timeline=[dict(kind='activity', action='Rest')])])
-    return '# Offline\n' + prose + '\n```destination-detail-v1\n' + json.dumps(data) + '\n```'
+    return with_budget('# Offline\n' + prose + '\n```destination-detail-v1\n' + json.dumps(data) + '\n```')
 
 
 class SupplyWiringTests(unittest.TestCase):
@@ -123,31 +124,31 @@ class SupplyWiringTests(unittest.TestCase):
             intake = dict(destination='Synthetic City', start_date='2026-12-01', case_id=name)
             # First-turn generation now has bounded stages. Keep the original
             # two-session source-cache assertions, using the new model protocol.
+            calls = {'research': 0, 'adjudicator': 0, 'writer': 0}
             async def model():
-                messages = agent.payload()['messages']
-                data = json.loads(next(m['content'] for m in messages if m['role']=='user'))
-                if 'case_id' in data:
-                    value = dict(destination='Synthetic City', departure_date='2026-12-01',
-                                 season_scope='fixture', categories=['开放'])
-                elif 'category' in data:
-                    if messages[-1]['role']=='user':
-                        return dict(role='assistant',content=None,tool_calls=[
-                            call('r','read_page',url=URL)]),'tool_calls'
-                    value = {'candidates':[{'source_id':'S1','atom':dict(
-                        destination='Synthetic City',claim='Hours',category='开放',s_level='S1',
-                        source_name='fixture',source_url=URL,verbatim_quote='Open daily.',
-                        checked_date='2026-11-06',expires_on='2099-01-01',season_scope='fixture',
-                        evidence_kind='fixture',notes=[])}]}
-                elif 'candidates' in data:
-                    value = {'accepted':data['candidates'],'rejected':[]}
-                elif 'composition' in data:
-                    value = {'passed':True,'findings':[]}
-                else:
-                    ids = list(data['bindings'])
-                    value = dict(markdown=handbook('Hours '+data['bindings'][ids[0]]['evidence']['marker']),
-                                 fact_atom_ids=ids,estimates=[],self_check={'passed':True},prices=[])
-                return dict(role='assistant',content=None,tool_calls=[
-                    call('finish-'+str(len(messages)), 'finish_stage', result_json=json.dumps(value))]),'tool_calls'
+                stage = agent._stage_payload.get()
+                role, messages = stage['role'], stage['messages']
+                calls[role] += 1
+                self.assertLessEqual(calls[role], 2 if role != 'writer' else 1)
+                lease = agent.request_budget.reserve('llm', role + str(calls[role]))
+                agent.request_budget.settle(lease, status='completed')
+                if role == 'research':
+                    if calls[role] == 1:
+                        return dict(role='assistant', content=None, tool_calls=[
+                            call('inventory', 'declare_price_inventory', price_items=[
+                                dict(id='entry', label='Admission price', conditions='adult')]),
+                            call('r', 'read_page', url=URL)]), 'tool_calls'
+                    return dict(role='assistant', content=json.dumps({'unavailable': [
+                        dict(item_id='entry', reason='Original page covers hours, not admission prices')]})), 'stop'
+                if role == 'adjudicator':
+                    if calls[role] == 1:
+                        return dict(role='assistant', content=None, tool_calls=[
+                            call('e', 'record_evidence', source_id='S1', quote='Open daily.',
+                                 claim='Hours', kind='hours')]), 'tool_calls'
+                    return dict(role='assistant', content=json.dumps({'decisions': [
+                        dict(candidate_id='S1', status='accepted', reason='offline fixture')]})), 'stop'
+                return dict(role='assistant', content=None, tool_calls=[
+                    call('save', 'save_handbook', markdown=handbook('Hours {{evidence:E1}}'))]), 'tool_calls'
             self.reader.reset_mock()
             with patch.dict(os.environ, {'TRAVEL_ORCH': '1'}), patch.object(agent, '_model', side_effect=model), patch(
                     'packages.travel_agent.single_session_orch_backend.render_pdf',
@@ -157,7 +158,8 @@ class SupplyWiringTests(unittest.TestCase):
             self.assertEqual(agent.session['turns'][-1]['status'], 'completed')
             self.assertEqual(self.reader.call_count, 1 if name == 'trip1' else 0,
                              agent.session.get('supply_cache_events'))
-            self.assertEqual(agent.budget.snapshot()['used'], 0)
+            self.assertEqual(calls, {'research': 2, 'adjudicator': 2, 'writer': 1})
+            self.assertEqual(agent.budget.snapshot()['used'], 5)  # Mock model leases, no provider requests.
 
     def test_expired_hit_falls_back_to_live(self):
         self.seed()

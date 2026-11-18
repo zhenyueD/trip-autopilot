@@ -1,0 +1,3963 @@
+{
+  "release": "reliability-demo-20261118",
+  "archive": "core/runtime-reliability-20261118.tar.gz.enc",
+  "archive_sha256": "53d27cdcf8ab9d0e7003f73057cd86f2c7a26753e196aa125bcc286b4370dbf7",
+  "encryption": "AES-256-CBC + PBKDF2; passphrase distributed separately",
+  "contents": "packages/ and tests/; no sessions or research evidence",
+  "files": [
+    {
+      "path": "packages/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "packages/atomizer/__init__.py",
+      "sha256": "66e35259d58ad43183976718b134504992b034620f580d566ea114f4c16e5035",
+      "bytes": 609
+    },
+    {
+      "path": "packages/atomizer/blend_energy.py",
+      "sha256": "19e2f74e0923e1edeeb6c5a2c7b958cfd697ea9587bb0f9ce430432f20ba2711",
+      "bytes": 3664
+    },
+    {
+      "path": "packages/atomizer/cluster.py",
+      "sha256": "650a0f3bfd21f8153aadb92131d546b5f153e23058e0d364c6c8d5ae84c83776",
+      "bytes": 12510
+    },
+    {
+      "path": "packages/atomizer/common.py",
+      "sha256": "dad179f59cb1f9cf264a001db79815f01902aa3600bb75f4e0874fc0925e8c93",
+      "bytes": 3880
+    },
+    {
+      "path": "packages/atomizer/dedupe_existing.py",
+      "sha256": "ae3d8f1b8eb38dcb29fbd9bccd637be90934d0f11599fc183ca6a6d8fd94ad6a",
+      "bytes": 6501
+    },
+    {
+      "path": "packages/atomizer/emit.py",
+      "sha256": "eb63f6eb70ecce57a6c8a1bc1f277343599add69b7418d8de9f27de4c7953266",
+      "bytes": 3757
+    },
+    {
+      "path": "packages/atomizer/enrich.py",
+      "sha256": "442ee97b7703d97d9b10415d037190a5218453c32744d19429f5b6ab28795999",
+      "bytes": 14499
+    },
+    {
+      "path": "packages/atomizer/extract_tips.py",
+      "sha256": "ebdf7fb3d32361c5b1203ca334bec605d438ee36a1670ec0fc4c12f142a318ef",
+      "bytes": 9406
+    },
+    {
+      "path": "packages/atomizer/fetch.py",
+      "sha256": "e82d85750b82e110bba8add3729cbe29706f828e6588b42158fda197b196b104",
+      "bytes": 29852
+    },
+    {
+      "path": "packages/atomizer/fetch_images.py",
+      "sha256": "52003248775444c64599dc5cea7f1da591fe1332336f0ae4a39a2a7b85a415cc",
+      "bytes": 15833
+    },
+    {
+      "path": "packages/atomizer/llm_enrich.py",
+      "sha256": "1b519aa5d9a9827c3ce7372ce736bda3dc3984bfc32291d0d0a75d02780bc991",
+      "bytes": 14699
+    },
+    {
+      "path": "packages/atomizer/validate.py",
+      "sha256": "4fae4dc91aa948682c2aada06fc5eb9a17af33c717e63e917e5ee2f799f0f0c5",
+      "bytes": 12467
+    },
+    {
+      "path": "packages/graph/__init__.py",
+      "sha256": "bccce756034aee437544e97fe97c5470c24fb12d526870966dbb58d9bed8091b",
+      "bytes": 489
+    },
+    {
+      "path": "packages/graph/build_matrices.py",
+      "sha256": "ecbc8ad59a8df6c5210c71b8f4ce82117c81de2ed7dcba55886f739689ee87b4",
+      "bytes": 10429
+    },
+    {
+      "path": "packages/graph/edges.py",
+      "sha256": "f1b316b9d3976eb3a1b94d40d83490f74e1e39bf0269d5f0b43fd7273a44fe67",
+      "bytes": 7702
+    },
+    {
+      "path": "packages/graph/nodes.py",
+      "sha256": "c1df17ed1cfcfecb494d8edfb610982d566de88ca80fa92fee751297d26f4ce6",
+      "bytes": 6142
+    },
+    {
+      "path": "packages/graph/routing.py",
+      "sha256": "39e28f5f152a71310cef871afac458cc260df3d3983fa1b01bacbadabe807786",
+      "bytes": 11842
+    },
+    {
+      "path": "packages/intent/__init__.py",
+      "sha256": "1fa99ba95aee7f6ff1ebbfc3f997f43dbe240b895a2c0644cf835a8a1b4ea4d7",
+      "bytes": 260
+    },
+    {
+      "path": "packages/intent/cli.py",
+      "sha256": "5abb91ef759fd829986504d21e1eee5a4d1e4aa70c40c8ea60ae2bf927dda9e2",
+      "bytes": 3676
+    },
+    {
+      "path": "packages/intent/data/sample_atoms.json",
+      "sha256": "6f1b88caceb84269b53c30fc2a2d360e84851b0931bf67662082ed695f2fa43c",
+      "bytes": 19665
+    },
+    {
+      "path": "packages/intent/matcher.py",
+      "sha256": "8fe5d66c6a1cf2f1da09cb31ba9c6db0ae3267225f57ac87fc95e70264612fab",
+      "bytes": 12454
+    },
+    {
+      "path": "packages/intent/parser_heuristic.py",
+      "sha256": "f1adcb1e98d25cfb863d83ce1f4bda570872e08494c5e6189c0ba489429b6004",
+      "bytes": 18341
+    },
+    {
+      "path": "packages/intent/parser_llm.py",
+      "sha256": "86ef93a70e4d00348efd5b4fdb639cb48f83a3d0b56c8f9092945513d6842301",
+      "bytes": 9715
+    },
+    {
+      "path": "packages/intent/poi_match.py",
+      "sha256": "57e527c9a91e92d8c03af12417a7747b12ffe6f3b5e6b401aabdaefc8a90be21",
+      "bytes": 4019
+    },
+    {
+      "path": "packages/intent/schema.py",
+      "sha256": "c91b6f01168886fc684aaa3d8bb126ea67c4dc423c3375de7592a9c26ec5b4c6",
+      "bytes": 11416
+    },
+    {
+      "path": "packages/intent/tensions.py",
+      "sha256": "4813d1ef8edb82799f45df42113a58e1e0afd394b66338dbd17058fe0ea2afe7",
+      "bytes": 3780
+    },
+    {
+      "path": "packages/intent/test_intent.py",
+      "sha256": "05cb06136925c43843d2daf2b5f124ac7e129b87f2c243fd989b9a268c40745c",
+      "bytes": 13108
+    },
+    {
+      "path": "packages/intent/weights.py",
+      "sha256": "c752898cd5c816dbe8e3aede0973238a5ba78556601d00cf4f7b7da91a4a31ea",
+      "bytes": 7856
+    },
+    {
+      "path": "packages/llm/__init__.py",
+      "sha256": "270a3d06d6aa06313a5e5632f664e893f90d5719cfedaf72333ce8c1b52ce971",
+      "bytes": 974
+    },
+    {
+      "path": "packages/llm/client.py",
+      "sha256": "ad39a3884b4da149d6d382d1dab6676432dc5da829004f014390cca192e7fedd",
+      "bytes": 4534
+    },
+    {
+      "path": "packages/narrative/__init__.py",
+      "sha256": "d8facaf4cea6fcc62f40463dc9c7aee29172cc66e5baaca31a31be06440564d1",
+      "bytes": 677
+    },
+    {
+      "path": "packages/narrative/chat.py",
+      "sha256": "21f55e97e2e4e39c51e3017e2e00db39eac9c2173862b48be3c99559a27ced48",
+      "bytes": 16786
+    },
+    {
+      "path": "packages/narrative/narrate.py",
+      "sha256": "72d03be3bdd286deb2ac7071cb3a4a3bb75742d5f900ec2d04e60da7b75eebc5",
+      "bytes": 10552
+    },
+    {
+      "path": "packages/solver/__init__.py",
+      "sha256": "eb955ad8e899a011458340c4cb57e1304fc9e621c2d0b39faba7301317d6cfcc",
+      "bytes": 543
+    },
+    {
+      "path": "packages/solver/common.py",
+      "sha256": "127f9b2e43964c68dd151f9289685597ca88865d79f634555abac371bd8f88c3",
+      "bytes": 2367
+    },
+    {
+      "path": "packages/solver/compare.py",
+      "sha256": "5e9be8240e6df5f0294838b902bc2533138276d6979f4ba5beea1216f52b399c",
+      "bytes": 10362
+    },
+    {
+      "path": "packages/solver/constraints.py",
+      "sha256": "405e835bf10b9a5e2cfbdabcbf3160efc90b755267eec5bb12382d08ba1daf6d",
+      "bytes": 4385
+    },
+    {
+      "path": "packages/solver/receipts.py",
+      "sha256": "45a1a27abf0f1a36e475a2ac4d04c7e8b9f6741f0194b7048cb7fe124c1a469d",
+      "bytes": 6311
+    },
+    {
+      "path": "packages/solver/refine.py",
+      "sha256": "cd5aa9a4046745eae0fdb05f5c629cfbda902d6c54d617a15af0e69dd044278d",
+      "bytes": 34700
+    },
+    {
+      "path": "packages/solver/resolve.py",
+      "sha256": "c040f1ef942f0fe20de81bcdd1ee5b11be673bf6a546f11f56aaa4acd068cac5",
+      "bytes": 22340
+    },
+    {
+      "path": "packages/solver/sequence.py",
+      "sha256": "4f07425288a977484a0f7fd6b406ba24cf51e2ea42ed6a3ba74e2fd776cef681",
+      "bytes": 6207
+    },
+    {
+      "path": "packages/solver/skeleton.py",
+      "sha256": "08966775bf894f2751de3772ee0d39fc00c57ac0ef36d8fd5c755b44564d138e",
+      "bytes": 2555
+    },
+    {
+      "path": "packages/solver/trace.py",
+      "sha256": "eeff175a68d5747fa6416aa3483cccd0a0a84f96cc680e1216e34e5daec844b5",
+      "bytes": 5787
+    },
+    {
+      "path": "packages/travel_agent/__init__.py",
+      "sha256": "a21ac3f4003b7442278c4c186217f7ee31d0d307290870ebe28b115c30956e2b",
+      "bytes": 73
+    },
+    {
+      "path": "packages/travel_agent/api.py",
+      "sha256": "e463cbb7647975d5ba12a9761f8825c2f703a490f62e60d022194f35a2e4d09b",
+      "bytes": 8375
+    },
+    {
+      "path": "packages/travel_agent/atomic_orchestration.py",
+      "sha256": "3d1f66b2173fb1f33dc55aa843ef5c196f58e950a97b7448b49ffedbfb9e7afc",
+      "bytes": 12818
+    },
+    {
+      "path": "packages/travel_agent/atomic_prompts.py",
+      "sha256": "ca3659688fbc52d0306b64c4cd67a6eb1dfd3355a37a2c57fc1ff06c3a4545fd",
+      "bytes": 15389
+    },
+    {
+      "path": "packages/travel_agent/autopilot_action_candidate.py",
+      "sha256": "d89248fed9747ff0da2bab021f7ef28d0466092f09dbc03807a7817fd7c37b9b",
+      "bytes": 9121
+    },
+    {
+      "path": "packages/travel_agent/autopilot_action_research.py",
+      "sha256": "bdb5ac48a83d78f70eb25ed1b276286aaf4abd765c58ecdb2b347c241459f7c4",
+      "bytes": 7764
+    },
+    {
+      "path": "packages/travel_agent/autopilot_action_touches.py",
+      "sha256": "5c24ed1917ecf4d28c8d186b537d4437f4c8cec94f337a90d2441dfaee71ab5a",
+      "bytes": 2346
+    },
+    {
+      "path": "packages/travel_agent/autopilot_actions.py",
+      "sha256": "b9a3ebff83c107c02712949ed6f71d13114966db668c84df74b13e83999512c3",
+      "bytes": 8703
+    },
+    {
+      "path": "packages/travel_agent/autopilot_advice.py",
+      "sha256": "c1dbcb81c78c073b1a4e9e9b7aabf679598d818b209558547815185fffab14d8",
+      "bytes": 14713
+    },
+    {
+      "path": "packages/travel_agent/autopilot_api.py",
+      "sha256": "657fb4ace48ecef5ced12549d04659c2387cb0156f8512e640b82303ef0b02df",
+      "bytes": 4060
+    },
+    {
+      "path": "packages/travel_agent/autopilot_bindings.py",
+      "sha256": "3fd5ca139bc4543990647300d1a3309e50cc5d24fce8d54709497f11e6fc2ce9",
+      "bytes": 21699
+    },
+    {
+      "path": "packages/travel_agent/autopilot_budget.py",
+      "sha256": "b56066132b1a5e709a03bb418444d870e901e883b050483c3ae9324113e277bd",
+      "bytes": 18462
+    },
+    {
+      "path": "packages/travel_agent/autopilot_context.py",
+      "sha256": "d0985587d07f3b1576c4eb169a10e8487e77654cf629f1e929931863f333b5c6",
+      "bytes": 11829
+    },
+    {
+      "path": "packages/travel_agent/autopilot_contract.py",
+      "sha256": "1c13ed936e71135e25910343fe3281178c2588fa7d68c7444446d5575b13883f",
+      "bytes": 2439
+    },
+    {
+      "path": "packages/travel_agent/autopilot_evidence.py",
+      "sha256": "30687c9a3ff8f3e2e985c31ed515b471eb995c0ec00876b23fc60d7cd80a8441",
+      "bytes": 6751
+    },
+    {
+      "path": "packages/travel_agent/autopilot_experiment.py",
+      "sha256": "a295efe1daeaad84f2f05bcf07c64dea7bbffe134416c34b8079b02184f7f3c5",
+      "bytes": 10161
+    },
+    {
+      "path": "packages/travel_agent/autopilot_experiment_budget.py",
+      "sha256": "e3a55aafa4ea09621d10a1a8d7c737f8bfc92ad8bb6c3a6458f73692259000c1",
+      "bytes": 4656
+    },
+    {
+      "path": "packages/travel_agent/autopilot_experiment_service.py",
+      "sha256": "722be82f86d6bd73e74943cabcb3cc83a8dd76f3d7b96cd6a6e865696b52b932",
+      "bytes": 2445
+    },
+    {
+      "path": "packages/travel_agent/autopilot_final.py",
+      "sha256": "300689d95290b43ca4edc4c079acfba3ac92d62690d56ba30036e8bebbcceed6",
+      "bytes": 7671
+    },
+    {
+      "path": "packages/travel_agent/autopilot_gateway.py",
+      "sha256": "51b4943005684a55cd7d6a564ad8ccd7084519535c312b488d5cd97dd45a49f6",
+      "bytes": 5705
+    },
+    {
+      "path": "packages/travel_agent/autopilot_history.py",
+      "sha256": "d348f333e85a52761d8ae241f51c13742b424f494759ac08d5af26520cb28671",
+      "bytes": 2970
+    },
+    {
+      "path": "packages/travel_agent/autopilot_intake.py",
+      "sha256": "f0ca2c71eed9d747f13fa36c7822a50b852bd6ef7bda1e2101b011aeecff0a24",
+      "bytes": 1631
+    },
+    {
+      "path": "packages/travel_agent/autopilot_methods.py",
+      "sha256": "32f327628deb675d12f567948ffd445fc352def18b4a822ce99237abc2fc700a",
+      "bytes": 4457
+    },
+    {
+      "path": "packages/travel_agent/autopilot_model.py",
+      "sha256": "7e18a9134859ebd30b5dc1d79503a45ae915260c696cb09bc572c437ae050090",
+      "bytes": 15162
+    },
+    {
+      "path": "packages/travel_agent/autopilot_operations.py",
+      "sha256": "8074aa2a2f83d8e8982956d54450f93c83c87f8fce29abe5885b52bc0c9699e3",
+      "bytes": 8141
+    },
+    {
+      "path": "packages/travel_agent/autopilot_research_failure.py",
+      "sha256": "686ec6c2f490c34707acce4a5153dc8c39e385fa2f80ba2c630e71f8d7f117ae",
+      "bytes": 1709
+    },
+    {
+      "path": "packages/travel_agent/autopilot_revision_fields.py",
+      "sha256": "c881ef4a8b85ae4f3c5cc3923070a2e6143352a303ac592dac03e681a27c2dbe",
+      "bytes": 4878
+    },
+    {
+      "path": "packages/travel_agent/autopilot_revision_guards.py",
+      "sha256": "11ea80934a1b6332234f1679bcdce97a4bb0fe5237eb23cb24b8a0ea013298b4",
+      "bytes": 4401
+    },
+    {
+      "path": "packages/travel_agent/autopilot_revisions.py",
+      "sha256": "9c617c1cd77803015c2a6622e4752bc25093e2352b652b7c44f54b448ac3ff0e",
+      "bytes": 13612
+    },
+    {
+      "path": "packages/travel_agent/autopilot_runner.py",
+      "sha256": "c0855fe06bfc1f5e0a440ee761aaa1563e3177f763d524932caed40655493711",
+      "bytes": 9923
+    },
+    {
+      "path": "packages/travel_agent/autopilot_service.py",
+      "sha256": "55d12f0f5246adb39a7c3d2aa5abc701fcd7c485cdee07c529a08015b5559d34",
+      "bytes": 17765
+    },
+    {
+      "path": "packages/travel_agent/autopilot_service_transactions.py",
+      "sha256": "7cf44ae46446bdf3ce0cf1ffdc800628d82f08b2608aa4a216ad75003c23b330",
+      "bytes": 965
+    },
+    {
+      "path": "packages/travel_agent/autopilot_service_views.py",
+      "sha256": "19a27e6a907daa1c17fec578b01473de21ee6edbb3f713beacfd138825652d11",
+      "bytes": 8045
+    },
+    {
+      "path": "packages/travel_agent/autopilot_store.py",
+      "sha256": "b785be14cddd90415a292009add6a386823f03eb82e6b34090584b1bad94ef65",
+      "bytes": 14640
+    },
+    {
+      "path": "packages/travel_agent/autopilot_tokenizer.py",
+      "sha256": "d1355f3925e46bcc37f229a194d58aac39fbd301d4c4c8566ca63a9d0d2d3e06",
+      "bytes": 7915
+    },
+    {
+      "path": "packages/travel_agent/autopilot_toolspec.py",
+      "sha256": "8a78b844e6e287b6772126c27554ec071f092f248cd7d3c02a6c6bc91f73fba5",
+      "bytes": 9490
+    },
+    {
+      "path": "packages/travel_agent/autopilot_verifier.py",
+      "sha256": "5c9b07b030a7b110c4a6efaa510825e2d2cb7e2bc41752a50aa69261631e8e7a",
+      "bytes": 10539
+    },
+    {
+      "path": "packages/travel_agent/autopilot_worker.py",
+      "sha256": "e81fab8d4f4a246d2eac4df716dde8a0ffcdfc7a977a30b609f759d6c320f013",
+      "bytes": 4908
+    },
+    {
+      "path": "packages/travel_agent/autopilot_workspace.py",
+      "sha256": "5a19dfdbcf7927cdbfa2c8283f649aa0462a1b6e008d036af5bf8cb4d5de2f3d",
+      "bytes": 9816
+    },
+    {
+      "path": "packages/travel_agent/autopilot_workspace_jobs.py",
+      "sha256": "e550b3d5730a8575a2fb9d8a1ddd1ead394bf07472e1db988f9d5fda6c683a9a",
+      "bytes": 6386
+    },
+    {
+      "path": "packages/travel_agent/autopilot_workspace_memory.py",
+      "sha256": "10e8790914b610b4ef6fc4e430a97d3ab6aca393f62ea8f33a95643116ade0ee",
+      "bytes": 7093
+    },
+    {
+      "path": "packages/travel_agent/autopilot_workspace_records.py",
+      "sha256": "35a8c9dbdaf2e8d3ca28bb72a26964cbf00d36b4bed848ec5e3075f90555a8df",
+      "bytes": 13072
+    },
+    {
+      "path": "packages/travel_agent/blind_spots.py",
+      "sha256": "b15f5844124693b34916266e0abaa64cad9ef9ce5e21cacbe5e8a7f07c543c54",
+      "bytes": 32706
+    },
+    {
+      "path": "packages/travel_agent/capability_tools.py",
+      "sha256": "56f729b3df068da20b859a5be10264d9be0cd79413bd84ee8be89c98534357d9",
+      "bytes": 19562
+    },
+    {
+      "path": "packages/travel_agent/coach_gate.py",
+      "sha256": "4e365e0e5d1cbd886ac4523f5fa080215db71de598fc80988fe3bb835ba6342f",
+      "bytes": 5456
+    },
+    {
+      "path": "packages/travel_agent/comparison_card.py",
+      "sha256": "fed668457fb969a54cae60d464dd1fe0ef8cf20e12884b0f9af98bf219f4e803",
+      "bytes": 4832
+    },
+    {
+      "path": "packages/travel_agent/comparison_card_budget.py",
+      "sha256": "85b5b576818b47ed938531217945ffb374ec7a63c09f2c0112d942dbd0000b14",
+      "bytes": 13414
+    },
+    {
+      "path": "packages/travel_agent/comparison_card_model.py",
+      "sha256": "8f8b5930aa9ab98301cb7f4b9147d684646fcf1552352f4d1ee134fa1fb69ebe",
+      "bytes": 11835
+    },
+    {
+      "path": "packages/travel_agent/comparison_card_research.py",
+      "sha256": "4556ca3d33ba0c6bfbd84ba2839c9d00c390a4304fbe624ed7bc29ed0c7d4520",
+      "bytes": 16158
+    },
+    {
+      "path": "packages/travel_agent/comparison_card_service.py",
+      "sha256": "461c3f74b1ce2fe083fd8d7e5d5ab6087894b3c07012f882603bd425e04c7945",
+      "bytes": 2048
+    },
+    {
+      "path": "packages/travel_agent/comparison_card_store.py",
+      "sha256": "1b1ceb31f894d67c98f11a49e50a4a0148243a15eaf81633329f1fed15d44b11",
+      "bytes": 9054
+    },
+    {
+      "path": "packages/travel_agent/comparison_maps.py",
+      "sha256": "e4b6d98e5eedb172e6e3fb1a307c854f196f9e637e766749aefaf028cc3bd906",
+      "bytes": 18705
+    },
+    {
+      "path": "packages/travel_agent/consistency.py",
+      "sha256": "633994fa22161291e374643eedc854645b0c7d9d473c51dbc714eef617ce18b3",
+      "bytes": 4715
+    },
+    {
+      "path": "packages/travel_agent/core_commitments.py",
+      "sha256": "db0c65a3bcd71f0c695c95a23711575fa53c590690468a6095ee231ccc3fe6de",
+      "bytes": 12102
+    },
+    {
+      "path": "packages/travel_agent/core_prompts.py",
+      "sha256": "bf83bfe35f9179e41695f8366463c83ab49549f9b3b89285be46cf64983c5fd8",
+      "bytes": 20219
+    },
+    {
+      "path": "packages/travel_agent/core_protocol.py",
+      "sha256": "40e8353945cd9ae0a498f0111489aa56d3b7a6d898f64c197f2976805f990348",
+      "bytes": 12445
+    },
+    {
+      "path": "packages/travel_agent/core_runtime.py",
+      "sha256": "99f5a5ac977958852652272e7f2caa2e4d6cf41970df053f7fa7bbfb0e860247",
+      "bytes": 87171
+    },
+    {
+      "path": "packages/travel_agent/date_window.py",
+      "sha256": "2668275d78c2d98a3d2629729d56c228e41dbe1b7accfe79b997b8530799b01d",
+      "bytes": 4262
+    },
+    {
+      "path": "packages/travel_agent/deepseek_discovery.py",
+      "sha256": "862b40c0b885dd94467612e5e42e1a63b9543dce5ec5123f3b8cc23bc017eab8",
+      "bytes": 5507
+    },
+    {
+      "path": "packages/travel_agent/delivery_consistency.py",
+      "sha256": "265cf37b52fbb5b25e37c8872c99301980021aee947202077564ddfa128f1c99",
+      "bytes": 15210
+    },
+    {
+      "path": "packages/travel_agent/delivery_truth.py",
+      "sha256": "e89bd3f05a3e7f818428e1dc318e0809cd355b3251c75190eafcc240e25c9ca1",
+      "bytes": 20187
+    },
+    {
+      "path": "packages/travel_agent/destination_discovery.py",
+      "sha256": "e9cf7a725f26ea7b1d6c25c018d9574d9a9e63bae5d712094e93067a63d06645",
+      "bytes": 30595
+    },
+    {
+      "path": "packages/travel_agent/detail_contract.py",
+      "sha256": "76a7e66ae1eaf54c70e2ddc94251fd1805fdc07d4189714ee3c9093dec7224ec",
+      "bytes": 3214
+    },
+    {
+      "path": "packages/travel_agent/detail_public_cache.py",
+      "sha256": "6911deba07b3841eaea22296492322afbe3b41a79e9380e1d29d6194afbb4f59",
+      "bytes": 3908
+    },
+    {
+      "path": "packages/travel_agent/detail_review_registry.json",
+      "sha256": "0071c61a5c2540c45c3b16a3382d4e084a8d1e8d54ad2b779c1cb6c41fcb7822",
+      "bytes": 1318
+    },
+    {
+      "path": "packages/travel_agent/detail_reviews.py",
+      "sha256": "ea121127bedd02c487c7e9def14607a444b80d2a2c986a7641b6ff7ffad2ca20",
+      "bytes": 5653
+    },
+    {
+      "path": "packages/travel_agent/detail_synthesis.py",
+      "sha256": "f749c6f4487c348b71f2b54ece0405750997e0e2294f4358d8469a24b5b8e201",
+      "bytes": 34431
+    },
+    {
+      "path": "packages/travel_agent/direction_repair.py",
+      "sha256": "f394f43acaa008968037db61138c1a7ef96db95a0029786656aff98417e1f413",
+      "bytes": 3072
+    },
+    {
+      "path": "packages/travel_agent/direction_schema.py",
+      "sha256": "b8978fd00b825f7e791d09ec2d9634a4d87b357baaee5dac092427b606171209",
+      "bytes": 4516
+    },
+    {
+      "path": "packages/travel_agent/document_reader.py",
+      "sha256": "2b48a4531bebfb6f869587b45093fd8d7bbceacd7a3540d1cef9541c24e18ffd",
+      "bytes": 18317
+    },
+    {
+      "path": "packages/travel_agent/entry_trust.py",
+      "sha256": "910a5c246634cc76436ef0664e6a0fd0436d3ae9f4315bdfa86fa4c89e417976",
+      "bytes": 2806
+    },
+    {
+      "path": "packages/travel_agent/evidence_context.py",
+      "sha256": "b738bf67ed81ffd5671604c3a5419d97444f7419468b89679d345757130cd96a",
+      "bytes": 1079
+    },
+    {
+      "path": "packages/travel_agent/execution_budget.py",
+      "sha256": "4fa3387f50da875fd33863ec56798310ee4384190fd017fab3c85804e820fc98",
+      "bytes": 12683
+    },
+    {
+      "path": "packages/travel_agent/factuality_policy.py",
+      "sha256": "725326b46b44d1863524382d81c7daffd937fe9705c6f6ea4508e7236c23b38e",
+      "bytes": 4940
+    },
+    {
+      "path": "packages/travel_agent/fixture_dispositions.py",
+      "sha256": "fe8908bfbde261609a4ded865206ed4a5e42998be1423c283f7e9ffc79b8b151",
+      "bytes": 9862
+    },
+    {
+      "path": "packages/travel_agent/full_revision_scope.py",
+      "sha256": "f0963145f82e329298ee2e996bded791da959b970d5327b50489b981c9d94b91",
+      "bytes": 15024
+    },
+    {
+      "path": "packages/travel_agent/geography.py",
+      "sha256": "d18d8a6c8084817e20324f6f59812def2ac9318b9928ca4f80420444b6a48bf6",
+      "bytes": 2271
+    },
+    {
+      "path": "packages/travel_agent/google_route_links.py",
+      "sha256": "92560b3791c3d5851371381118f26cc5ebe980f02ffd5c36a5322cfbd14fe804",
+      "bytes": 976
+    },
+    {
+      "path": "packages/travel_agent/initial_blind_delivery.py",
+      "sha256": "1851c71d69b9dd1fc03d3e614d6f1caa732371875df147b3e765b2d091b07c93",
+      "bytes": 4571
+    },
+    {
+      "path": "packages/travel_agent/initial_budget.py",
+      "sha256": "04c9f6bad388f07b1435606dd5ce81e266b1d27925ce56b0fe78abd4862b5e96",
+      "bytes": 1103
+    },
+    {
+      "path": "packages/travel_agent/initial_checkpoints.py",
+      "sha256": "af432ce539d06994449aa659224588ac1be106a2c20246014c8502d25eccc11b",
+      "bytes": 1685
+    },
+    {
+      "path": "packages/travel_agent/initial_contract.py",
+      "sha256": "5a39d72bad8819587bb1b5c38cc803eb361a2271d5b09e8ff63937724763be98",
+      "bytes": 15014
+    },
+    {
+      "path": "packages/travel_agent/initial_generation.py",
+      "sha256": "3d8931eeea6f4a8606c41797a5ce02ca6df965b0ce4244c4f14fc65616abe418",
+      "bytes": 11688
+    },
+    {
+      "path": "packages/travel_agent/initial_public_research.py",
+      "sha256": "9ee6e97153cdda36c67743ad02feec586d7568665e60e499d1989c2733105563",
+      "bytes": 1232
+    },
+    {
+      "path": "packages/travel_agent/intake.py",
+      "sha256": "2db5ec03c2be9fac18ded298dfe9b7125044ba904c50a94b588111fd6fe6372b",
+      "bytes": 10841
+    },
+    {
+      "path": "packages/travel_agent/intent_questions.py",
+      "sha256": "a4481d22712b605e361971ee6d81eb6eee5b2a34a72bf555cfd77b2a84f609d0",
+      "bytes": 5011
+    },
+    {
+      "path": "packages/travel_agent/intent_questions_model.py",
+      "sha256": "a5fe68f0c853af12652059eaee811898a4332c59c905750ba6c403585967b35c",
+      "bytes": 5655
+    },
+    {
+      "path": "packages/travel_agent/intent_revision.py",
+      "sha256": "e1dd3a3d72aa4514002e8f3a53af0bb6d4de401332aae873ac855a0359665ce4",
+      "bytes": 27098
+    },
+    {
+      "path": "packages/travel_agent/intent_revision_model.py",
+      "sha256": "3520bf966868b98376a239fce27225615f1b7328be748a9049bb6d81a2af89b2",
+      "bytes": 4208
+    },
+    {
+      "path": "packages/travel_agent/itinerary_assembly.py",
+      "sha256": "9313e5bed37d12d9918784a849cdc31ce1eac75e56184b01aadbee69bb882981",
+      "bytes": 32705
+    },
+    {
+      "path": "packages/travel_agent/itinerary_assembly_model.py",
+      "sha256": "c5e9fe08cdcbef506c8b24f61fa6128d98c4d8e7f1a814c66acdc555f5595ef0",
+      "bytes": 12309
+    },
+    {
+      "path": "packages/travel_agent/itinerary_assembly_pipeline.py",
+      "sha256": "8ca280359b9fb513c987799b1382dfa3175dd1695aada595d5303b8ec75365ad",
+      "bytes": 38618
+    },
+    {
+      "path": "packages/travel_agent/itinerary_fixture_preflight.py",
+      "sha256": "634e215b21888f6a093888193f97407ecf7fd81d9614edca848b88581e85033d",
+      "bytes": 18500
+    },
+    {
+      "path": "packages/travel_agent/itinerary_price_projection.py",
+      "sha256": "9b2c922525156abc7579aefbd637bd7bace71b803deb224bc8a9b0426dae02ff",
+      "bytes": 14179
+    },
+    {
+      "path": "packages/travel_agent/itinerary_supply.py",
+      "sha256": "9b4115990123ec342ce8f424c682a9c859839f9312beeefb763e08feeb89c508",
+      "bytes": 10407
+    },
+    {
+      "path": "packages/travel_agent/journey_delivery.py",
+      "sha256": "51161eb874616335bd6bb972658225fdb2496858bd51c7b3c07dc4121c537adb",
+      "bytes": 5506
+    },
+    {
+      "path": "packages/travel_agent/journey_routes.py",
+      "sha256": "60f4946fe40621ba54d691cbeb574d0592e9727dbc4bf5f37759cbf060d0f506",
+      "bytes": 10233
+    },
+    {
+      "path": "packages/travel_agent/journey_state.py",
+      "sha256": "9bffdc3109850453f41e99ba1c0c88231a487f692e1464546ffdd90372473811",
+      "bytes": 20137
+    },
+    {
+      "path": "packages/travel_agent/lifecycle_atoms.py",
+      "sha256": "825d5e0384214031af518e21f6be4343bfcd4d1905a1577a4caed5185efb4c7d",
+      "bytes": 11813
+    },
+    {
+      "path": "packages/travel_agent/material_details.py",
+      "sha256": "e5821c0fe0bcb028dbd45c6acac114fd2a36c45e0b216ec9950340bbcf1ef381",
+      "bytes": 37630
+    },
+    {
+      "path": "packages/travel_agent/material_reader.py",
+      "sha256": "fc1a27dab880b2d12775d67dc24681506d1722cd2ae1d46006b048b64ad0652a",
+      "bytes": 26496
+    },
+    {
+      "path": "packages/travel_agent/message_answers.py",
+      "sha256": "0a627e3787b27df44bb8c4cfab1f70c20292d383e8bdc5a0738dcdd98409821b",
+      "bytes": 15553
+    },
+    {
+      "path": "packages/travel_agent/message_evidence.py",
+      "sha256": "9f35c3ed46d2b22b6b5aa164c483560c13a146ef351916b0ce3c9e3f997fc888",
+      "bytes": 16395
+    },
+    {
+      "path": "packages/travel_agent/message_timeline.py",
+      "sha256": "7e3a4985eb49940108b2b6f6f121163db17b2f906f042ed8151ef70c1fda5d02",
+      "bytes": 5790
+    },
+    {
+      "path": "packages/travel_agent/model.py",
+      "sha256": "a304b6602c38b3ad4cf8cec747ba1632d03d53685bbcbc474a19237ac4395cbf",
+      "bytes": 47352
+    },
+    {
+      "path": "packages/travel_agent/model_boundary.py",
+      "sha256": "ee6d6e2140a6d117ba46e3ea5de21ef769f4f465cad4bb3c49dc669dd1235e54",
+      "bytes": 8504
+    },
+    {
+      "path": "packages/travel_agent/model_response_diagnostics.py",
+      "sha256": "3fd75e4edf31fc548581d582dd12d48e2e4b35f653f037a703e520bf18cf6e85",
+      "bytes": 6312
+    },
+    {
+      "path": "packages/travel_agent/model_sizing.py",
+      "sha256": "21645dc1ef3a3a1d097e2397f6198d3a070763b04648a3ab7592c1a031aec752",
+      "bytes": 2111
+    },
+    {
+      "path": "packages/travel_agent/model_sizing_baseline.json",
+      "sha256": "27eca389c80b6e77da7c6341186fce5b8a12271bfa6920f0433f11b33de216dd",
+      "bytes": 152891
+    },
+    {
+      "path": "packages/travel_agent/multisource_organize.py",
+      "sha256": "7f1eeb58ec4041cf23777f28d64cbbbe24adf2eb8a0e00b5ff44d6b7399cf316",
+      "bytes": 9926
+    },
+    {
+      "path": "packages/travel_agent/pending_materials.py",
+      "sha256": "ba8fc6895e38daa39c658e3196a531f95e5e1f8311a1fb1014d44ec9d19cf216",
+      "bytes": 1602
+    },
+    {
+      "path": "packages/travel_agent/phase1_budget_context.py",
+      "sha256": "3be0052aca40aa822d1d2ffd0d64a048deab9ca6fe990707f0f12d8094a61327",
+      "bytes": 5312
+    },
+    {
+      "path": "packages/travel_agent/phase1_lookup.py",
+      "sha256": "704d7dba7fb9b83cd7d8ddb5346da0fce230ba2ac4e7f5ec01119a195ddb75a0",
+      "bytes": 5132
+    },
+    {
+      "path": "packages/travel_agent/phase1_revision.py",
+      "sha256": "980034611044c3b8f91e9628d0c1a3fa0a6e975c5a53ef99f602b3607ff47ade",
+      "bytes": 14657
+    },
+    {
+      "path": "packages/travel_agent/phase1_runtime.py",
+      "sha256": "0cc76d57908cccc4661cf9a8773f781578c38c4e494703d9a884043608387885",
+      "bytes": 22009
+    },
+    {
+      "path": "packages/travel_agent/phase1_service.py",
+      "sha256": "7fe839cf872c607cc779f013559c21701130f1bc4f9cbf7fe8d9824697bdcc87",
+      "bytes": 15595
+    },
+    {
+      "path": "packages/travel_agent/phase1_sources.py",
+      "sha256": "99bd0e43b04045fd65bb2d987a389035d8fedb24d41ab1e1bade32097b26b228",
+      "bytes": 4295
+    },
+    {
+      "path": "packages/travel_agent/place_media.py",
+      "sha256": "7d3a0fe4c26131f3876d542ababa4c2c60d7f5cf3b18301e008d06f7b632054a",
+      "bytes": 17787
+    },
+    {
+      "path": "packages/travel_agent/place_reading.py",
+      "sha256": "d70240fb839522686cc889255f4dd62c670366eb69a2632f70b4b9bce3df19f2",
+      "bytes": 6318
+    },
+    {
+      "path": "packages/travel_agent/planning_context.py",
+      "sha256": "ec126316f5933351e101f6aa91e78031c89cbe0ea1d64e4a097e3d9d18c836bb",
+      "bytes": 1184
+    },
+    {
+      "path": "packages/travel_agent/preparation.py",
+      "sha256": "aff8f84954345aa7617de1e0cd9f15b02704ea9398e31f0d7d10d6e7ad9ec251",
+      "bytes": 39079
+    },
+    {
+      "path": "packages/travel_agent/preparation_state.py",
+      "sha256": "a77a3f82a5ac40a4f24ab1435346c2ea2bc8028b238cbb56137fb8cd139586df",
+      "bytes": 2963
+    },
+    {
+      "path": "packages/travel_agent/progressive_discovery.py",
+      "sha256": "c939c6c62ad4027b3f27323e063c5104e95082123f4bc249acc4eb04c02ad291",
+      "bytes": 4352
+    },
+    {
+      "path": "packages/travel_agent/prompts.py",
+      "sha256": "e8f33e01855c464f35afcb002877dee421b5196e963e5bc7a8465c018f58fc52",
+      "bytes": 23433
+    },
+    {
+      "path": "packages/travel_agent/public_search.py",
+      "sha256": "b401e0d714b431a4dfa2eee2885028122810ebc810c72b272934045bbab3e10f",
+      "bytes": 20754
+    },
+    {
+      "path": "packages/travel_agent/recorded_contract_samples.json",
+      "sha256": "da9ac7cbf388a82ea79d1c7928457a9cfd1fd952521e2396bea630b59a17a08d",
+      "bytes": 1320
+    },
+    {
+      "path": "packages/travel_agent/research.py",
+      "sha256": "0bc6ea46fceec71e1c986925b05674db2902340c947fd3c1a24c311f35d164f2",
+      "bytes": 17838
+    },
+    {
+      "path": "packages/travel_agent/research_focus.py",
+      "sha256": "7b0bcff95742ff1a3a05e953a8df313df483f8813ef372903dea028ed5964dcb",
+      "bytes": 8948
+    },
+    {
+      "path": "packages/travel_agent/restaurant_availability.py",
+      "sha256": "9564b0ce37b4b9c2530180ceaaa6663b0987602ed7710c7eb5829af52da3c6f0",
+      "bytes": 19249
+    },
+    {
+      "path": "packages/travel_agent/revision_plan.py",
+      "sha256": "681a6b368f7e21e6e7651042f55beb92ef5d7ee7a86a4b696fe63c434a489c95",
+      "bytes": 20227
+    },
+    {
+      "path": "packages/travel_agent/revision_presentation.py",
+      "sha256": "f38c320c934aabe37cca1c292116f4adb0265690afeb9702ac42b5036039ee83",
+      "bytes": 4617
+    },
+    {
+      "path": "packages/travel_agent/revision_receipt.py",
+      "sha256": "e40b4084619e1f92501e23ba6727641213179f19f7bb6c90487e87460e8eb365",
+      "bytes": 33469
+    },
+    {
+      "path": "packages/travel_agent/revision_receipt_runtime.py",
+      "sha256": "940b40e3a39732dfd41500569863e57673966e4bc2d8ac88e2c76d6b71c54811",
+      "bytes": 2595
+    },
+    {
+      "path": "packages/travel_agent/revision_stages.py",
+      "sha256": "a97416a95c4df5d472d9bf080a32c4f93759be67fa913f62134a7e54ae3074ab",
+      "bytes": 4947
+    },
+    {
+      "path": "packages/travel_agent/run_canary.py",
+      "sha256": "95a50e47a355aec7a3005d45299906cc6928b439514632f062e55aed8189303a",
+      "bytes": 11311
+    },
+    {
+      "path": "packages/travel_agent/run_reliability.py",
+      "sha256": "70c0e1f4ad0bab22a436c17805c6146c1a4ef1729a40339a1bf50bb548a25a25",
+      "bytes": 15206
+    },
+    {
+      "path": "packages/travel_agent/runtime.py",
+      "sha256": "9e4909d041665d2d2a522b342c3f51ce48c238dd4065571252473ee48c1da927",
+      "bytes": 20976
+    },
+    {
+      "path": "packages/travel_agent/runtime_evidence_pool.py",
+      "sha256": "8104bbdd28075158bdbe50902a2d5f6d2fe0e2bd63cde66697b37bc5ef9223aa",
+      "bytes": 23804
+    },
+    {
+      "path": "packages/travel_agent/runtime_loop.py",
+      "sha256": "4dd04ce0d4a7031b5f738162b7470ba65f79c8c64174f17658bbc2c79af6eed2",
+      "bytes": 24259
+    },
+    {
+      "path": "packages/travel_agent/runtime_model_policy.py",
+      "sha256": "ccb9df4053ff43c2305e865f9fc357eeaa8a25933fcf9e7f01290ff5ae187da9",
+      "bytes": 2907
+    },
+    {
+      "path": "packages/travel_agent/runtime_model_sizing_baseline.json",
+      "sha256": "0f6a23a2509a262def668df249d2731ddae0648c4aa257b8b5afd1e1cb251b42",
+      "bytes": 6553
+    },
+    {
+      "path": "packages/travel_agent/runtime_planning.py",
+      "sha256": "6ebf4a7d86fbb78d014ea3e88a32b2e056cd5ca01ee86f4393386a73497a25b7",
+      "bytes": 14088
+    },
+    {
+      "path": "packages/travel_agent/runtime_reference_delivery.py",
+      "sha256": "3020928964a72659b1890f41e59c14b62e28b8e860c5ff9ecf77833eb331c6fb",
+      "bytes": 18242
+    },
+    {
+      "path": "packages/travel_agent/runtime_revision.py",
+      "sha256": "1c94b1959a942d91cb6dad28d80612d279c3c5f41fe8ec096e5ef28588a6bd69",
+      "bytes": 9237
+    },
+    {
+      "path": "packages/travel_agent/runtime_stage_input.py",
+      "sha256": "c47bc41c7ea65c72f7e2085c2a45cb4389ebe23cac1865e2a00fd384a10abbf9",
+      "bytes": 10316
+    },
+    {
+      "path": "packages/travel_agent/runtime_supply_acquisition.py",
+      "sha256": "3be15db6d5b748c1d9c54923958f6295777b8d21eb60c317125baf3619d569ef",
+      "bytes": 32683
+    },
+    {
+      "path": "packages/travel_agent/scoped_replan.py",
+      "sha256": "6de3f385449906114d6cd2d1aeea1b1fe72eb06d48f14217e02ecc3c2b41573f",
+      "bytes": 22858
+    },
+    {
+      "path": "packages/travel_agent/scoped_time_copy.py",
+      "sha256": "aed7a1f24c93676691b9e849cf8d1013f82888fca6c348d194ab2a271415152c",
+      "bytes": 9822
+    },
+    {
+      "path": "packages/travel_agent/scoped_time_shift.py",
+      "sha256": "48ce1f3a538627a1271786a9057e2ee503cb7a1425d809a3e1c43d4d5cc79609",
+      "bytes": 12548
+    },
+    {
+      "path": "packages/travel_agent/season_scope_coverage.py",
+      "sha256": "60f78b3f990deefddb47bda38c341ef5e2069275db1856b42fd6b454dc2278ef",
+      "bytes": 5570
+    },
+    {
+      "path": "packages/travel_agent/semantic_review.py",
+      "sha256": "2dac5532ca1ee00a5511018eaeb572a0820cc73d92cc95708f67c77a02546454",
+      "bytes": 19016
+    },
+    {
+      "path": "packages/travel_agent/shard_reuse.py",
+      "sha256": "d0f9909be5b30eab0ed99a2acc9aa6c62c7221273a4e890ff6bb584f6c01c046",
+      "bytes": 10101
+    },
+    {
+      "path": "packages/travel_agent/single_session_accounting.py",
+      "sha256": "2c6972ea98778e49588e82442e5588d3f1043266e25e9c92bdf40935edfd7fd1",
+      "bytes": 5920
+    },
+    {
+      "path": "packages/travel_agent/single_session_adjudicator.py",
+      "sha256": "96120f62f77c7fb30c43b22454069a7eba81ddca7e02ab43422fbae17d47b971",
+      "bytes": 9394
+    },
+    {
+      "path": "packages/travel_agent/single_session_agent.py",
+      "sha256": "4d3d6894bbe82d9838c09a9922837007b476f1b700c63984034d2377c3367d24",
+      "bytes": 101657
+    },
+    {
+      "path": "packages/travel_agent/single_session_agent.py.bak-20261109",
+      "sha256": "590c62f0cef40c2f639cf3f10399cf7f4560ad3175a3f999647116d3076f0575",
+      "bytes": 50743
+    },
+    {
+      "path": "packages/travel_agent/single_session_api.py",
+      "sha256": "f34752716495011ed284ef1f4c20d96ac0dd4189958be7608f2086ec98edb27f",
+      "bytes": 70368
+    },
+    {
+      "path": "packages/travel_agent/single_session_assets.py",
+      "sha256": "ed88ec1988bf621bcb60d662af37d17a126f95851a5e6b2dfef89cf5e0c98565",
+      "bytes": 5010
+    },
+    {
+      "path": "packages/travel_agent/single_session_budget_prompt.py",
+      "sha256": "761d721cb9d8aac94e2f15ae7fd279eeef1a05d8f26d14f6b371d29a0d7c1000",
+      "bytes": 3934
+    },
+    {
+      "path": "packages/travel_agent/single_session_budget_totals.py",
+      "sha256": "f311c10e1ec373ff0e9ea52555c08658e79bf3a70b5dfcb91d583e7f7a76bfa3",
+      "bytes": 12781
+    },
+    {
+      "path": "packages/travel_agent/single_session_comparison.py",
+      "sha256": "dd4e035af3e95760466a816203f9e1476c303e411897b85893de20ae36d6cef4",
+      "bytes": 9773
+    },
+    {
+      "path": "packages/travel_agent/single_session_completeness.py",
+      "sha256": "d1826d5c537734f3b2675898542c3908b9789ee987842e27f70d96e20638049d",
+      "bytes": 2718
+    },
+    {
+      "path": "packages/travel_agent/single_session_context.py",
+      "sha256": "ad2aa154b05c23a0e68ddf6cdb6a8a26f47c1d3817c6c71a6e61b9c78ba03c69",
+      "bytes": 11834
+    },
+    {
+      "path": "packages/travel_agent/single_session_detail.py",
+      "sha256": "bda6314fa86534b6fee329abda85b00f5b30a79fe26449db15ab41a731d426a1",
+      "bytes": 29537
+    },
+    {
+      "path": "packages/travel_agent/single_session_document.py",
+      "sha256": "52ffd8e2baa34f45899c8965559d0822476b9ea186f72ec5af860a7fce9b06da",
+      "bytes": 85834
+    },
+    {
+      "path": "packages/travel_agent/single_session_draft.py",
+      "sha256": "5aa946aa39fa4f155245c65f77e831908770096224e0de88b6d30c1440c8ac40",
+      "bytes": 20006
+    },
+    {
+      "path": "packages/travel_agent/single_session_edit_binding.py",
+      "sha256": "f82dbb6dc53f98b10a0b00f2e4dcba13e4824a53d4d17bc5e3de8be1978a149d",
+      "bytes": 17457
+    },
+    {
+      "path": "packages/travel_agent/single_session_evidence_text.py",
+      "sha256": "ef5daf2e50f517916bd27ddb809c9b8a5f21e3927fcf05bf616158976c32c5c4",
+      "bytes": 848
+    },
+    {
+      "path": "packages/travel_agent/single_session_first_eye.py",
+      "sha256": "fc4a1b4d59a183fa8ffd524077dd282178fd1597443554c68d4dfa43554c56f5",
+      "bytes": 32516
+    },
+    {
+      "path": "packages/travel_agent/single_session_handoff.py",
+      "sha256": "f7a2ac921376c8fd318dc8e1708f709926282108841ee7e2397b3b760da2b03b",
+      "bytes": 38679
+    },
+    {
+      "path": "packages/travel_agent/single_session_legacy_presentation.py",
+      "sha256": "8f4de6e65d9d3d8e52b73115263f6de76a90055ecf4e95180d90c4ae20235774",
+      "bytes": 3052
+    },
+    {
+      "path": "packages/travel_agent/single_session_media.py",
+      "sha256": "61644940816ee665d5d6236984c075c739dcfd0d6d5d91fe57102878571cce4a",
+      "bytes": 5668
+    },
+    {
+      "path": "packages/travel_agent/single_session_media_candidates.py",
+      "sha256": "dbeb7753a697308d067942f39d736eaca83c1210fdca778469c95b938cf741b2",
+      "bytes": 14007
+    },
+    {
+      "path": "packages/travel_agent/single_session_media_selection.py",
+      "sha256": "6b47df6e595850c5d0d33ca4041981a0df3437497b6ed469234db2db7cc4d5f9",
+      "bytes": 42030
+    },
+    {
+      "path": "packages/travel_agent/single_session_media_sources.py",
+      "sha256": "47dabb9a674db7049238396e3d01f4650b57b632e7c4bed5d8eb4efd6ab5d619",
+      "bytes": 4410
+    },
+    {
+      "path": "packages/travel_agent/single_session_orch_backend.py",
+      "sha256": "d22530ad79b65ca5afa35bb553698f91cbc377cddd78e158b51cef903171faf5",
+      "bytes": 17934
+    },
+    {
+      "path": "packages/travel_agent/single_session_orchestration.py",
+      "sha256": "7cd1007dfbc83737c54526cc527fe7a845a3795c69aac7eaf59b03e6fc679989",
+      "bytes": 22800
+    },
+    {
+      "path": "packages/travel_agent/single_session_pdf.py",
+      "sha256": "b12260659baefebb9d89a61ed5763da90dd0a67be29e053d17f5359614af4a65",
+      "bytes": 24502
+    },
+    {
+      "path": "packages/travel_agent/single_session_pdf_runner.py",
+      "sha256": "107c36fefa47cc011aff64ee98e3de3e40c4c2b6acc8fcacf73afcc61bb9a8cf",
+      "bytes": 4249
+    },
+    {
+      "path": "packages/travel_agent/single_session_presentation.py",
+      "sha256": "a637fd77e883f63e9599cf8594654c288f86441f9cb4bafb9bf25426c97e6640",
+      "bytes": 10263
+    },
+    {
+      "path": "packages/travel_agent/single_session_presentation_copy.py",
+      "sha256": "2cf99d5ed92f7b53a0dd166a2703e382ff2be71c2c13afd811611eaeba6d9162",
+      "bytes": 2806
+    },
+    {
+      "path": "packages/travel_agent/single_session_presentation_delivery.py",
+      "sha256": "d7e758fe5fff2a1cd9c0bec9f74dbf1515f89bcb5dbf1e9af1aa97bbff922098",
+      "bytes": 26180
+    },
+    {
+      "path": "packages/travel_agent/single_session_profiles.py",
+      "sha256": "9c82edc7dfae38d162366aa5f708825506c07f61e77ffc2eef1e836886d49446",
+      "bytes": 5324
+    },
+    {
+      "path": "packages/travel_agent/single_session_progress.py",
+      "sha256": "184b92f21516aa79f7d4475bf366d25f9c063fbc88b065596a443b9c58b6bd93",
+      "bytes": 18536
+    },
+    {
+      "path": "packages/travel_agent/single_session_reader_copy.py",
+      "sha256": "914a2553ed4e70f82df10113ff4210cf66b3b655c8996ae5adaa7d34dc886340",
+      "bytes": 1102
+    },
+    {
+      "path": "packages/travel_agent/single_session_research_read.py",
+      "sha256": "a772dc085f3b311840fc00e6ef984a087a37ed0847cf2d4c4059cc9df878670a",
+      "bytes": 11412
+    },
+    {
+      "path": "packages/travel_agent/single_session_research_yield.py",
+      "sha256": "099d780589959af7d7636a32716aac682897af7cf4ac08c8058e9d580a818d43",
+      "bytes": 17594
+    },
+    {
+      "path": "packages/travel_agent/single_session_role_budget.py",
+      "sha256": "fce19deb2100d97f54200c668872f2dbf334855a1e43fa9838d035d31bd4e9ee",
+      "bytes": 2557
+    },
+    {
+      "path": "packages/travel_agent/single_session_roles.py",
+      "sha256": "4872ecd2dc1aeb9ff720a14037720bd2693fc7543682a905f7b50c4971e1e662",
+      "bytes": 39820
+    },
+    {
+      "path": "packages/travel_agent/single_session_runtime_media.py",
+      "sha256": "928e12e914773acd17891ad3b47899156f2564df03e702dcd476c9d615c9964a",
+      "bytes": 30864
+    },
+    {
+      "path": "packages/travel_agent/single_session_search.py",
+      "sha256": "c2d19f1ea5dfab623eea6e1ddfd0ebddd027f5e152bea7ca59c26b81c1940472",
+      "bytes": 6001
+    },
+    {
+      "path": "packages/travel_agent/single_session_supply.py",
+      "sha256": "f603ef66ee6f7f4e95abf3ab6de7424925f589f9d33f14aa15bcb559b233773e",
+      "bytes": 7029
+    },
+    {
+      "path": "packages/travel_agent/single_session_tool_calls.py",
+      "sha256": "f625442e33fbbd5f700d174d743e279b64aa59dc808c73cfcc36faf2efaaaa57",
+      "bytes": 7318
+    },
+    {
+      "path": "packages/travel_agent/single_session_working_plan.py",
+      "sha256": "04786afc604c47ff52df4f273831800a4769ae42ce78f51c7fe1549072cdca37",
+      "bytes": 10168
+    },
+    {
+      "path": "packages/travel_agent/single_session_writer_prompt.py",
+      "sha256": "e9561fc84fa79ae884458588d1cb16cc9fdaae5395c7b9dcc8cc57127c551e8d",
+      "bytes": 11825
+    },
+    {
+      "path": "packages/travel_agent/single_session_writer_recovery.py",
+      "sha256": "4d9e7e077d7b285c41b26c7d02c1aafb91fa69e70bb4b0a5be3adfef30d5d1a0",
+      "bytes": 4029
+    },
+    {
+      "path": "packages/travel_agent/source_adapters/__init__.py",
+      "sha256": "862a976d0909e526c0e0aeb41fded37a0672b783172f319c71da8a189a633ce6",
+      "bytes": 818
+    },
+    {
+      "path": "packages/travel_agent/source_adapters/base.py",
+      "sha256": "5442e7f8322bc619c5d24ff0d306099b7e7b1f7f797d95276b63cc8c57398ee0",
+      "bytes": 7364
+    },
+    {
+      "path": "packages/travel_agent/source_adapters/google_maps_review.py",
+      "sha256": "33fdcd1eb315ac73d138147f964a40321b16aced55826cf0619cffebd06abc10",
+      "bytes": 3262
+    },
+    {
+      "path": "packages/travel_agent/source_adapters/hotel_official.py",
+      "sha256": "d60d145209c5aea9c7d0475bccfda1e46e40ccc536338ccdc26c999670c4ccbc",
+      "bytes": 194
+    },
+    {
+      "path": "packages/travel_agent/source_adapters/official.py",
+      "sha256": "47ee2334dc4157d3d2c33c7de90ee471e36d3dbe87402333751a0c10d1404b73",
+      "bytes": 9297
+    },
+    {
+      "path": "packages/travel_agent/source_adapters/transport_authority.py",
+      "sha256": "d9da79707569d721cdd99012d8f67f89113a366537a1f28899afad1e256e59e5",
+      "bytes": 202
+    },
+    {
+      "path": "packages/travel_agent/source_adapters/tripadvisor_forum.py",
+      "sha256": "96dcc4314480cd1959019b1bae6973c3626b29d861662a0c42524e9c0a4d6b40",
+      "bytes": 1099
+    },
+    {
+      "path": "packages/travel_agent/source_adapters/validator.py",
+      "sha256": "9c26c2add9ef96634906435b5c33eb346b9cdc5614d8ef88ee4ae0fd30a36bbb",
+      "bytes": 10598
+    },
+    {
+      "path": "packages/travel_agent/source_adapters/xiaohongshu.py",
+      "sha256": "a5f1e859435da2cf89bb5f4b7e7ddf54caabcd853973543db24a91cfdb1feff1",
+      "bytes": 2709
+    },
+    {
+      "path": "packages/travel_agent/source_policy_view.py",
+      "sha256": "ea886f85e699c3da81e70ccdedc988d7330b41838a809d8aaa7010a8edb271c7",
+      "bytes": 757
+    },
+    {
+      "path": "packages/travel_agent/source_registry.py",
+      "sha256": "dfc060ebaa77be15bfb1003cdc97e55fd03ac6e474c569c55e5f4814d99ab566",
+      "bytes": 8384
+    },
+    {
+      "path": "packages/travel_agent/store.py",
+      "sha256": "45957ffd7988d35e2cec7f913e7694b3b98fb62e0f6274cb8fc1faf40eee4f25",
+      "bytes": 31639
+    },
+    {
+      "path": "packages/travel_agent/store_timeline.py",
+      "sha256": "b937c8eecfc1a8cbdb0b6c6f3a73abf9dba670a1b054e23e0881b2468420d6ba",
+      "bytes": 1205
+    },
+    {
+      "path": "packages/travel_agent/strong_reasoning.py",
+      "sha256": "ffb5947325360b9c03e478098f3c867ada0cf31c4bb8dc024b872e2b4a1f2cd1",
+      "bytes": 1241
+    },
+    {
+      "path": "packages/travel_agent/supply.py",
+      "sha256": "134f703d63b92f1d1e6535725d180c00f2065724e328c9c68128dd4512c1d4cb",
+      "bytes": 8918
+    },
+    {
+      "path": "packages/travel_agent/supply_cache.py",
+      "sha256": "e6b3ec33fe8d2542df14b4cf36ef0cdc20072a4d621d9a66b907b7041d4af71c",
+      "bytes": 10347
+    },
+    {
+      "path": "packages/travel_agent/supply_candidates.py",
+      "sha256": "f947cb0850f229bbfde3b4955f1c7ad89f36875601d3496cdbe4659436dcdb95",
+      "bytes": 14964
+    },
+    {
+      "path": "packages/travel_agent/supply_candidates_model.py",
+      "sha256": "f03c5d1b2799e6813093c93b9e1c30facdde9e262e4177b3b21d60aaf0ab9861",
+      "bytes": 6280
+    },
+    {
+      "path": "packages/travel_agent/supply_claim_review.py",
+      "sha256": "6c48e5abdc89db86d631572b7e7e38255b16da6f1bb02d289a9ce31e21a2333e",
+      "bytes": 7025
+    },
+    {
+      "path": "packages/travel_agent/supply_discovery_queue.py",
+      "sha256": "7c1022f09a879d019acb66c313f9cba28d33ad8ed0a9b74b7b8e088a176a7087",
+      "bytes": 5990
+    },
+    {
+      "path": "packages/travel_agent/supply_evidence.py",
+      "sha256": "27a05e942ff6cb629967679723099b5a4e5373b3a91aaa9c9904ab99220921f7",
+      "bytes": 11800
+    },
+    {
+      "path": "packages/travel_agent/supply_evidence_floor.py",
+      "sha256": "4c9955e5d81841eb137647a76d9e3e3c94c41b1687ea5620dda221e865bf4aec",
+      "bytes": 33973
+    },
+    {
+      "path": "packages/travel_agent/supply_identity_normalization.py",
+      "sha256": "9c2b70f00b91aeb1a4bacba775e6109872e1fea2b788736af9e00b764e878698",
+      "bytes": 4040
+    },
+    {
+      "path": "packages/travel_agent/supply_jina_identity.py",
+      "sha256": "d63b487abcf97050de24c38e076c1194548b7d35f5fa5b4ccbeac8562406e3f3",
+      "bytes": 9739
+    },
+    {
+      "path": "packages/travel_agent/supply_jina_reader.py",
+      "sha256": "d86a1eca07743f245843df9168115b5c3fb9cd10b4bf251cdf446484394ffa20",
+      "bytes": 14308
+    },
+    {
+      "path": "packages/travel_agent/supply_jina_transport.py",
+      "sha256": "f4126b47f673fdc8ceaa00df6021c124328c3aa9e59726dce5b0cdd6f0f41f6c",
+      "bytes": 10769
+    },
+    {
+      "path": "packages/travel_agent/supply_layered_plan.py",
+      "sha256": "4dc3b106ee7a9fdd607cb874d4dac0d38d49f17fbcbdab51fff34825efcf9440",
+      "bytes": 8889
+    },
+    {
+      "path": "packages/travel_agent/supply_layered_research.py",
+      "sha256": "42eedab630b3b553a9aac0b26d3494cbe6b8e718cbd6d1bc06bdd3912659fa43",
+      "bytes": 13266
+    },
+    {
+      "path": "packages/travel_agent/supply_layered_sources.py",
+      "sha256": "7bdef627c4edd51edd69730fd7b1aacf1cdad7c81f14a943b6ff393ebc3df4b9",
+      "bytes": 20118
+    },
+    {
+      "path": "packages/travel_agent/supply_normalization.py",
+      "sha256": "ac4e4797f369bf3683e3af288f65742c9e28f24b971ac54ff9cffad0fbf6c0ee",
+      "bytes": 9006
+    },
+    {
+      "path": "packages/travel_agent/supply_output_normalization.py",
+      "sha256": "fb916f24cdbc55c7bdaef5f181c4fa853ed287d09e2db5ac4e3119086c5e1510",
+      "bytes": 9227
+    },
+    {
+      "path": "packages/travel_agent/supply_planner_wire_normalization.py",
+      "sha256": "7c253f1ab8c24dc3b4a2440e92456603e5b67534f1cbae2931e3c5213097e718",
+      "bytes": 7671
+    },
+    {
+      "path": "packages/travel_agent/supply_read_order.py",
+      "sha256": "7567c922846bc2364d6062926359ff6e206c0b45deb30fd71ae8f4aa5d6e4d5c",
+      "bytes": 5017
+    },
+    {
+      "path": "packages/travel_agent/supply_render_queue.py",
+      "sha256": "4af6daf7d503f9bf414a6b9efb35e6a6540699acba0e87ff8c364494f8f1546e",
+      "bytes": 5687
+    },
+    {
+      "path": "packages/travel_agent/supply_rendered_reader.py",
+      "sha256": "368e4bf2a295b917a95db168b533f618fed1625cf2debeacb70587eec62082c4",
+      "bytes": 11324
+    },
+    {
+      "path": "packages/travel_agent/supply_research.py",
+      "sha256": "a10b686fa4c2c0dc66ba23d5fc0e501423227bae2f4f01864af9faef5fbae5a2",
+      "bytes": 13068
+    },
+    {
+      "path": "packages/travel_agent/supply_source_identity.py",
+      "sha256": "eba39c32bca1244b1d0314697a88c43154a407bc2b4f796977eb26f07ac23851",
+      "bytes": 21652
+    },
+    {
+      "path": "packages/travel_agent/tokenizer_assets/deepseek_v4_pro/LICENSE",
+      "sha256": "f2c6c602815669d292889e5be8c802f2ed950653b77999b1584e8e6aed25d040",
+      "bytes": 1084
+    },
+    {
+      "path": "packages/travel_agent/tokenizer_assets/deepseek_v4_pro/README.md",
+      "sha256": "9d8600d61f6d91b2c2d9fe0dfe0a02330f7eb8f7af0b5024adf84f957eba5236",
+      "bytes": 1149
+    },
+    {
+      "path": "packages/travel_agent/tokenizer_assets/deepseek_v4_pro/encoding_dsv4.py",
+      "sha256": "bdbd57c132a1b3725042323d02b98b9d1df28e5f388f134399555d041f5055e0",
+      "bytes": 27908
+    },
+    {
+      "path": "packages/travel_agent/tokenizer_assets/deepseek_v4_pro/encoding_dsv4_0813.py",
+      "sha256": "abc0d26120250dda0ae077dc64aa28836026e61e970854aaeb792445e6a0dde6",
+      "bytes": 29001
+    },
+    {
+      "path": "packages/travel_agent/tokenizer_assets/deepseek_v4_pro/tokenizer.json",
+      "sha256": "8f9f37ca37fdc4f5fd36d5cf4d3b0e8392edb4e894fd10cc0d70b4957c8633cf",
+      "bytes": 6367146
+    },
+    {
+      "path": "packages/travel_agent/travel_principles.py",
+      "sha256": "79d497c7f7fd08cd5a6b6d7ce1d44212ec5eaec3682c8ceac182003731694621",
+      "bytes": 7345
+    },
+    {
+      "path": "packages/travel_agent/traveler_profile.py",
+      "sha256": "423ebcb51d950db2f8601df21f652b952516db1a40d7bd8c0f39ea8685360d88",
+      "bytes": 2673
+    },
+    {
+      "path": "packages/travel_agent/trip_graph.py",
+      "sha256": "e04a187cc7b0980e5f1297a5eb194c27123086b1256904ee3ea729da9ab65abf",
+      "bytes": 6066
+    },
+    {
+      "path": "packages/travel_agent/trip_messages.py",
+      "sha256": "c49d76eba940e445f099a56218d68b1f9cdad0089e505be6e2777182e01b7083",
+      "bytes": 10549
+    },
+    {
+      "path": "packages/travel_agent/uncertainty_actions.py",
+      "sha256": "b999abc42234e65fec58f58d49f3e41841c436066d11051ba9f1b09d67b1a459",
+      "bytes": 12395
+    },
+    {
+      "path": "packages/travel_agent/uncertainty_audit.py",
+      "sha256": "f4bf1070372bf935387defeb3571e4fd6e8000c898d8954de88453b298d47320",
+      "bytes": 9728
+    },
+    {
+      "path": "packages/travel_agent/uncertainty_contract.py",
+      "sha256": "aec39a2ebbbcb8e351200e97b8f58e46e89233606dd8616f42f6a375004a5543",
+      "bytes": 5293
+    },
+    {
+      "path": "packages/travel_agent/uncertainty_evaluation.py",
+      "sha256": "c825a9397c52aab4326cdef734aaab2fd39f0a0e020365dfda2dfbf330fdb9ab",
+      "bytes": 11706
+    },
+    {
+      "path": "packages/travel_agent/uncertainty_schedule.py",
+      "sha256": "a0b1d5d65282bbf0ffb2727c5c7be8511019fef42a467167e7ee63c98a88d842",
+      "bytes": 1206
+    },
+    {
+      "path": "packages/travel_agent/uncertainty_store.py",
+      "sha256": "b63bc922de680d3777a11b4ccbd69a857a1160c114aea628d0bee0699d8a5ed7",
+      "bytes": 22199
+    },
+    {
+      "path": "packages/travel_agent/uncertainty_verifier.py",
+      "sha256": "49d52d932f04b67d63f659ff8e8672204a525eae9f9b51cf45108e133c6f0d00",
+      "bytes": 13448
+    },
+    {
+      "path": "packages/travel_agent/validation.py",
+      "sha256": "1d2ee659327c243430bfc595788a9e512ff9776bf88a387b361c0ee74b02e7fa",
+      "bytes": 14304
+    },
+    {
+      "path": "packages/travel_agent/writer_context.py",
+      "sha256": "48a9ba8d3ca58827d14041f7d35fa8b3025e7c192ea0839282d0091ccf6a7c86",
+      "bytes": 18884
+    },
+    {
+      "path": "packages/travel_agent/writer_critic.py",
+      "sha256": "d9c170cdc6aac18d7d068e9d544fe773658cd311a8186f1889ab89e770bd6a78",
+      "bytes": 50292
+    },
+    {
+      "path": "packages/travel_agent/writer_critic_runtime.py",
+      "sha256": "6b4dcff11266a26b2a8657320483bb5346a47ab25ca99d4e8add5f6e7917f134",
+      "bytes": 8524
+    },
+    {
+      "path": "packages/travel_agent/writer_prompt.py",
+      "sha256": "20ce19a37f726268210c7f889f8e2ded2fb1be8a6478cd2a7608e023145b122e",
+      "bytes": 2137
+    },
+    {
+      "path": "packages/travel_agent/writer_schema.py",
+      "sha256": "2bdfd8ed9f432b6c036cb4820642c317ec8ce59ebb0b087945b8beead17d30e9",
+      "bytes": 13592
+    },
+    {
+      "path": "packages/travel_agent/writer_scope.py",
+      "sha256": "7c6ff481e668670e7dc63ae9868736d9d49a98b508b5a98ef62b037dea93124e",
+      "bytes": 31438
+    },
+    {
+      "path": "packages/travel_agent/writer_shards.py",
+      "sha256": "4d07669b4697ed5d809dbc211aac8c04dbeff6bf0061e3cfba4ab839edeb791e",
+      "bytes": 29313
+    },
+    {
+      "path": "packages/travel_agent/writer_tokenizer.py",
+      "sha256": "ce6068958e104519f88c00c706e25d0159b7db815238423a5550251b3360840a",
+      "bytes": 7234
+    },
+    {
+      "path": "packages/travel_agent/writer_transport.py",
+      "sha256": "2acda45f6f20d7d5371a42b55ab42802312ef7e77f618070de3991c7ee633155",
+      "bytes": 38531
+    },
+    {
+      "path": "packages/travel_agent/writer_transport_http.py",
+      "sha256": "d38228c4b83bc61da92404fcf06a2929dbdd7ac92604b58b68903ea5532844a0",
+      "bytes": 5337
+    },
+    {
+      "path": "packages/verify/__init__.py",
+      "sha256": "c23ae8495cb17ff253e277ace68428466c22be197818e50b324d5e2f9fd4a89c",
+      "bytes": 2483
+    },
+    {
+      "path": "packages/verify/audit.py",
+      "sha256": "fd39419b7828e4546b751d865422db4b8611dec9c76fb55d7811b9877f23fda9",
+      "bytes": 7082
+    },
+    {
+      "path": "packages/verify/gate.py",
+      "sha256": "c7fccc3fe4912ea7bad7efd44b868adf559b81fbe20cb3c80ae0eec34dc1dc4c",
+      "bytes": 4270
+    },
+    {
+      "path": "packages/verify/opening_hours.py",
+      "sha256": "98186c327ef0eec6428b21bf2b894e591d0afba3b9e15c953b25bfb7b5fa9c63",
+      "bytes": 14172
+    },
+    {
+      "path": "packages/verify/test_opening_hours.py",
+      "sha256": "08cdfdee67223fee8d6174e2987fdb44cb3e8e0733e455dd0c5cc7b202b64f31",
+      "bytes": 5987
+    },
+    {
+      "path": "tests/agent_fixture_server.py",
+      "sha256": "d676f2b8cc0896ae2d2bd174669c3952d1f0f4acbf02d880eac77cca5ff9bbe1",
+      "bytes": 4698
+    },
+    {
+      "path": "tests/delivery_alignment_helpers.py",
+      "sha256": "5b8b8c6a94e40a7f779515d6a1a52dabd41a94bf72d9edd7a0e93a9bbcc2e880",
+      "bytes": 766
+    },
+    {
+      "path": "tests/delivery_consistency_replay.py",
+      "sha256": "77cf9ca151c3ca73a2e7f62256549f1719cfdf80deba700e5983060ec2ec3c86",
+      "bytes": 2252
+    },
+    {
+      "path": "tests/first_eye_fixtures.py",
+      "sha256": "1d9fbcaffcd0ba3a9aed8ec294e64f44e28e2230be4314d5f28120ce086802ed",
+      "bytes": 1164
+    },
+    {
+      "path": "tests/fixtures/adjudication_wrapped_response_20261117.json",
+      "sha256": "5030439a997e5067f99ed0ba51a602650d88a4fac8eb1b9a455006a5b22947ff",
+      "bytes": 2439
+    },
+    {
+      "path": "tests/fixtures/autopilot-advice-originals.json",
+      "sha256": "0922883f251b0993860d491ae6ceada44fe70cc04251343ccfc7d763ba4cddc4",
+      "bytes": 17097
+    },
+    {
+      "path": "tests/fixtures/c4_closeout_interval.json",
+      "sha256": "15aef6cdaa4e7b25cdee5667c52e1fdd76dd43bdaa98df0c478c730568b77d80",
+      "bytes": 2553
+    },
+    {
+      "path": "tests/fixtures/c5_offline_fixes/manifest.json",
+      "sha256": "eae83e52d420d15b0754cc32066f468c905332f55e3f724fd201218facd2728b",
+      "bytes": 26908
+    },
+    {
+      "path": "tests/fixtures/c5_offline_fixes/replay-A.json",
+      "sha256": "2d82f095222f9be90a6b1d793c5ac101dd4b024089fa169610457eb4f07b2067",
+      "bytes": 234613
+    },
+    {
+      "path": "tests/fixtures/c5_offline_fixes/replay-B.json",
+      "sha256": "518b061ef90c84c9c2fa33f5698a5ca4642b6001cc338796cdf4186e46a72721",
+      "bytes": 208867
+    },
+    {
+      "path": "tests/fixtures/delivery_consistency/A/approval.json",
+      "sha256": "d5f194cb21d462782b973cea8b1662c77391d4c9a526ff45c3843b77d019d9e9",
+      "bytes": 33929
+    },
+    {
+      "path": "tests/fixtures/delivery_consistency/A/fixture.json",
+      "sha256": "017c54576beffd5cafdbdce5fbd66b3fd5f9b847da5cfd269a14481790fe4886",
+      "bytes": 125000
+    },
+    {
+      "path": "tests/fixtures/delivery_consistency/A/handbook.json",
+      "sha256": "0cb61534bc225800629c0e800e857c196d6f0989444049bcdd48aeece6ff670b",
+      "bytes": 153263
+    },
+    {
+      "path": "tests/fixtures/delivery_consistency/A/notes.json",
+      "sha256": "f47f9d03e60375af3b7c283f7e66d2bd06fedfbde3800cd420cf9ac4e83a02b3",
+      "bytes": 16715
+    },
+    {
+      "path": "tests/fixtures/delivery_consistency/A/scripted-alignment.json",
+      "sha256": "8707c77806d824c9dcc8bc028cd90ad49c169e76394645a3e9f1ea606f519efe",
+      "bytes": 9718
+    },
+    {
+      "path": "tests/fixtures/delivery_consistency/B/approval.json",
+      "sha256": "b455d03ef4a714eb3f5780dd9414129e45c65d21a13d583117a3c52a13c3122e",
+      "bytes": 17708
+    },
+    {
+      "path": "tests/fixtures/delivery_consistency/B/fixture.json",
+      "sha256": "b3f2b37f4645a0de7e9e5bfcf1a13c83ca91b0d3ed3931badc75e0c592da8d0f",
+      "bytes": 114889
+    },
+    {
+      "path": "tests/fixtures/delivery_consistency/B/handbook.json",
+      "sha256": "6a6d398256d595a0a1be7d0ac9d99acd0d8ca977c1b3600c9eda0744c70e98e6",
+      "bytes": 132827
+    },
+    {
+      "path": "tests/fixtures/delivery_consistency/B/notes.json",
+      "sha256": "521bc618c37034a8107792007f40865530da1b2b71d5f42add1f226d2c8c613a",
+      "bytes": 18376
+    },
+    {
+      "path": "tests/fixtures/delivery_consistency/B/scripted-alignment.json",
+      "sha256": "02e3a6a21f8aef310419e6794f4ffd5d7464f76c993f24ba245aa0169caef172",
+      "bytes": 1505
+    },
+    {
+      "path": "tests/fixtures/delivery_consistency/README.md",
+      "sha256": "7661ce3b56e07c97bfa5164e3bef0a2ba671089037e244943002f70f31544767",
+      "bytes": 2453
+    },
+    {
+      "path": "tests/fixtures/delivery_consistency/authorized-production-delta.json",
+      "sha256": "476e417a8330ee31c838d934d179f500b0d3c74ff4151bdf3e002b043fe6cddc",
+      "bytes": 698
+    },
+    {
+      "path": "tests/fixtures/delivery_consistency/manifest.json",
+      "sha256": "89309cf1a3a16938005f07ba681b589a05578b1af2070ba97dc95fbb906d088c",
+      "bytes": 10046
+    },
+    {
+      "path": "tests/fixtures/delivery_consistency_revision/authorized-production-delta.json",
+      "sha256": "21cc427d9af20e913d439d4efa9ca7e20ff3f5181b73b48ff99673dc9e9f32f4",
+      "bytes": 728
+    },
+    {
+      "path": "tests/fixtures/framing_proposition/A/original-generated-raw.json",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "tests/fixtures/framing_proposition/A/original-handbook.json",
+      "sha256": "a6d92a8c18a9781cfe4ce90fac9e54331360f2697b5a0a6a04c88487c540bd93",
+      "bytes": 318625
+    },
+    {
+      "path": "tests/fixtures/framing_proposition/A/scripted-repair-alignment.json",
+      "sha256": "5396bbc02c3e93016ef01eaa220ac4cd01622cfc36473078f81d8f0e69e7ae8c",
+      "bytes": 11141
+    },
+    {
+      "path": "tests/fixtures/framing_proposition/conditional/approval.json",
+      "sha256": "0e847068a5b8c7593aa65dfcd1d7e0860efd09d22dd49c175058577129a17a0f",
+      "bytes": 33177
+    },
+    {
+      "path": "tests/fixtures/framing_proposition/conditional/input.json",
+      "sha256": "663414b44225550f8d901616ea2a302965e7ca149794f478bc72c62d7b630cf5",
+      "bytes": 126442
+    },
+    {
+      "path": "tests/fixtures/framing_proposition/conditional/scripted-keep-alignment.json",
+      "sha256": "7c945d9579ae56a469ebdda797d44675ca5b941ee1fe74aef590a858ef6c1650",
+      "bytes": 1201
+    },
+    {
+      "path": "tests/fixtures/fukuoka-v3-asset-ledger.json",
+      "sha256": "2b318891d307c12bf4160deb46fdab5817d4e4bc7e8b42fd925889d57ca0b018",
+      "bytes": 466898
+    },
+    {
+      "path": "tests/fixtures/fukuoka-v3-route.json",
+      "sha256": "f2b18588b201a79149bb01ab0a3c3d3aede15ba2f81ca998b35b266c3ffcebbf",
+      "bytes": 6766
+    },
+    {
+      "path": "tests/fixtures/handbook-assets/design-tokens.css",
+      "sha256": "ac152f07951d64bebec310efcd5f1fce03b9b9c7840b1bcc4b9e78ef4c00c14b",
+      "bytes": 1209
+    },
+    {
+      "path": "tests/fixtures/handbook-assets/handbook-presentation.css",
+      "sha256": "5c1d684ca76b8575fcceb15be403a1907849c2773e82909dddd04e17baebc391",
+      "bytes": 10100
+    },
+    {
+      "path": "tests/fixtures/handbook-assets/handbook-presentation.js",
+      "sha256": "191cd32d58eac5d470e094de7291a4d0fc08802da2ae76c0a197f5773d81bb25",
+      "bytes": 16288
+    },
+    {
+      "path": "tests/fixtures/handbook-assets/provenance.json",
+      "sha256": "ed8af53cdd42d8534fa9e05217ee5b156bde81abebee6f1f20a6147a1493eaa8",
+      "bytes": 711
+    },
+    {
+      "path": "tests/fixtures/media-provider-429-20261116.json",
+      "sha256": "035b2533119e9e65b55bad61caff5e4ec79de6e03155646601a6a8c36c0745a6",
+      "bytes": 949
+    },
+    {
+      "path": "tests/fixtures/run_reliability/recorded-revision.json",
+      "sha256": "326c15868dc4c717bd6d1180ce603abf3840e64f8c699b390dc7c10f15ea21b7",
+      "bytes": 2235
+    },
+    {
+      "path": "tests/fixtures/runtime_loop/authorized-production-delta.json",
+      "sha256": "c6829f9ef8b3e22932b0e3ad8b76d080b809621df905a58acfb11968f22162b6",
+      "bytes": 717
+    },
+    {
+      "path": "tests/fixtures/source_adapters/bad_evidence.json",
+      "sha256": "5c63c8471a44b614c06b48efa8723b488c3de5495c8895fe19ea974f60d70ee5",
+      "bytes": 1041
+    },
+    {
+      "path": "tests/fixtures/source_adapters/comments.json",
+      "sha256": "85dfcaa1655778a23bc24ff7b98f8e4c1f3c93c679666c47aa7d6ff9acd16725",
+      "bytes": 1088
+    },
+    {
+      "path": "tests/fixtures/source_adapters/conflict_closed.json",
+      "sha256": "3c61c3afdd338b288d90a77f7cc963d89d0a80c866e76483d1e4fc2bd8f4a1ba",
+      "bytes": 1129
+    },
+    {
+      "path": "tests/fixtures/source_adapters/conflict_open.json",
+      "sha256": "79adb83d32688e7d1697ddae1e6960b48fd272c0be9e3509c7926e07f5c4bb3e",
+      "bytes": 1127
+    },
+    {
+      "path": "tests/fixtures/source_adapters/coordinates.json",
+      "sha256": "cd2e80b7496cd4273949bd668c257d30e310b07eac2938a1e8c895b9074ced1d",
+      "bytes": 963
+    },
+    {
+      "path": "tests/fixtures/source_adapters/framework/user_screenshot.json",
+      "sha256": "8f561f96800edb268dede404aa9f1ca9e51c67125116556a96f0e47d0914cec5",
+      "bytes": 989
+    },
+    {
+      "path": "tests/fixtures/source_adapters/gmaps/reviews.json",
+      "sha256": "260f54fa91eab32e25da089ff3bddaa940c550b13efb6a3bb4cb17453875ee4e",
+      "bytes": 672
+    },
+    {
+      "path": "tests/fixtures/source_adapters/hallucinated_coordinates.json",
+      "sha256": "9fc4f03c395d85669b64d278d868565741b59a47aad316e4dbb953e45d9d0670",
+      "bytes": 993
+    },
+    {
+      "path": "tests/fixtures/source_adapters/inference.json",
+      "sha256": "bb07a6fb4abc7a52369923a4d7ca5666462c0e9c35e5b19c27fd97609c0be649",
+      "bytes": 1038
+    },
+    {
+      "path": "tests/fixtures/source_adapters/local_ref.json",
+      "sha256": "ef81815dc10f3afbab65ae76784f0c1f24bfd8fc05d729c07067b9057b55c4ca",
+      "bytes": 852
+    },
+    {
+      "path": "tests/fixtures/source_adapters/malicious.json",
+      "sha256": "b41f00074f3274b3cb563139e4957752158c44f65e7ab1515871aa7e631b66ba",
+      "bytes": 1219
+    },
+    {
+      "path": "tests/fixtures/source_adapters/missing_city.json",
+      "sha256": "efdd1fb0c7d906d9f5ac2c3d7d189783dd6b6262d183276b3d05bd8a87cec46e",
+      "bytes": 684
+    },
+    {
+      "path": "tests/fixtures/source_adapters/multiple.json",
+      "sha256": "dff270c1872a1896953b2b750de23a2c642da20a2dea509459347ce3cfd4eaa8",
+      "bytes": 1315
+    },
+    {
+      "path": "tests/fixtures/source_adapters/no_price.json",
+      "sha256": "d661f692eb3d6e07014dc80e02b2fa77cc1e71e0bd3adad10101068f8072801a",
+      "bytes": 857
+    },
+    {
+      "path": "tests/fixtures/source_adapters/non_travel.json",
+      "sha256": "5e9c4e4900d2ca300e275b2b488716e147ecc2882ea7e9e94c026b2299776c34",
+      "bytes": 458
+    },
+    {
+      "path": "tests/fixtures/source_adapters/official/admobility_short_excerpt.json",
+      "sha256": "ca22b202c83db7e93221c54e3ba618f50a3de8b883c735c0199646e7a3027836",
+      "bytes": 714
+    },
+    {
+      "path": "tests/fixtures/source_adapters/raw_price_hours.json",
+      "sha256": "c54d2ee7a47e4f7fa5dc72b23855e9bbd2186985d5e82cbf52fac0c6b2a91a17",
+      "bytes": 1270
+    },
+    {
+      "path": "tests/fixtures/source_adapters/tripadvisor/yas_synthetic.json",
+      "sha256": "a3167a8a7527113ddd03a2b7f4d43c2889bc88fb0332252754efc3562228a0f0",
+      "bytes": 1408
+    },
+    {
+      "path": "tests/fixtures/suzhou-v2-route.source.md",
+      "sha256": "dc74ced92537d2bc3e14339fd705a6372b50d65822b89cc9da014b0924be72ac",
+      "bytes": 44715
+    },
+    {
+      "path": "tests/fixtures/writer_fukuoka_v3.json",
+      "sha256": "bdfdc11cb32bb7a4f8cf3114cb09f31fa9a4e4977ee8688637d06cd6fe9af8cc",
+      "bytes": 66768
+    },
+    {
+      "path": "tests/framing_proposition_replay.py",
+      "sha256": "520af6240fe5dd0befff385a65469d1dc0cec479673dee8747793031a50c069b",
+      "bytes": 3165
+    },
+    {
+      "path": "tests/invariant/__init__.py",
+      "sha256": "f781542668582a45f132f556889e000059de348d2507be70624af3c168c299dd",
+      "bytes": 79
+    },
+    {
+      "path": "tests/invariant/test_atomic_contract.py",
+      "sha256": "d8a72b698e885def43035ef087ff19917fe2a5055da169acb0b6a0d61393acd0",
+      "bytes": 2802
+    },
+    {
+      "path": "tests/legacy_revision_harness.py",
+      "sha256": "a38753fb6bfff9c3c486a96116d244f19b1fa25a62b4692f63e1a21d5ed70567",
+      "bytes": 1245
+    },
+    {
+      "path": "tests/receipt_fixtures.py",
+      "sha256": "cbe62767d6d2c6f102fa9f35a7aa29600a18d834fbc73763bb97454643d4b991",
+      "bytes": 763
+    },
+    {
+      "path": "tests/test_adjudication_backend_compression.py",
+      "sha256": "c9f61c6a93204031ac649ac596367379c85e52133377f61d1d8f518428d8233c",
+      "bytes": 5635
+    },
+    {
+      "path": "tests/test_adjudication_compression_replay.py",
+      "sha256": "1ebf54e6ffaa4d9cc006ae9e81d70f7cf8a39f36301e0a3d8250a33998dca9ab",
+      "bytes": 10900
+    },
+    {
+      "path": "tests/test_adjudication_hardening.py",
+      "sha256": "472de5b7d14d1811ca657dd612879d4fcbfd35e995c1224a002a52e6cb08c9e5",
+      "bytes": 14025
+    },
+    {
+      "path": "tests/test_adjudication_semantic_normalize.py",
+      "sha256": "7edbb32bbb6a44361e6b2be362993e8eecd3e7c3e3927309d46a77bc6bc346e4",
+      "bytes": 12883
+    },
+    {
+      "path": "tests/test_adjudicator_resilience.py",
+      "sha256": "65533c45d5dd707c39352583329e9564f276fa3d8d2a47e48350c13a437b0659",
+      "bytes": 14680
+    },
+    {
+      "path": "tests/test_agent_action_guide_compat.py",
+      "sha256": "28bb4e6d43a28f624220fba998e7b745f9455b8eead995b16b2610de20aada38",
+      "bytes": 6687
+    },
+    {
+      "path": "tests/test_agent_action_loss.py",
+      "sha256": "7582798a21a8799b6fcffeee23aaf0e962189e29421a23d6e0494d8eb5ca19f8",
+      "bytes": 7038
+    },
+    {
+      "path": "tests/test_agent_api.py",
+      "sha256": "1d3f7be5cc835e4709aa372d2fae42fc2821da7cbc347e86f87c93aace4054b0",
+      "bytes": 9175
+    },
+    {
+      "path": "tests/test_agent_api_routing.py",
+      "sha256": "cf06ae186909d55b30c1f52558a0fb9a290bebdc04ec1334992c14481df4c9d6",
+      "bytes": 2832
+    },
+    {
+      "path": "tests/test_agent_atomic_orchestration.py",
+      "sha256": "8b264d9ab6a8c27f0c6c969fa5043e7e4f5c6d2647ecde0dab43dde5b481b2f5",
+      "bytes": 4781
+    },
+    {
+      "path": "tests/test_agent_atomic_runtime.py",
+      "sha256": "9bb76188e8c985229f317d5dd71f09167fbd23834b3db6f176e1c8a9101b5733",
+      "bytes": 41578
+    },
+    {
+      "path": "tests/test_agent_capability_tools.py",
+      "sha256": "2400348d53eadc92c6afd7f50864457d34fb5dc9e59f53e69c2c4fe8fda4f60a",
+      "bytes": 15282
+    },
+    {
+      "path": "tests/test_agent_consistency.py",
+      "sha256": "1f6735566bbf06918bc09e508143e0e6ed2370d393c440d4b6655362afdc71e4",
+      "bytes": 13631
+    },
+    {
+      "path": "tests/test_agent_consistency_confirmation.py",
+      "sha256": "ef2f76015b92ca330a3a2e1a5efa1aa0cb9b836bfc8e8cf2f396ea38281dc4c7",
+      "bytes": 2522
+    },
+    {
+      "path": "tests/test_agent_consistency_runtime.py",
+      "sha256": "86b4ac50f8b4458953d530351e0e4313389d7921cbedecadc58535de227c49f4",
+      "bytes": 7719
+    },
+    {
+      "path": "tests/test_agent_core_commitments.py",
+      "sha256": "06d6c614660c39c0686350fe0adef3835e1db239f537f3eb710fc95299ba868b",
+      "bytes": 12129
+    },
+    {
+      "path": "tests/test_agent_core_geography.py",
+      "sha256": "ce90e25f55b0f56d151ab16bf37bf810f9cc5a920a68ce9cacd37bfa749f41e9",
+      "bytes": 1140
+    },
+    {
+      "path": "tests/test_agent_core_model.py",
+      "sha256": "accdd79eda1d17cb9e81b5af9a45b71fde20872443d6a6e9f94411c00720dd6d",
+      "bytes": 6057
+    },
+    {
+      "path": "tests/test_agent_core_protocol.py",
+      "sha256": "4d8db9a5d56b278d7118461505e93f0805fe9e7822d894be05e1c454036a2bb6",
+      "bytes": 6486
+    },
+    {
+      "path": "tests/test_agent_core_research.py",
+      "sha256": "98c1a5808b13e81d86984b3c666c9b213bbb8a550bcdc547b8b843cee99569c9",
+      "bytes": 8842
+    },
+    {
+      "path": "tests/test_agent_core_runtime.py",
+      "sha256": "3363a5272cac232453f98667036979e38a6e722ce5911867d36c443016eaa971",
+      "bytes": 11953
+    },
+    {
+      "path": "tests/test_agent_date_window.py",
+      "sha256": "59071659b5e9da738c6d3e9e9210b9e78dbb32c5f3c7c04ce065ff66d347a3bb",
+      "bytes": 8694
+    },
+    {
+      "path": "tests/test_agent_delivery_truth.py",
+      "sha256": "845b01d623ccc70bc47126ea9c9fb9eec4a4b1364da7082843d14d4731206d06",
+      "bytes": 6818
+    },
+    {
+      "path": "tests/test_agent_delivery_truth_api.py",
+      "sha256": "d0c0ce3b00a10696ea0e76dd5d5926818470c523825b5cd21c6910c129390dfb",
+      "bytes": 14984
+    },
+    {
+      "path": "tests/test_agent_delta_protocol.py",
+      "sha256": "ecba4da604c82481b64dfad0116af23b49da609a9b80211a10da209efb3f40e1",
+      "bytes": 4033
+    },
+    {
+      "path": "tests/test_agent_destination_discovery.py",
+      "sha256": "024bb257df0f78cfc7b45e83c06b380da3d7f94f2c995d21dd74d239d6e2e863",
+      "bytes": 7749
+    },
+    {
+      "path": "tests/test_agent_direction_repair.py",
+      "sha256": "237f47fc82339a4d14a0901267c55d3a247fc55d382c5047cd208eebb67879a1",
+      "bytes": 13315
+    },
+    {
+      "path": "tests/test_agent_discovery_context.py",
+      "sha256": "c8f39050cf00b9cb7c1ad764f122d15ff8fe2bd0975948e7133659f8f79b6bbc",
+      "bytes": 5330
+    },
+    {
+      "path": "tests/test_agent_document_reader.py",
+      "sha256": "a0a9d3191bf4460117095c09717ab80f5569b78bb0e85a4d98cd5963c8fe37bf",
+      "bytes": 5560
+    },
+    {
+      "path": "tests/test_agent_english_dates.py",
+      "sha256": "270b6e50c828ff96e48394e02114fd23c91ecf6511d5f42c0fa274e075cd11fd",
+      "bytes": 2503
+    },
+    {
+      "path": "tests/test_agent_entry_trust.py",
+      "sha256": "5d173da7e0c18447ea3a8d10b0a461af77cac96488f41c421756463f47f0825d",
+      "bytes": 11244
+    },
+    {
+      "path": "tests/test_agent_evidence_context.py",
+      "sha256": "33113e19e85cd22893a1773b9d22dc97d5de7a89f40a7cf2dfb01baa409e99d9",
+      "bytes": 1783
+    },
+    {
+      "path": "tests/test_agent_feedback_context.py",
+      "sha256": "74e578a49e4227cbfe958cdd660c770b383f72b0a1c247564eabcdd3e2c96a99",
+      "bytes": 3675
+    },
+    {
+      "path": "tests/test_agent_full_revision_scope.py",
+      "sha256": "17f34d3ff236ede54e5304d175146075be0bde6b5740500a1e10a89ea82f084b",
+      "bytes": 14273
+    },
+    {
+      "path": "tests/test_agent_handbook.py",
+      "sha256": "6d464b4961d0dd8347c1bf3ba7ec4a4cfe7aa72288ece87ae495f7e386863d26",
+      "bytes": 16796
+    },
+    {
+      "path": "tests/test_agent_intake.py",
+      "sha256": "8c76d6623579f59c69e89c96fa551d80d600a644f56cc097eab6c046b26b5345",
+      "bytes": 10573
+    },
+    {
+      "path": "tests/test_agent_intake_repair.py",
+      "sha256": "b3d8cf922d731a65b779627ecdd0cb7669983b118a66506a8019456400af04c4",
+      "bytes": 4003
+    },
+    {
+      "path": "tests/test_agent_intake_revision_state.py",
+      "sha256": "44245207ddf1a2046207ed31ddd54c27dcf44dc8ceaf4321785026a1d8f90989",
+      "bytes": 5429
+    },
+    {
+      "path": "tests/test_agent_intake_security.py",
+      "sha256": "b1207ea251cfb6839e38e3404a5d75e5798a25c6f04428e0db81489c0d69c64d",
+      "bytes": 35482
+    },
+    {
+      "path": "tests/test_agent_intake_v44_security.py",
+      "sha256": "1a1877b6e21970c9c6204a6eb561285a6a9ba74e659aab73180c62e9e0167677",
+      "bytes": 15283
+    },
+    {
+      "path": "tests/test_agent_intake_v45_security.py",
+      "sha256": "997ab17da74e418889fdddd9fd5bf958fd22c737438fff822b52f76b4dcbfaa9",
+      "bytes": 4870
+    },
+    {
+      "path": "tests/test_agent_intake_v46_security.py",
+      "sha256": "a885d180c30552d9162633a696e7f5ed293e49fe87c2ad83334de5b748738a68",
+      "bytes": 16706
+    },
+    {
+      "path": "tests/test_agent_intake_v47_security.py",
+      "sha256": "283003e9040f3502c0bc79650e8a57e091373ffc31c7f2a907442acaaaa4faae",
+      "bytes": 12491
+    },
+    {
+      "path": "tests/test_agent_journey_routes.py",
+      "sha256": "0e669ee1839bccf99cf961585f21b295b7a19f1b1a46e943b8013ab486620d2e",
+      "bytes": 5460
+    },
+    {
+      "path": "tests/test_agent_journey_state.py",
+      "sha256": "5f1fb9ab896109091d705ae86b463233349034cb2c55a3a6f580f0ff0e6a09c0",
+      "bytes": 17835
+    },
+    {
+      "path": "tests/test_agent_live_replan_eval.py",
+      "sha256": "305b2bce9ebc5b59c5139df76e9334de6ff7ca4c39b4f07e76ae4b3a6964efd1",
+      "bytes": 27787
+    },
+    {
+      "path": "tests/test_agent_material_reader.py",
+      "sha256": "81afd7d5c44d29a62d9511119259da30ba0efa0e54f0f0045e69cb25b4320677",
+      "bytes": 15171
+    },
+    {
+      "path": "tests/test_agent_material_reader_paths.py",
+      "sha256": "4a6bbe6e92f54b7cc0937b9e975ecd6ab2ff2016dcbca1adcae9495f5a088eb0",
+      "bytes": 6309
+    },
+    {
+      "path": "tests/test_agent_messages_api.py",
+      "sha256": "4824ef40aac97fe1681f9e6e709d94996a2c3db3efe334fca3004e2c5bf1e7da",
+      "bytes": 21322
+    },
+    {
+      "path": "tests/test_agent_model_deadline.py",
+      "sha256": "ecc5dad498b9f03cab9ab3a34fd02c246c74774a282fda8627cc89b109ecef69",
+      "bytes": 13202
+    },
+    {
+      "path": "tests/test_agent_place_media.py",
+      "sha256": "839d11d08c1b583b9d21e9074c65991bbc5c14fd3f3253c5ce9a6a51ba30c62e",
+      "bytes": 19219
+    },
+    {
+      "path": "tests/test_agent_place_reading.py",
+      "sha256": "363c2f01badebd3670e08629f583599e2aecf55a35c438d6aec817a0f25a1baa",
+      "bytes": 18938
+    },
+    {
+      "path": "tests/test_agent_planning_context.py",
+      "sha256": "b86391113de7c226824ccd014e588e03bd24d48f3558b33c946532d10aff980a",
+      "bytes": 7928
+    },
+    {
+      "path": "tests/test_agent_preparation.py",
+      "sha256": "d352340bbfa4c5b3fed06bc31b68dd6dcebac78cd2415776a1f816ddce01aef5",
+      "bytes": 16379
+    },
+    {
+      "path": "tests/test_agent_preparation_flow.py",
+      "sha256": "e17b09e1c88f45a505990e09d1e1e58c92586fad36aedd49cde41341d1bfec8f",
+      "bytes": 6505
+    },
+    {
+      "path": "tests/test_agent_preview.py",
+      "sha256": "bc0fafc5c3d0cefa077bd9b7cb55a0a0d988c596d25002a342a4278e3d084a60",
+      "bytes": 1036
+    },
+    {
+      "path": "tests/test_agent_progressive_discovery.py",
+      "sha256": "49752490e6cc192eb38a8ee3cf7c3ec6816016dab3a72ac9924a2c4725000829",
+      "bytes": 3302
+    },
+    {
+      "path": "tests/test_agent_public_search.py",
+      "sha256": "279e70cc8cb0ee6e82ca888610f1a8cb2d97ffb8770c1f326afaac597d6f7f4e",
+      "bytes": 17266
+    },
+    {
+      "path": "tests/test_agent_research_focus.py",
+      "sha256": "c946998c78b32ce64cfd11aae5e36e739abc89847847a35da2be737bc057f669",
+      "bytes": 27738
+    },
+    {
+      "path": "tests/test_agent_research_focus_api.py",
+      "sha256": "ed9755c09d85b6afcfae49d57597ce395a1d40086996629cb9412c13ebcf1d9c",
+      "bytes": 11259
+    },
+    {
+      "path": "tests/test_agent_scoped_benchmark.py",
+      "sha256": "e246300a7dfd984e57ba0c22602acf4cedc46691fac6a45dcbaba363eacad3d9",
+      "bytes": 11487
+    },
+    {
+      "path": "tests/test_agent_scoped_contract_api.py",
+      "sha256": "21601dbb2111194066b7819d42e98d4f69cbf1f6bb923ed2ff0f1030266ae3dc",
+      "bytes": 8080
+    },
+    {
+      "path": "tests/test_agent_scoped_replan.py",
+      "sha256": "d443648332bad38e9ab37fc98733de5098e48e52c3573c6adef1b7d62822a53d",
+      "bytes": 12411
+    },
+    {
+      "path": "tests/test_agent_scoped_time_cascade.py",
+      "sha256": "fd48cc231c222efc3990b1f4bbea10a2c4b933b76b7c7c223445f178b5e65790",
+      "bytes": 11533
+    },
+    {
+      "path": "tests/test_agent_security_regressions.py",
+      "sha256": "efe8024b195e892548f3a53045d83457b5e0206f17a19e22682904ee0625762d",
+      "bytes": 8285
+    },
+    {
+      "path": "tests/test_agent_semantic_review.py",
+      "sha256": "9eff14c4ff10b07c808a61f161635ca1d50b5fbddfd113d0aa0cfcf4bad47330",
+      "bytes": 9853
+    },
+    {
+      "path": "tests/test_agent_server_version.py",
+      "sha256": "b3227ffbac4de057469a7a8cf5acf6fc041ebded83ce8e4c76f011f56024de5d",
+      "bytes": 1783
+    },
+    {
+      "path": "tests/test_agent_store.py",
+      "sha256": "2bca392a7f6f7ab473575a69ca3de18710f7d10b876488d37ebc65f6188421ab",
+      "bytes": 2320
+    },
+    {
+      "path": "tests/test_agent_supply.py",
+      "sha256": "46b472f6602fee78d662f9f8934ac6f731654c2e80f84822ef3ecbe68a6da5ac",
+      "bytes": 7931
+    },
+    {
+      "path": "tests/test_agent_time_copy.py",
+      "sha256": "b3e1e63f545e28acfef308a94f480573e2e98f93e535fd58216442b8c8d972ab",
+      "bytes": 13712
+    },
+    {
+      "path": "tests/test_agent_time_shift_api.py",
+      "sha256": "b6a62bfcd30874faa8e3a3b0566100076c8299d0a9efc53927bacb39e76cf59f",
+      "bytes": 9469
+    },
+    {
+      "path": "tests/test_agent_time_shift_engine.py",
+      "sha256": "794b7b9756cc4bea15b8bea287ef81d6e0c68ab53635999da49cd1cd16837b78",
+      "bytes": 13156
+    },
+    {
+      "path": "tests/test_agent_trip_graph.py",
+      "sha256": "be711ab0e70d7c68bcbb4914483bf420ea579667f4a4ea175951c25a96d4d68b",
+      "bytes": 3254
+    },
+    {
+      "path": "tests/test_agent_universal_core.py",
+      "sha256": "14f3d205273af1d4441ee4c161f755a9ae40d98ff53fc5fa6082dcc13cd13870",
+      "bytes": 5440
+    },
+    {
+      "path": "tests/test_agent_validation.py",
+      "sha256": "07844367e57a77dabc8d8c016f0069f7fa65682d11e805b28c7f98d2bb55b0cd",
+      "bytes": 5827
+    },
+    {
+      "path": "tests/test_autopilot_actions.py",
+      "sha256": "d81a2b95920b576245ca5d3e22f504786f8c67fbda37268ea7774339f714ddf1",
+      "bytes": 24084
+    },
+    {
+      "path": "tests/test_autopilot_actions_search.py",
+      "sha256": "1109717a3a288abf21e0aab8422ac59ecebe99d2da62d3e4ed7f0cc479837fc3",
+      "bytes": 13937
+    },
+    {
+      "path": "tests/test_autopilot_advice.py",
+      "sha256": "529d23a3ecadd8e8d9eb08b2691ed25efacd5ea6df3f90cb4c1aa3d6bbb8b22a",
+      "bytes": 13862
+    },
+    {
+      "path": "tests/test_autopilot_advice_feedback.py",
+      "sha256": "7cdb03bb3e6fa39f4da441151fad343881979bced77c8241225cc3fe2994359e",
+      "bytes": 8514
+    },
+    {
+      "path": "tests/test_autopilot_advice_integration.py",
+      "sha256": "b8cd77e2b2454b0bbf76c86236719807f64a026f535c135e9c0c4eaced0d90e0",
+      "bytes": 14340
+    },
+    {
+      "path": "tests/test_autopilot_api.py",
+      "sha256": "bad136869aab026fc7c46ef9204fe9a72129bd83c3cc1a95280ba4f2c0944184",
+      "bytes": 10118
+    },
+    {
+      "path": "tests/test_autopilot_bindings.py",
+      "sha256": "56bf0eba9468ae135b8503ecb539b0d34f12439bee4ac1b8bc3b3d96c850941a",
+      "bytes": 15613
+    },
+    {
+      "path": "tests/test_autopilot_budget.py",
+      "sha256": "41182f4a396a3710403c9a4e284d922e42cf4cf885b3595c34b953becf938c68",
+      "bytes": 30652
+    },
+    {
+      "path": "tests/test_autopilot_context.py",
+      "sha256": "61c8d4f415c2d2af6c88458f519b70512c65298bb269e46c0947ead6bfc4f584",
+      "bytes": 3466
+    },
+    {
+      "path": "tests/test_autopilot_context_continuity.py",
+      "sha256": "ce9b854c89e68e405f8fa8800ba05eaca453261afecb4b6cfc88eda9badc09d1",
+      "bytes": 14029
+    },
+    {
+      "path": "tests/test_autopilot_entity_contract.py",
+      "sha256": "86a92eda674e894cb18286f50406a070fade5de1c773573981e9026e0931bade",
+      "bytes": 8713
+    },
+    {
+      "path": "tests/test_autopilot_evidence.py",
+      "sha256": "1fd63fba1008fe2be0fb3558e6db03651b5ff95c28fc06159de9d6af40ebed00",
+      "bytes": 14979
+    },
+    {
+      "path": "tests/test_autopilot_experiment.py",
+      "sha256": "4344cba17459dd3e567415c44789ea5625575c8aaf8bd1d5ffe7547288e5022a",
+      "bytes": 17691
+    },
+    {
+      "path": "tests/test_autopilot_experiment_budget.py",
+      "sha256": "007863bf8f5c2d352d1e05e7ee149c54ecb506cc025b19c2c01032d60a967eb6",
+      "bytes": 16558
+    },
+    {
+      "path": "tests/test_autopilot_gateway.py",
+      "sha256": "ee391373a0cb5b6032108dee015eea0c17cbde3f8846b11ef070031476df0239",
+      "bytes": 3865
+    },
+    {
+      "path": "tests/test_autopilot_maincore.py",
+      "sha256": "6bfccbafbf9a045c808415ae42f8d910ea30ccd77edb4281381e76a19c64460f",
+      "bytes": 17023
+    },
+    {
+      "path": "tests/test_autopilot_model.py",
+      "sha256": "ff9eefa70875be0470f62c1cee12f90e16a66f117507cf03746def19bc6e48be",
+      "bytes": 18359
+    },
+    {
+      "path": "tests/test_autopilot_operations.py",
+      "sha256": "3b182c89677c9bbabfad02da0296419d7382f17abaf1e1e490a4c69a8a7acc6a",
+      "bytes": 12076
+    },
+    {
+      "path": "tests/test_autopilot_revision_privacy.py",
+      "sha256": "5781796b4ac81d88748facebdd5f5c3a2231b5d3e4cbcafd6d3b2dbcb1c9bd15",
+      "bytes": 4613
+    },
+    {
+      "path": "tests/test_autopilot_revisions.py",
+      "sha256": "dae4495b84ca28da2893dadd24cf22866ed6527bdfe162b730d3f1a8479520b9",
+      "bytes": 33965
+    },
+    {
+      "path": "tests/test_autopilot_runner.py",
+      "sha256": "b7a060d25952d0fe30f379b46f54ddab1b7d757afd9ff84a5f6d30fbebdf6f00",
+      "bytes": 5592
+    },
+    {
+      "path": "tests/test_autopilot_service_commands.py",
+      "sha256": "a8136f9ae2f0d4a4ed74c481a5788935705f93d69caea90b9b7249ce9a40ad50",
+      "bytes": 14514
+    },
+    {
+      "path": "tests/test_autopilot_service_contract.py",
+      "sha256": "899d2fb91cfb5406557c684709ee39b40f4988ffd2eaa0b4f0f9de203bea8b98",
+      "bytes": 7301
+    },
+    {
+      "path": "tests/test_autopilot_service_public_scope.py",
+      "sha256": "be7a6a2c7ad599bd4c032faa11e7eda2e019d7784834c196746defa271ccd6c1",
+      "bytes": 3740
+    },
+    {
+      "path": "tests/test_autopilot_service_state.py",
+      "sha256": "fd9a3b89bc85e26776185b62fc9cced878717192d856aac9df2298edca8e0f2e",
+      "bytes": 3656
+    },
+    {
+      "path": "tests/test_autopilot_source_ttl.py",
+      "sha256": "f2b51d7e3663e0d5d4f2df15b2a49241c88ca4c86dbd8911073301a0d44ab519",
+      "bytes": 10230
+    },
+    {
+      "path": "tests/test_autopilot_store.py",
+      "sha256": "55919493329d17d58fa1a78abb20de3b4d81c59f38d0a862b42de127cbf803d3",
+      "bytes": 13428
+    },
+    {
+      "path": "tests/test_autopilot_tokenizer.py",
+      "sha256": "b742dc0efaf2d68320279a478b101d4d5f2e1e3665b9737386133ef9b75d8e2f",
+      "bytes": 5005
+    },
+    {
+      "path": "tests/test_autopilot_worker.py",
+      "sha256": "777c78f91d3af09e6a1e722d6d9ef8e7363d02ccedcd4d0228058313e9ca2dd1",
+      "bytes": 3645
+    },
+    {
+      "path": "tests/test_autopilot_workspace.py",
+      "sha256": "10df0c6bc2430a2d35ceba48fb961dc9ca0cf3cf176853be31528d414ea28044",
+      "bytes": 30103
+    },
+    {
+      "path": "tests/test_blind_capability_contract.py",
+      "sha256": "2d3f557ea87f5d4eb825fb0e680c57eec798e41984a9c255fe79fcba0e1f5c72",
+      "bytes": 9462
+    },
+    {
+      "path": "tests/test_blind_critic_context.py",
+      "sha256": "14c99edf4fec10035208a0e4d9c8938e55c559a4d1bd6dd32a59a90f3ac53548",
+      "bytes": 7719
+    },
+    {
+      "path": "tests/test_blind_delivery.py",
+      "sha256": "ec0c81ec422cfc602cf2b110b28925d2c9296d4990ad1e4431d861e0cefe18b5",
+      "bytes": 12418
+    },
+    {
+      "path": "tests/test_blind_repair_hypothesis.py",
+      "sha256": "c948f4bd4eca880ee295359bdc50a6a6b002f13d066650ef62c1dcad13bcfd91",
+      "bytes": 14124
+    },
+    {
+      "path": "tests/test_blind_spots.py",
+      "sha256": "d203d11636a66c6d3700136c148f13453d8d630e39f84c91d7dc7e9ae3e493b3",
+      "bytes": 10334
+    },
+    {
+      "path": "tests/test_blind_transport_errors.py",
+      "sha256": "9ca2ed5791180602d25b0a6613f0723915e48198e7bc6eddc5f66d58f7920f99",
+      "bytes": 2013
+    },
+    {
+      "path": "tests/test_blind_warning_repair.py",
+      "sha256": "cd123b17df163350ddaab5c6609b261fa1b3988e6d65a86771f934d2aede2884",
+      "bytes": 12429
+    },
+    {
+      "path": "tests/test_budget_estimate_assumptions.py",
+      "sha256": "b7c16770e30a666269156758fe55ecc742938571b5f0331156df6927fe5c4c7c",
+      "bytes": 8362
+    },
+    {
+      "path": "tests/test_c6_explicit_fixture_runner.py",
+      "sha256": "46dd01b730c9fe7ac4578930c7cd363479ab97ca136050e166756b0e95c19a40",
+      "bytes": 14889
+    },
+    {
+      "path": "tests/test_c6_fixture_a_disposition.py",
+      "sha256": "c4ebb4363df919c7d3fdd9f2738956ed65e355f2dd664bb4e0966ef9ce42b213",
+      "bytes": 9128
+    },
+    {
+      "path": "tests/test_c6_fixture_b_disposition.py",
+      "sha256": "534be417b5d9dae877d83c33de5dc921aee4c277535c3c791729dfb7ede8b20c",
+      "bytes": 9758
+    },
+    {
+      "path": "tests/test_c6_live_closure_entry.py",
+      "sha256": "4a5504d622610cebec081f90a531e237e4cba25aa7efe413e78b318ca67d2ff6",
+      "bytes": 17366
+    },
+    {
+      "path": "tests/test_coach_gate.py",
+      "sha256": "001fd5d3f901130bcd3749f33ab96ae25af867e66945cc144add97168405f893",
+      "bytes": 13384
+    },
+    {
+      "path": "tests/test_comparison_card.py",
+      "sha256": "76fb8b860433291868fad177beb72c16a2feca5ad6879c57ff3accf2cbc44144",
+      "bytes": 20612
+    },
+    {
+      "path": "tests/test_comparison_card_research.py",
+      "sha256": "f8ec4ae70074a89ebeecb933ae1bfb50aa936384eec8c57f3c13ef70408ed913",
+      "bytes": 10131
+    },
+    {
+      "path": "tests/test_comparison_maps.py",
+      "sha256": "ce8b1ac5a6aa00f83e1203f074cd2e40ef13dc53bb7e5560073d054afe66252d",
+      "bytes": 13021
+    },
+    {
+      "path": "tests/test_comparison_source_context.py",
+      "sha256": "86c8706f6678e084123fe1c0d50db66987da775cc3a222ac3741491e071fd49e",
+      "bytes": 4356
+    },
+    {
+      "path": "tests/test_customer_preview_gateway.py",
+      "sha256": "75b010445e645822797c2c6f4f7add06d4363a72093b2ed63be81d4b80f91dfa",
+      "bytes": 14898
+    },
+    {
+      "path": "tests/test_customer_preview_header_compatibility.py",
+      "sha256": "50f78657f2bc7569e2aeb9baf41fbc20348fb283dea41ea85c884fa00cf52557",
+      "bytes": 9353
+    },
+    {
+      "path": "tests/test_deepseek_discovery.py",
+      "sha256": "81bb3ad786649a0b81a65221273561fcd1d851f930fc649cc41e466d4d9d03c5",
+      "bytes": 16753
+    },
+    {
+      "path": "tests/test_delivery_boundary_regressions.py",
+      "sha256": "04562d0be3446cee8be019955228dd95228471315dca0890374cb5fb402b401f",
+      "bytes": 9647
+    },
+    {
+      "path": "tests/test_delivery_consistency.py",
+      "sha256": "181f0cd3bc69699129d2c06e884e5c252e094b36fd938ae547056f22fb4d75cf",
+      "bytes": 6959
+    },
+    {
+      "path": "tests/test_delivery_consistency_revision.py",
+      "sha256": "44955724be255316d3160aef0acb22d69c95335be5025941ce4ec1bbf502ddbc",
+      "bytes": 12015
+    },
+    {
+      "path": "tests/test_delivery_consistency_revision_b.py",
+      "sha256": "2e93294b250a1cb656d02f69f7fc11dfd81dcbadb86a743672b4b899b95d17ba",
+      "bytes": 1608
+    },
+    {
+      "path": "tests/test_destination_trim.py",
+      "sha256": "a78fa3522cd56bf4be37510038eb3b800b526539dee4d01b5c84088f52d43289",
+      "bytes": 6858
+    },
+    {
+      "path": "tests/test_destination_trim_days.py",
+      "sha256": "84c2cfffacd3e16ffc57505c76d43f419b117e5c94c9ddded05a9cf03fb158a8",
+      "bytes": 6270
+    },
+    {
+      "path": "tests/test_detail_creation.py",
+      "sha256": "91faf359194473b9267fc373559ff8a25f7e3417995998031045aacd18f86507",
+      "bytes": 10400
+    },
+    {
+      "path": "tests/test_detail_public_cache.py",
+      "sha256": "94b8fa4dd58c3adfe57bfd22c867b64b69b576af691fb3c11fe814c48eab7fb2",
+      "bytes": 3873
+    },
+    {
+      "path": "tests/test_detail_research_parallel.py",
+      "sha256": "47b83008e20085b830930d70e56c2f9fe576c856f1e012066a5dd0197daddb95",
+      "bytes": 2777
+    },
+    {
+      "path": "tests/test_detail_review_consumers.py",
+      "sha256": "52da786d2925bd825c756162914b3292e45e76986b9a8632246147aa848e2c66",
+      "bytes": 1404
+    },
+    {
+      "path": "tests/test_detail_reviews.py",
+      "sha256": "f8ae1eda6d2b74eceefe5b7a992ccd6f069b11e195a772254e63a5adbae208bf",
+      "bytes": 6922
+    },
+    {
+      "path": "tests/test_detail_synthesis.py",
+      "sha256": "de853482e8c9e7ff3a57a9050d8440c44c9dcf1190d182fbe10747f168225a6c",
+      "bytes": 10877
+    },
+    {
+      "path": "tests/test_detail_synthesis_deadlines.py",
+      "sha256": "de29dafd93cf5fec41562f12d23a43ad5113440a3a8e9f91541d4222599a9ea9",
+      "bytes": 4517
+    },
+    {
+      "path": "tests/test_detail_synthesis_flow.py",
+      "sha256": "83720513206c35fb1246281eeb72a0e513b132aae098d90f213b4e60c13f5a0f",
+      "bytes": 10490
+    },
+    {
+      "path": "tests/test_direction_anchor_contract.py",
+      "sha256": "012202da6023182877af2dbf2df492b642c7bf1cdfda1f86fa0e19963774d48d",
+      "bytes": 5545
+    },
+    {
+      "path": "tests/test_direction_schema.py",
+      "sha256": "0f3a113a090ce280de25877095bdf304579dc5fb8577ddc64285cd38c9df597d",
+      "bytes": 2339
+    },
+    {
+      "path": "tests/test_docsave_completeness.py",
+      "sha256": "fa7a2f4536359f3153416dcdaf94eb866ce679564446dd5b20ef0a1d9ec5ebc6",
+      "bytes": 8629
+    },
+    {
+      "path": "tests/test_docsave_context_errors.py",
+      "sha256": "4baab0940c0b6b013759ee5a6a30552ee5b6bdaf3496289cc5426451611ba6f5",
+      "bytes": 6342
+    },
+    {
+      "path": "tests/test_edit_binding.py",
+      "sha256": "2659fdb02cb7289dc5ff73b32119dc9a71fe341092a06b335608707077b2d7b7",
+      "bytes": 23929
+    },
+    {
+      "path": "tests/test_evidence_lands.py",
+      "sha256": "b9c7694313b4dcb0f00aa815d97a9aa70c369026d672757358c3fb9abf551119",
+      "bytes": 12528
+    },
+    {
+      "path": "tests/test_evidence_price_contract.py",
+      "sha256": "f13af5219eb97a2542daa892670757a0b2f2742dd7293fdd0cd5cc7068f3eac1",
+      "bytes": 4503
+    },
+    {
+      "path": "tests/test_execution_budget.py",
+      "sha256": "e94d299b68c7ffb8428e97219564d3e0a39c9c5d7fca7140b773b0b749debd02",
+      "bytes": 9391
+    },
+    {
+      "path": "tests/test_explicit_truncation_recovery.py",
+      "sha256": "be7fc0bbadae7ef2efab4d4baa05f21733c9f25438721cd1469e57c1c844937b",
+      "bytes": 3234
+    },
+    {
+      "path": "tests/test_fanout_safety_net.py",
+      "sha256": "c6ca411c5ff2e7689f37f7b20533f4dd90d37504577be01b354359f17e572acf",
+      "bytes": 9910
+    },
+    {
+      "path": "tests/test_first_eye_integration.py",
+      "sha256": "0755554c2843cc26f6422c822c74cf3fe50cc0f3a324442726c243eb259ad64b",
+      "bytes": 6577
+    },
+    {
+      "path": "tests/test_first_eye_media_binding.py",
+      "sha256": "0ff0cfa70b47fad717a138e6c59f94619c2ba4f56ff5a2129677c239397120ac",
+      "bytes": 15959
+    },
+    {
+      "path": "tests/test_firstpass_role_allowance.py",
+      "sha256": "a0b02de688f106e27918490d10765d64ff462962f82ad6b840f93eb7865b61ed",
+      "bytes": 11773
+    },
+    {
+      "path": "tests/test_followup_first_eye_browser.py",
+      "sha256": "92b32677ec40d8d34ff4d54b81ce8e7de6dec34c2f17bf0bdf384c84614f730f",
+      "bytes": 3718
+    },
+    {
+      "path": "tests/test_followup_walking_impact.py",
+      "sha256": "a2de3f4014515840718d14c3277edf802a3861b36b32178ddb44a40dd8586aa9",
+      "bytes": 4342
+    },
+    {
+      "path": "tests/test_framing_proposition.py",
+      "sha256": "6387b31174242647a5740a9bb08de71bb7f71819d4652cc18b965c74b9a35202",
+      "bytes": 6448
+    },
+    {
+      "path": "tests/test_google_route_links.py",
+      "sha256": "fa46c91f3c9c4883a07f8709b910ab7c23c8818156cabde2944232a8bd9d42dc",
+      "bytes": 1055
+    },
+    {
+      "path": "tests/test_handbook_assets.py",
+      "sha256": "256b286873b490ea46501cdb712911bde3caacba5c3f0c40cb4324641dc2ab61",
+      "bytes": 4464
+    },
+    {
+      "path": "tests/test_handbook_media.py",
+      "sha256": "e7d5a0d7ec1af41cf4610d2d426851109aa8192d03d458a8305ab82ed67ada59",
+      "bytes": 5560
+    },
+    {
+      "path": "tests/test_handbook_polish.py",
+      "sha256": "aaa08fbf8f230e48e4e5344151235ae1a6b4015a3b7770b1180cc14aeba7c3b4",
+      "bytes": 3424
+    },
+    {
+      "path": "tests/test_harness_teardown.py",
+      "sha256": "5ea48c4c343aa393c3b2e8680a2d2d38b550baf23a461baafc37aa8306bbc8b7",
+      "bytes": 4320
+    },
+    {
+      "path": "tests/test_initial_generation.py",
+      "sha256": "ee8cfcae0d170c7cd360a7fe48619680e8109bdbc4d29efd9281d5d575fb9cd5",
+      "bytes": 22080
+    },
+    {
+      "path": "tests/test_initial_public_research.py",
+      "sha256": "bc7e6069f942a04907be315893af3ca3d69d8a6e06c360520780da874e15cba8",
+      "bytes": 8537
+    },
+    {
+      "path": "tests/test_initial_reference_contract.py",
+      "sha256": "dbddce22d8863afd23a2aa86f5ef9d4830639616d32e8fbc83375561455dba77",
+      "bytes": 6131
+    },
+    {
+      "path": "tests/test_intent_questions.py",
+      "sha256": "3400e14e3a0a7b6d9a25c7d665d9e3074c86302b3af99999325ada7cb3e54e4a",
+      "bytes": 12396
+    },
+    {
+      "path": "tests/test_intent_revision.py",
+      "sha256": "ec73caf75bd8d5e3864b2b183ec78a092c7cb55e34bf412b5fb8ff738c02f7db",
+      "bytes": 17267
+    },
+    {
+      "path": "tests/test_interview_acceptance_budget.py",
+      "sha256": "d4e31da97286d18f1dbda04bfcfdeac1e01aa73c8b8f6ff925d7a89100977b17",
+      "bytes": 17783
+    },
+    {
+      "path": "tests/test_interview_configured_budget.py",
+      "sha256": "f3912469168e4fb5a30199e16d53c52c2263188d22d07ed64a7dbec616272506",
+      "bytes": 4019
+    },
+    {
+      "path": "tests/test_interview_operation_identity.py",
+      "sha256": "9810852ce1c2849c021271ffcbae2457fe222195d85042f73db137cd66159703",
+      "bytes": 5528
+    },
+    {
+      "path": "tests/test_interview_upload_budget.py",
+      "sha256": "ac32f631ea04fb0ef82fbfd8748fa14e74f6240d96a47af18620891c5d49b070",
+      "bytes": 5786
+    },
+    {
+      "path": "tests/test_interview_upload_gateway.py",
+      "sha256": "55d691e9179cbcb1e98b9879901ca4e53db3550a4c676342a40f63f9952c36ea",
+      "bytes": 4788
+    },
+    {
+      "path": "tests/test_itinerary_assembly.py",
+      "sha256": "ee8854ed428aa19a2b2d813dd50425362d81f112b527f85168c7c98bc181e66a",
+      "bytes": 18491
+    },
+    {
+      "path": "tests/test_itinerary_assembly_model.py",
+      "sha256": "690f281ba6dc70b10a6ec827e7810ab4c8e86b59ce4147b7d0941b8f108450c9",
+      "bytes": 6025
+    },
+    {
+      "path": "tests/test_itinerary_assembly_offline_fixes.py",
+      "sha256": "b0346764139c0e4c93bf1f16cb2c860aee1a5a87981ed285a489835f120523d4",
+      "bytes": 10062
+    },
+    {
+      "path": "tests/test_itinerary_assembly_pipeline.py",
+      "sha256": "51307ac4c5f7a59141e24628542d345f15742b18b01b2ee5d9fbe7281c8b5e6e",
+      "bytes": 14993
+    },
+    {
+      "path": "tests/test_itinerary_assembly_runner.py",
+      "sha256": "a639e9438a794be83c8c28c7e5ce7e264bbf4bcae98810c313b601d3d2455031",
+      "bytes": 22002
+    },
+    {
+      "path": "tests/test_itinerary_assembly_second.py",
+      "sha256": "e05a16d1a9991e5a3a9737c61361c380bc8f6e044cad465a69d5abd81b2cc918",
+      "bytes": 7165
+    },
+    {
+      "path": "tests/test_itinerary_assembly_second_runner.py",
+      "sha256": "981a9b9520421e5fc4eb7b19a130987ee41200596b1cddcf60b7ad36399938a5",
+      "bytes": 15733
+    },
+    {
+      "path": "tests/test_itinerary_fixture_preflight.py",
+      "sha256": "e45f6ce5ca84be482951d561fe3736c3a033abc77671eb7b3b4d5a8f4cb236f8",
+      "bytes": 16254
+    },
+    {
+      "path": "tests/test_itinerary_fullchain.py",
+      "sha256": "ec46c83941b2525ef1b4b89b675f9a3e9dc772f8b6b3b93af50985277a97c23d",
+      "bytes": 6513
+    },
+    {
+      "path": "tests/test_itinerary_price_projection.py",
+      "sha256": "274e069335804d80211786d7912dd9aa0013e774e12e3812a96ce622f5ea10c1",
+      "bytes": 13037
+    },
+    {
+      "path": "tests/test_itinerary_supply.py",
+      "sha256": "32ef31fd0d0eb3ecba3be725181ae86025d7c2ef64364426df640cce02ed9110",
+      "bytes": 11410
+    },
+    {
+      "path": "tests/test_l3b_atomic_revision.py",
+      "sha256": "b2f9137caf7b4b72e6d65ea91d00b14097dbebdb83fde39909fd1ab5595b0393",
+      "bytes": 9520
+    },
+    {
+      "path": "tests/test_l3b_intent_titles.py",
+      "sha256": "df0ad9a091b397af6aa5e837756e1001bd501632131ca59a4dbae394c0bbd5e5",
+      "bytes": 9601
+    },
+    {
+      "path": "tests/test_l3b_pending_materials.py",
+      "sha256": "bbfa719dc04568c942c988f511b9dc17d5103272df1bea7d163f7bcab5bfbf73",
+      "bytes": 2592
+    },
+    {
+      "path": "tests/test_lifecycle_atoms.py",
+      "sha256": "91df767ef5b75596db418ce86ed67d2a872400376eb00de215b4f6e96d7e523a",
+      "bytes": 8309
+    },
+    {
+      "path": "tests/test_loop_slim_assembly.py",
+      "sha256": "9db1fc1f173b9bb9f0084c2e98a3d41eb513532acd3984afc8e4add92d966f2c",
+      "bytes": 13398
+    },
+    {
+      "path": "tests/test_loop_slim_guard.py",
+      "sha256": "f696a2149702729e88425b4a4684b89b58a5ab4a9ac20918a9f38321adfb0faf",
+      "bytes": 7190
+    },
+    {
+      "path": "tests/test_loop_slim_revision.py",
+      "sha256": "f6ffe8094de7de6804361b563d22336e94d6d014e42452c3ea881febe1bd83cf",
+      "bytes": 8584
+    },
+    {
+      "path": "tests/test_maincore_intake.py",
+      "sha256": "69ece96b89681300509fa81a0e5b3906c028247e0fa096fab5ac53387fb90427",
+      "bytes": 3482
+    },
+    {
+      "path": "tests/test_material_details.py",
+      "sha256": "5ab4de251edb4d6eb24b39637e7232553f6d543919e4ee88fe05a450dad6d038",
+      "bytes": 20041
+    },
+    {
+      "path": "tests/test_material_parallel.py",
+      "sha256": "eb2ba856e86933a4b40b278b5bf9214c45cb6ad331872c012e4016f4e1cdfc26",
+      "bytes": 14510
+    },
+    {
+      "path": "tests/test_media_acquisition_reuse.py",
+      "sha256": "9be185ac988adf5696e971e06a5ffbc49722824e85863b3019cc08f9c90fea92",
+      "bytes": 3028
+    },
+    {
+      "path": "tests/test_media_context_contract.py",
+      "sha256": "ec21f7e75f4fd8ca3a9ba579421c8d02418eafbb6ff9070e945c6b93c8e3b775",
+      "bytes": 18484
+    },
+    {
+      "path": "tests/test_media_linked_provenance.py",
+      "sha256": "6687c7000fe78223dd27d3e397111fa97357d297a40745dab44a74033e44926d",
+      "bytes": 4801
+    },
+    {
+      "path": "tests/test_media_metadata_singleflight.py",
+      "sha256": "8458bc68fcb8b4962abbc8838184f687b0dc74370d4edcfc64525e4ca97bd8af",
+      "bytes": 9572
+    },
+    {
+      "path": "tests/test_media_model_projection.py",
+      "sha256": "5f4aaecb26f66ffa58a306e0d32d9affe5b7a1e8bcd0c474400f04f030a8bcee",
+      "bytes": 11439
+    },
+    {
+      "path": "tests/test_media_photo_alternates.py",
+      "sha256": "1d697a31bcfb0f45388c36f5198c675cee09e7c78cf63291f21ba07b4aa8d5be",
+      "bytes": 8135
+    },
+    {
+      "path": "tests/test_media_photo_delivery.py",
+      "sha256": "cc1b9c8a0d43d5db9e8be6cd57e0c64e6720f9fe941c76433d2295dddd7396d8",
+      "bytes": 6880
+    },
+    {
+      "path": "tests/test_media_photo_persistence.py",
+      "sha256": "d89d28c179059e3b5a282750202c9f937882c8b62bc4229603cf6f00d1778b0b",
+      "bytes": 12892
+    },
+    {
+      "path": "tests/test_media_provider_deadline.py",
+      "sha256": "9893b18653778ff011eca07ce87394c08b39fb5662b31f98b9fcf55f72bc3620",
+      "bytes": 8745
+    },
+    {
+      "path": "tests/test_media_reader_copy.py",
+      "sha256": "406e02a0bef41129a3b4eb6ef46b8af09099c552c8653a6e036c01309e16d3e1",
+      "bytes": 1747
+    },
+    {
+      "path": "tests/test_media_receipt_reuse.py",
+      "sha256": "c3d5690f2db1f9990105fc076a9a210387dab22be2bdfafc488f676e1bc54fd6",
+      "bytes": 19417
+    },
+    {
+      "path": "tests/test_media_revision_pipeline_reuse.py",
+      "sha256": "04cabded3f80077399bc33f235c4676b366e2bb0be86636f52cbfd4747d71ef8",
+      "bytes": 10879
+    },
+    {
+      "path": "tests/test_media_selection_model_mode.py",
+      "sha256": "a5e73f45d327f0a0feec1a234b47da13b34ca34d0eda9341c68adac6e835e13e",
+      "bytes": 3728
+    },
+    {
+      "path": "tests/test_message_evidence.py",
+      "sha256": "5b8364d4ba52d11b1ee7e052cd3aa0d93b0b7e61d513d8bfd630131a0541b787",
+      "bytes": 12067
+    },
+    {
+      "path": "tests/test_message_evidence_review.py",
+      "sha256": "0cb298450168340fc775ad59f3490b3a26906bdfeb55aac5f75ace24c4b73a12",
+      "bytes": 9665
+    },
+    {
+      "path": "tests/test_message_ledger_access.py",
+      "sha256": "8ae8691107b6c36b4e0134aa86cc087e980173c665756dfc4f938dc50a04be4c",
+      "bytes": 8826
+    },
+    {
+      "path": "tests/test_model_boundary.py",
+      "sha256": "f71284535b72d3950d9ba5ef6f136296f9b3e3c1bc0565e07db07d45b3986330",
+      "bytes": 13502
+    },
+    {
+      "path": "tests/test_model_media_acceptance.py",
+      "sha256": "e7bc86f848d9eccde634f7c227bfa2898f5f5dda6efffceb260161141d7101ea",
+      "bytes": 18233
+    },
+    {
+      "path": "tests/test_model_sizing.py",
+      "sha256": "b596525eeab816f3f022596fa7b3efd7632c045649be3531d53dbf06b0db09e6",
+      "bytes": 7460
+    },
+    {
+      "path": "tests/test_multisource_organize.py",
+      "sha256": "1a86aaf2fe5e84c19830ab543e9be590f2784ce886c3fd5d153529a1d123c81a",
+      "bytes": 21581
+    },
+    {
+      "path": "tests/test_native_writer_reasoning_preflight.py",
+      "sha256": "be0defcf78797d83518f9d80739be4068ed458f60c0eb30b2ae62bdb5c2158ad",
+      "bytes": 9824
+    },
+    {
+      "path": "tests/test_offline_test_guard.py",
+      "sha256": "7f0f40fddbbd71aef169ba576212d317f2a9cc3d88a405bbb4c1b86e7f194a92",
+      "bytes": 2639
+    },
+    {
+      "path": "tests/test_orch_shape_core.py",
+      "sha256": "2c15090f92f3e57e12183e3e93450986553e7b4f5719b3938288de715ab97e2a",
+      "bytes": 9972
+    },
+    {
+      "path": "tests/test_orch_shape_integration.py",
+      "sha256": "2daaede3c95560e835e9448e45d44ae4d8fa24d487604ffaea44a6e609b8da22",
+      "bytes": 5451
+    },
+    {
+      "path": "tests/test_pdf_batch_cache.py",
+      "sha256": "0b1fce190abc6ba5125df3899ba426c85064a3c240c49c0c32bdd61d3cea7d29",
+      "bytes": 2380
+    },
+    {
+      "path": "tests/test_pdf_fail_degrade.py",
+      "sha256": "189d7b66c5cab0acbf9475c54a97a83e6a4cf236aac1bf15635ac87a7c3eb0cf",
+      "bytes": 5944
+    },
+    {
+      "path": "tests/test_pdf_failed_image_placeholders.py",
+      "sha256": "444f48a18c09ccd0a6bfab7510d9e57059387a68ad207a78d535312179d57dc1",
+      "bytes": 4287
+    },
+    {
+      "path": "tests/test_pdf_shared_image_deadline.py",
+      "sha256": "88902f6865c4e0208f4e1af84c46be7382a52b8dc5b0724118e44f3aedc99745",
+      "bytes": 4858
+    },
+    {
+      "path": "tests/test_phase1_annotation.py",
+      "sha256": "c9fe318b12b2361a3dd6cb02b54b40e0b2595b0583065d0742c049754c53616c",
+      "bytes": 21571
+    },
+    {
+      "path": "tests/test_phase1_lookup.py",
+      "sha256": "9dc4f6fae179f47e27bf8e32c65d3363d3b0f65285a1147c617402f94b58df63",
+      "bytes": 5125
+    },
+    {
+      "path": "tests/test_phase1_revision.py",
+      "sha256": "35fdfe012b438dcc5e3a3eab1f537e56e7cee1afced7a3074137f289cb80e4f2",
+      "bytes": 8397
+    },
+    {
+      "path": "tests/test_phase1_runtime.py",
+      "sha256": "81bd029a4222817e9cd73526605dcfd8466b2463517c10a6db529d5bfeb0df57",
+      "bytes": 40768
+    },
+    {
+      "path": "tests/test_phase1_service.py",
+      "sha256": "ed5d40b2b8bf02d976402c82cdc56719dcf3b2eaa8cd67479198a5c22c2260f8",
+      "bytes": 9596
+    },
+    {
+      "path": "tests/test_phase1_sources.py",
+      "sha256": "e3edfca943e5aeddf38e71e178c4ddecd34315c05062fb921e862340e187b73c",
+      "bytes": 1860
+    },
+    {
+      "path": "tests/test_pipeline_accounting.py",
+      "sha256": "c616ea82091530d6f4a2a56ab31f7c25d2c34cabfae2bdff6668be08a4ab7d2c",
+      "bytes": 6495
+    },
+    {
+      "path": "tests/test_presentation_delivery.py",
+      "sha256": "d1f7917ce1c0b870c0c3247871e8d871c5e404b69d9f80df2b23757047e4836c",
+      "bytes": 8962
+    },
+    {
+      "path": "tests/test_presentation_standard_fixup.py",
+      "sha256": "41c8043f1891c75b1efd9ddd17ce1793ee3bc476b01064a8e177049f158563e7",
+      "bytes": 8568
+    },
+    {
+      "path": "tests/test_presentation_wire.py",
+      "sha256": "d02c30badd204b82a367fa787f176ebb9c3c8679c6ccfbb85b7c72dc65950dd8",
+      "bytes": 8603
+    },
+    {
+      "path": "tests/test_price_binding.py",
+      "sha256": "7f3aa41a09bfffb8a1bfc139b522757d9c942f52bf38877bd249a8be49a8e28f",
+      "bytes": 4341
+    },
+    {
+      "path": "tests/test_quote_binding.py",
+      "sha256": "d74d66820bf89c25ec49a9142492ad13ff8a1c66099ed7e01b06693d070ea9b5",
+      "bytes": 10818
+    },
+    {
+      "path": "tests/test_reader_budget_composition.py",
+      "sha256": "7b798993372f3e84f5825f7070db99206fa627dc0882eb34e84775b8aaadabbf",
+      "bytes": 12508
+    },
+    {
+      "path": "tests/test_reader_content_locality.py",
+      "sha256": "d175d1c497d4980b1c9eb88916464ab2a38fcf0a08861a329538f4996e288e59",
+      "bytes": 1825
+    },
+    {
+      "path": "tests/test_receipt_number_language.py",
+      "sha256": "a6ae482fbbefd167f955ea7f32c1892616fa22158f5363027479afd0fcfd7293",
+      "bytes": 1271
+    },
+    {
+      "path": "tests/test_recorded_transport_evidence.py",
+      "sha256": "598369f0bf6efdbf33087a86646e499ad4807144ea8150cb0c4157742b2de119",
+      "bytes": 8540
+    },
+    {
+      "path": "tests/test_reddit_public_evidence.py",
+      "sha256": "512814cf148ac7e6dd4e90b9ae313e1a1db9d9772358335d128f7f2aa866fc7f",
+      "bytes": 9697
+    },
+    {
+      "path": "tests/test_render_queue_timeout.py",
+      "sha256": "204961c2a4423706b54793275cced63e4d10d2c4abb25f4a92b7a84d385a4332",
+      "bytes": 8439
+    },
+    {
+      "path": "tests/test_render_service_startup.py",
+      "sha256": "3d9c44b5ae1ea33fd1f583b51f37fd8f168961a70159be91e9b9c8e1a3deaf6d",
+      "bytes": 1268
+    },
+    {
+      "path": "tests/test_research_batch1_replay.py",
+      "sha256": "04bd728a96d00f897de7671361daafbf6bc0c19508f8dbb2f2b4268f3ec19ac5",
+      "bytes": 7635
+    },
+    {
+      "path": "tests/test_research_parse_degrade.py",
+      "sha256": "a57c3a574f94a981f8b1136673ba12d77609d69ee6c9184fa253e6ea93848c78",
+      "bytes": 11113
+    },
+    {
+      "path": "tests/test_research_transport_diagnostics.py",
+      "sha256": "5ed2d6bfe0078687838f3467730327dfeb7e7c1520539c75c5efe9afc36f4d45",
+      "bytes": 18533
+    },
+    {
+      "path": "tests/test_researcher_native_handoff.py",
+      "sha256": "ff2cdc6e8bffea276b125a8a9e62884dc83eb2ceebfea048f61729c8a2d2da1a",
+      "bytes": 21124
+    },
+    {
+      "path": "tests/test_researcher_read.py",
+      "sha256": "14879c924ed225d9b761ee6bc7d7ef5f0524aba41ca913804a909065ff7f5b2a",
+      "bytes": 12590
+    },
+    {
+      "path": "tests/test_researcher_read_parallel.py",
+      "sha256": "93fd983b82f2acb42ed44e6dd98118690df6d95fb1f5c3d157e91ef8d6394f10",
+      "bytes": 9317
+    },
+    {
+      "path": "tests/test_researcher_read_selection.py",
+      "sha256": "4b956475e2b685f48f4d827918bddc6c5a0bb66d190d38d59722786feed2e7a6",
+      "bytes": 9138
+    },
+    {
+      "path": "tests/test_researcher_yield.py",
+      "sha256": "1f3a7ea88d18886e599203ac36c63a9b34cec5d8ff1a4f51373ed196ee10f007",
+      "bytes": 11537
+    },
+    {
+      "path": "tests/test_restaurant_availability.py",
+      "sha256": "dbcefcd9ee5d771c15713f37d7ae281ef95dd0751b67b047dee47354931bd443",
+      "bytes": 11128
+    },
+    {
+      "path": "tests/test_retained_receipt_evidence.py",
+      "sha256": "744c7fca872d0926d80a6ae00ddd1dc4ddf63fa34b3d4fb3d23daa57e8afeff2",
+      "bytes": 6111
+    },
+    {
+      "path": "tests/test_revision_failed_dedup.py",
+      "sha256": "3783a2c04d6b1a05271cbf5c91f03691a68109811e85bdf57b6db2d944ae30ee",
+      "bytes": 3367
+    },
+    {
+      "path": "tests/test_revision_plan.py",
+      "sha256": "23708c58242f5bf10305099389af6c3846c24d7e3e2d857176ebe09f349a3343",
+      "bytes": 11752
+    },
+    {
+      "path": "tests/test_revision_presentation.py",
+      "sha256": "a56e6b413ce678a92b964d512cc714f71075b766c6601c2ce5514b095908dcd8",
+      "bytes": 6463
+    },
+    {
+      "path": "tests/test_revision_presentation_api.py",
+      "sha256": "51458ae2e93cb0b7e9ab1012f6ba5ebd1db7a9dd9efcf852020a3333d7e04ef2",
+      "bytes": 8723
+    },
+    {
+      "path": "tests/test_revision_receipt.py",
+      "sha256": "42f5b5b929cf447b9ca66698e8480f6e171cd65a6748eef7a006d8e0a76f1616",
+      "bytes": 27745
+    },
+    {
+      "path": "tests/test_revision_receipt_api.py",
+      "sha256": "fa5e4093f54143e07586b4005b691fe8e96278ee85cbeb17cf61f8146b36e520",
+      "bytes": 4842
+    },
+    {
+      "path": "tests/test_revision_review_budget.py",
+      "sha256": "712de55d4b8038445304758bbac7c9d24bbcdef8a07d48bad7057dd6e7a731c5",
+      "bytes": 9824
+    },
+    {
+      "path": "tests/test_revision_review_handoff.py",
+      "sha256": "2ae3e365be85ba7123c4acaedd58ea3779ac5622bed4d21915ac30b8efd2b594",
+      "bytes": 3872
+    },
+    {
+      "path": "tests/test_revision_stages.py",
+      "sha256": "bf5dfa7351c6bafa4292b74466b74b08a82a85125420da9e85cab5e5a94b0060",
+      "bytes": 12714
+    },
+    {
+      "path": "tests/test_role_media_budget.py",
+      "sha256": "7ab519a430319d7b482e675590298b49dc3f79b6d118e33b27de997780943ee7",
+      "bytes": 3761
+    },
+    {
+      "path": "tests/test_role_no_progress.py",
+      "sha256": "cf96c0cdebd3bf987461a85f5f2540da41ef3fd5d9ad6d224e9dd814fa409e4f",
+      "bytes": 20273
+    },
+    {
+      "path": "tests/test_run_canary.py",
+      "sha256": "52bf66fefc1355c95290c131441d9283d1e06f367050a9deb7f37d8b56a144a7",
+      "bytes": 10928
+    },
+    {
+      "path": "tests/test_run_gate_disposition.py",
+      "sha256": "1ef1a161698cd65cc4f34e42b9e7ddc0d5265e3c2be007c4a3ba06d8a251b4c3",
+      "bytes": 13619
+    },
+    {
+      "path": "tests/test_run_reliability.py",
+      "sha256": "43a62ff94b08a0f34ffff40e64b7b4f44232f02c4aa4573b04e66ee08cdf6b6c",
+      "bytes": 16299
+    },
+    {
+      "path": "tests/test_runtime_evidence_pool.py",
+      "sha256": "307046efa63d9a20316eb1d02af576b4d0ab53760bb5c193f0df3952a3c46ca5",
+      "bytes": 11019
+    },
+    {
+      "path": "tests/test_runtime_loop.py",
+      "sha256": "10cad966e39054a8f6ca904d5feca2aec83f2d70bef17de9eaae3f9afc9ea666",
+      "bytes": 9240
+    },
+    {
+      "path": "tests/test_runtime_revision.py",
+      "sha256": "cc53c74c016ad2808bc7f05c02633894008876aa2fcc20cd8014fa2a1293d3b6",
+      "bytes": 12924
+    },
+    {
+      "path": "tests/test_runtime_supply_acquisition.py",
+      "sha256": "b6df33fb681fa701ec5ced448bb060d9febdda9a6a5370cf982c331ad31d1603",
+      "bytes": 14280
+    },
+    {
+      "path": "tests/test_search_pool_degrade.py",
+      "sha256": "6ad26a6197a62e6fef2bfdc3f5e24a35d9c3a0a1f76962116632f33da560e1e3",
+      "bytes": 14639
+    },
+    {
+      "path": "tests/test_season_scope_coverage.py",
+      "sha256": "238ac3404249958157f56d6cb94b41c27a4f5c365794b180d0b823e1ffbcf3d1",
+      "bytes": 3810
+    },
+    {
+      "path": "tests/test_seasonal_price_accounting.py",
+      "sha256": "a20d2236bf4af143ed74ab66f5597da917d772c4ce167fe8cfb957b1ef8e1be7",
+      "bytes": 6675
+    },
+    {
+      "path": "tests/test_session_delivery_accounting.py",
+      "sha256": "1574a017761b121510f72aaec4b527c73ae99f6233b1d2f24797d64376c822a8",
+      "bytes": 7208
+    },
+    {
+      "path": "tests/test_single_session_acquisition_grace.py",
+      "sha256": "951d2b208a7b9882581f5f6a183b255c659b4e16aa628cc4805290924aa504e0",
+      "bytes": 7023
+    },
+    {
+      "path": "tests/test_single_session_adjudication_wrapper.py",
+      "sha256": "ffb6f5f737a38ed4f85ecbabceb0ff58a221ea8b9efafaec7ae3055d2ed4d4da",
+      "bytes": 2719
+    },
+    {
+      "path": "tests/test_single_session_agent.py",
+      "sha256": "5e1b1f529e4ff558dec800b68c77667e60dcf7900198a375c87676be05bcc2ef",
+      "bytes": 20996
+    },
+    {
+      "path": "tests/test_single_session_api.py",
+      "sha256": "558e1ec9e49e3c728d2911e3c6edee25644a10e0f636efc36fb6c9871d104302",
+      "bytes": 27350
+    },
+    {
+      "path": "tests/test_single_session_api_failure_classification.py",
+      "sha256": "95dccc2d07e67ec8c95dfb05a273147385caaa1c822d51e0b4112a70be1efa1e",
+      "bytes": 7176
+    },
+    {
+      "path": "tests/test_single_session_api_progress_errors.py",
+      "sha256": "07139b5cf9e171020e71c681251ddb0a7eacdf99e3489d8a0939a8c780cc9af5",
+      "bytes": 4490
+    },
+    {
+      "path": "tests/test_single_session_api_recovery.py",
+      "sha256": "184b0eadf3b9ae3930fc7a8e3e037ed30954f342ed201850948ef43ee01d4990",
+      "bytes": 24227
+    },
+    {
+      "path": "tests/test_single_session_authoritative_plan.py",
+      "sha256": "f111b4518d411f1a8a2ffdbf2fd2d1bfb24615761a4f6d7ca2b07559e02ba324",
+      "bytes": 7667
+    },
+    {
+      "path": "tests/test_single_session_budget_totals.py",
+      "sha256": "c1060556aeeac0f494e9207df63e0b4b5166ebbbd72eab90a57f7d2c6a01bc09",
+      "bytes": 9755
+    },
+    {
+      "path": "tests/test_single_session_cancelled_commit.py",
+      "sha256": "e08719d1c1bbda8fb7626b1a728fafe1706891594ba92473985b0cfdd379f95d",
+      "bytes": 6161
+    },
+    {
+      "path": "tests/test_single_session_comparison.py",
+      "sha256": "6ea28335dfa1354415fff3c64b3be388d4c544186b0e6f2a02eaad536cf5eceb",
+      "bytes": 15693
+    },
+    {
+      "path": "tests/test_single_session_context_spec.py",
+      "sha256": "376c448b0e5579ff339623422ec4333aeda62dd24a2c1fab42324dede75a50be",
+      "bytes": 1018
+    },
+    {
+      "path": "tests/test_single_session_delivery_quality.py",
+      "sha256": "618cbc260f76952ca62ef12864c47db6a656f346163ea6fe6ee604e42c6bc403",
+      "bytes": 6863
+    },
+    {
+      "path": "tests/test_single_session_delivery_recovery_contract.py",
+      "sha256": "abf971c9026e9226bc70989736b919e0a3c8897463322d2cce98e3cad5ed2cc9",
+      "bytes": 8572
+    },
+    {
+      "path": "tests/test_single_session_destination_context.py",
+      "sha256": "046c100e382f087057d8bccf978ac44a406c251f6c95783db14255e1be0d3ac3",
+      "bytes": 9206
+    },
+    {
+      "path": "tests/test_single_session_destination_depth.py",
+      "sha256": "2078c65403c55075af787e2a8213e3c9912f173be08266ecd84c7ecb79bfe050",
+      "bytes": 7681
+    },
+    {
+      "path": "tests/test_single_session_destination_detail.py",
+      "sha256": "d20e28e9529acc96f9a7deb409ea0161813597b8cdac35015bca6469f04343f3",
+      "bytes": 9708
+    },
+    {
+      "path": "tests/test_single_session_destination_visual.py",
+      "sha256": "232cfae1d6e670aa6e0e71c22a408a9dfc63149270404feebdbf4fafd7c8b0e4",
+      "bytes": 9242
+    },
+    {
+      "path": "tests/test_single_session_detail_spec.py",
+      "sha256": "c597cb5687e77c4b76f23b668d567fe004fd0877455340cb9af507673633e94c",
+      "bytes": 4042
+    },
+    {
+      "path": "tests/test_single_session_document.py",
+      "sha256": "9adafaa34a187d70ef3ee14b9ee436a5cfca11af75e192549d226dc1a686285c",
+      "bytes": 41932
+    },
+    {
+      "path": "tests/test_single_session_draft.py",
+      "sha256": "bf9fac67cdfafd571721a180a07d33c8c1573ad83f53130d773b635b3d646207",
+      "bytes": 11880
+    },
+    {
+      "path": "tests/test_single_session_draft_context.py",
+      "sha256": "7197e94c54c300723e69744ad004dbd41e4376053a6e4caacab1214d80565c0c",
+      "bytes": 11835
+    },
+    {
+      "path": "tests/test_single_session_draft_pipeline.py",
+      "sha256": "53f08de9981752123c4c5cd6999749b87a02b50578faf9cc410f093100c51b7a",
+      "bytes": 9815
+    },
+    {
+      "path": "tests/test_single_session_draft_repair_progress.py",
+      "sha256": "c2a458b4a9c119149088933e8e8a8cbbdcffd8e600533f10b89253fd5edb66fe",
+      "bytes": 29355
+    },
+    {
+      "path": "tests/test_single_session_draft_work_packet.py",
+      "sha256": "b7e24fc63ee8b63dfe79e8783c6259e3665a2f2144cd1ac85e4e0efbb8250fa5",
+      "bytes": 6884
+    },
+    {
+      "path": "tests/test_single_session_field_edits.py",
+      "sha256": "fa5d1504b3f282fb5b20ead7777975024f64ea492e0d2f7133c10518e9b7a847",
+      "bytes": 11691
+    },
+    {
+      "path": "tests/test_single_session_first_eye.py",
+      "sha256": "a64107636bcd9be9453aa061e8351e56b9ca46cfa1c14e95677024a9b974fd27",
+      "bytes": 19063
+    },
+    {
+      "path": "tests/test_single_session_firstpass_context.py",
+      "sha256": "238900e958486ec004a3e00a907fc88bcff61377a87166bf12c39769de3d6e22",
+      "bytes": 10077
+    },
+    {
+      "path": "tests/test_single_session_firstpass_plan.py",
+      "sha256": "96a2182c5bc658a3dacc2db049058d390260b09ed4ab5d7089ab2b568b47c692",
+      "bytes": 7045
+    },
+    {
+      "path": "tests/test_single_session_handoff.py",
+      "sha256": "9beec533b38279cdd49226c70a2291c1fa80f8e4f849aae3e941fb8f13c196c4",
+      "bytes": 17860
+    },
+    {
+      "path": "tests/test_single_session_interrupted_revision.py",
+      "sha256": "b41c95117f8b34912b0ec9e6f901c7b60e6360d7a5321183400943d383cdf51a",
+      "bytes": 14336
+    },
+    {
+      "path": "tests/test_single_session_ledger_cancellation.py",
+      "sha256": "1223c9da264e9f2978602b0fff86a6f07b6ac5845e268a275583b71e34905e23",
+      "bytes": 11590
+    },
+    {
+      "path": "tests/test_single_session_legacy_presentation.py",
+      "sha256": "8677e8719d135d12c2e08dd296da8a9ac5f80018594ed51a283e6c011a06e414",
+      "bytes": 2880
+    },
+    {
+      "path": "tests/test_single_session_media_candidates.py",
+      "sha256": "97162b7a0a7f5374e2813e44505182aca2f7d1b826cd704bbb25d8bc42f9362e",
+      "bytes": 13737
+    },
+    {
+      "path": "tests/test_single_session_media_sources.py",
+      "sha256": "ac29911b1087e6bc0c74882ecf31302b462cecf54c5defa470ae2c4dabb810ed",
+      "bytes": 11885
+    },
+    {
+      "path": "tests/test_single_session_pdf.py",
+      "sha256": "4b3aaa00da1e1d54008e1c644e535ea6d378c5ef1a6acebc7a09369295467512",
+      "bytes": 9812
+    },
+    {
+      "path": "tests/test_single_session_pdf_batch.py",
+      "sha256": "53bbfb74d9ccc077a9bf9fb5fee200c93f9e60ae29b06b01ae9e53fd96497a99",
+      "bytes": 8439
+    },
+    {
+      "path": "tests/test_single_session_pdf_image_receipts.py",
+      "sha256": "1a97a2f49e776728e8ddabf2a8e42655668fca952b791a6f7e6651dabd237619",
+      "bytes": 14665
+    },
+    {
+      "path": "tests/test_single_session_pdf_reader.py",
+      "sha256": "8cd3e71311b71f339cebd2939e08e8ca277edc950b831810a4f1f15762933886",
+      "bytes": 8984
+    },
+    {
+      "path": "tests/test_single_session_pdf_retry.py",
+      "sha256": "4f73f5039924d566860d6bd4901b1cd41beb0aabfcfa770d6f635bc6b7e86a22",
+      "bytes": 2093
+    },
+    {
+      "path": "tests/test_single_session_plan_price_binding.py",
+      "sha256": "79d294e8c7b98156cef0b1d23bf0423efec719194b95331dea2f7e82a69673f2",
+      "bytes": 6942
+    },
+    {
+      "path": "tests/test_single_session_plan_references.py",
+      "sha256": "62dc69b6d27a15ff67ecc127dc9866c69f2aafb3de89b0c03608a6381c2a42c5",
+      "bytes": 9094
+    },
+    {
+      "path": "tests/test_single_session_presentation_rebuild.py",
+      "sha256": "5843b795219ffc5fa9688726b9e80eef42cee65886467b9972650f140352b6ae",
+      "bytes": 20402
+    },
+    {
+      "path": "tests/test_single_session_price_display_scope.py",
+      "sha256": "ad1ec63b053732041ed703802ac8c9ef8bdac79c109330a66d6be9476f914f0a",
+      "bytes": 6352
+    },
+    {
+      "path": "tests/test_single_session_price_findings.py",
+      "sha256": "36befb40b74c17a1a57a31a1de7cc43646d33be2cfcd8d4b6dbac29f613a07c3",
+      "bytes": 7734
+    },
+    {
+      "path": "tests/test_single_session_profiles.py",
+      "sha256": "58cae06cd101774ab0a34c081bd383492e36e2225c95dbb6465f75743f198df7",
+      "bytes": 13606
+    },
+    {
+      "path": "tests/test_single_session_prose_edit_scope.py",
+      "sha256": "efda0f765876fd982043993e383aed90a2808eaf87b828f9b8b713e2ef00b3c4",
+      "bytes": 4809
+    },
+    {
+      "path": "tests/test_single_session_protocol_sizing.py",
+      "sha256": "852f58c1518a7ebbe9b7c692a88dc3c86665410115f33cebc0b28f3af24e86b1",
+      "bytes": 5047
+    },
+    {
+      "path": "tests/test_single_session_reader_asset_records.py",
+      "sha256": "b30243416ad4cfb4e58b235c4df87a7060ad2deb0397b9600e0518952f776916",
+      "bytes": 3398
+    },
+    {
+      "path": "tests/test_single_session_reader_publication.py",
+      "sha256": "6da1f7ea65d431f77c6876d2fd5b9ce6b9dfc62c9f67f65d2bebf50daf350d4b",
+      "bytes": 4163
+    },
+    {
+      "path": "tests/test_single_session_receipt_budget.py",
+      "sha256": "c15bc7a0cf3d209ea3b70cb34b0184fb180f979a0c6bd4779339fdee8d38acf8",
+      "bytes": 6886
+    },
+    {
+      "path": "tests/test_single_session_research_resilience.py",
+      "sha256": "514e2c440f1f8c43e428f7614dfea5744abdd257268dfa98e57e20e27fcc2915",
+      "bytes": 13633
+    },
+    {
+      "path": "tests/test_single_session_revision_compression.py",
+      "sha256": "aaa22ee50e371b99e5a17adbef87cb2f86f045b7b981face26be9636acbdcc37",
+      "bytes": 5814
+    },
+    {
+      "path": "tests/test_single_session_revision_repair.py",
+      "sha256": "74124bdf92f3b0cd6827aff8f6d871cec49e72a04bce0b74aed35b90b8f39d6e",
+      "bytes": 31669
+    },
+    {
+      "path": "tests/test_single_session_role_context.py",
+      "sha256": "efe4e5e286974548ab9acb1668139ef0b4b9b83c7891359b30b34ed5feac0b8d",
+      "bytes": 6685
+    },
+    {
+      "path": "tests/test_single_session_role_cost.py",
+      "sha256": "7c77c44d01c633da1774fb68eb204b5f18772dac22c006099c88f0722c9e4de0",
+      "bytes": 14188
+    },
+    {
+      "path": "tests/test_single_session_roles.py",
+      "sha256": "1647fb61b81dcf4a7a0ca0f9e1833ff9fe3cdc0dd12755a3598d8935720b7a54",
+      "bytes": 18403
+    },
+    {
+      "path": "tests/test_single_session_route_projection.py",
+      "sha256": "6a39099cae631d2507f062d4bdd5a32cd2afdc1beaa2cab5426feef6e4691752",
+      "bytes": 10322
+    },
+    {
+      "path": "tests/test_single_session_runtime_media.py",
+      "sha256": "5a4a53533416e82c509522101d3f5775f5e9ec2d62ed210f89e84e8a93c1a47d",
+      "bytes": 21196
+    },
+    {
+      "path": "tests/test_single_session_service_boundaries.py",
+      "sha256": "f9978bce816121702ae14c05775daa1aec57130e621f823a31fc6bf0645ac193",
+      "bytes": 23431
+    },
+    {
+      "path": "tests/test_single_session_sizing.py",
+      "sha256": "cd8f24c411b59a2896a2b63e2f803f5a105eda10c07b04bb32d40c3f20a3bfab",
+      "bytes": 11413
+    },
+    {
+      "path": "tests/test_single_session_static_csp.py",
+      "sha256": "ca13eb5b5dac526a2e1a4d851094544dd0b690b65073581564584f2051531b56",
+      "bytes": 1889
+    },
+    {
+      "path": "tests/test_single_session_supply.py",
+      "sha256": "d870514e8ff82075b1fed9001258484a518f78f5bccb1e8c71574762988c2bcc",
+      "bytes": 12804
+    },
+    {
+      "path": "tests/test_single_session_tool_call_degrade.py",
+      "sha256": "4dc4c9c2141b3b46cb5c6c59373e395a36183533afb207d2673732335c7d4090",
+      "bytes": 13009
+    },
+    {
+      "path": "tests/test_single_session_transport_deadline.py",
+      "sha256": "f20f30b92a014ac991d9ce63be4cec8cc2a83f779848e1e7c060ed8a6fbe783a",
+      "bytes": 18783
+    },
+    {
+      "path": "tests/test_single_session_writer_coherence.py",
+      "sha256": "ed4ff058ac322cbf15d9b4b3305a12c14fbec00e55954acfe44b8ab39f7c735c",
+      "bytes": 9168
+    },
+    {
+      "path": "tests/test_single_session_writer_directory_projection.py",
+      "sha256": "f71abc004e9b3dcbebed3a97173b309cc894e47c1a4a9d61e8fdc2c94403823c",
+      "bytes": 3474
+    },
+    {
+      "path": "tests/test_single_session_writer_latency.py",
+      "sha256": "6e6a2f1ec253ac9add412e96d44ab657348161a469c6ecdb37bda2ab4f587163",
+      "bytes": 13289
+    },
+    {
+      "path": "tests/test_source_adapter_exports.py",
+      "sha256": "d2cf0c9ca10e761d153d2dae77bb24441f0644b90c4f9e69bf3acffba73984b4",
+      "bytes": 987
+    },
+    {
+      "path": "tests/test_source_adapter_gmaps.py",
+      "sha256": "5dab4fda51801b54e3873a1bfae3ee385d7f9d4bd30fb72401612990a019f4ac",
+      "bytes": 9390
+    },
+    {
+      "path": "tests/test_source_adapter_official.py",
+      "sha256": "c0b461d9bc622a8fbf55acc8b6dad2fea092e6174259d3e7457a818e803b8e8b",
+      "bytes": 24987
+    },
+    {
+      "path": "tests/test_source_adapter_tripadvisor.py",
+      "sha256": "8be0d965fdec0090be3355c7c746a9d912640c2ee67b5d65caa210ebfb89109c",
+      "bytes": 10936
+    },
+    {
+      "path": "tests/test_source_adapters.py",
+      "sha256": "545ec224dc58117dccad8a59880b19c7cd3eb6ac78c18e220b106032d5b614e0",
+      "bytes": 19227
+    },
+    {
+      "path": "tests/test_source_provenance_v02.py",
+      "sha256": "8df61432df961637fe3ddcf46a139ce040c9796b5b1f1a6f37f0065fe82f586d",
+      "bytes": 10167
+    },
+    {
+      "path": "tests/test_source_registry.py",
+      "sha256": "0a86b7622af1164310bf02c15a16fc4e700e15f7fca037cf4fec265f4e0048e7",
+      "bytes": 10420
+    },
+    {
+      "path": "tests/test_source_registry_integration.py",
+      "sha256": "411e470bd3ffa07008a46f5c88e79f8a2e311027ac89a0e35afd4c39eed11bea",
+      "bytes": 3144
+    },
+    {
+      "path": "tests/test_source_traveler_tier.py",
+      "sha256": "5bc665564664e6b30c83d1310be8583d64b26552f4a948522e1105d4703f3925",
+      "bytes": 2986
+    },
+    {
+      "path": "tests/test_source_withdrawal.py",
+      "sha256": "25ae7219dd11d7b97fd7bea4290cf2268cbae078587389984f309baf7c5396a2",
+      "bytes": 3422
+    },
+    {
+      "path": "tests/test_store_timeline.py",
+      "sha256": "20b13b3776043598a658c10b409f5194f4b2cf007e672ed6af422a358f455db4",
+      "bytes": 3836
+    },
+    {
+      "path": "tests/test_structured_removal.py",
+      "sha256": "0d5a0d290f9c477a99ffe456b085b4d8876e60270659eafb3486fb6e8ae068de",
+      "bytes": 44281
+    },
+    {
+      "path": "tests/test_supply_arch.py",
+      "sha256": "a6ec1e08ebb362d8a0f56eb97f972b90cfa69948a926a667bb9dce5ea9821130",
+      "bytes": 14344
+    },
+    {
+      "path": "tests/test_supply_candidates.py",
+      "sha256": "8c289e15ba726652ee78fa1c454befc20a57d8cc819fb444e6bd87ecbc0b022a",
+      "bytes": 25065
+    },
+    {
+      "path": "tests/test_supply_closeout_normalization.py",
+      "sha256": "77b08a1ae587bfd347ab72fc41661f764b38dec779d44aa52611e356c08b64fe",
+      "bytes": 13214
+    },
+    {
+      "path": "tests/test_supply_contract.py",
+      "sha256": "b793417758624a856e4fef2861636ba3bd3cb9b294521b991298929dab7750f7",
+      "bytes": 6138
+    },
+    {
+      "path": "tests/test_supply_critic_transport.py",
+      "sha256": "e1a3b46091d8f0803fbf195d9f343e49b25cae75657f95623966c343e533bbe3",
+      "bytes": 6096
+    },
+    {
+      "path": "tests/test_supply_discovery_queue.py",
+      "sha256": "d962a80e0886e3a2ce9a716398bdea977484c2b457a5f0678a4e771e02a09779",
+      "bytes": 6161
+    },
+    {
+      "path": "tests/test_supply_evidence.py",
+      "sha256": "fb7c34ed600cb4ee566aec4be8b9d0f40bc9c12802aa5a3555a24c2a03306141",
+      "bytes": 7130
+    },
+    {
+      "path": "tests/test_supply_evidence_floor.py",
+      "sha256": "71f382fe23cce63c4395c658c40969ac4eaf1d5f3cbd1e5be3993f664891a2a4",
+      "bytes": 12236
+    },
+    {
+      "path": "tests/test_supply_final_budget.py",
+      "sha256": "56982a7bd2468bfd8d26b7d892076da1d6cbe8f1e4f62147adf07889a5ccce8a",
+      "bytes": 2466
+    },
+    {
+      "path": "tests/test_supply_jina_identity.py",
+      "sha256": "1db8c552dd037562a39b3baf12189569bbb1235cd995ab13f03d63a40251d9f4",
+      "bytes": 19120
+    },
+    {
+      "path": "tests/test_supply_jina_identity_closeout3.py",
+      "sha256": "371e4ba5fc55fc666ddceff221c840234c71b065692f98d2c9940f34758668d1",
+      "bytes": 9432
+    },
+    {
+      "path": "tests/test_supply_jina_identity_normalization.py",
+      "sha256": "df731e2ed8e351b0448fb6a605cb95c98b72de8a72958c70a16a6ccbba49b1c8",
+      "bytes": 18422
+    },
+    {
+      "path": "tests/test_supply_jina_identity_wiring.py",
+      "sha256": "230de8d929fa6d91f134c191c3da7a02543511e532d4abfdc97452c0c5ee318c",
+      "bytes": 7279
+    },
+    {
+      "path": "tests/test_supply_jina_reader.py",
+      "sha256": "9f37073f1a6cd1ffde51ca853d2376aa7bf2cd302c8b9690b0b33a2a5fb95d52",
+      "bytes": 12825
+    },
+    {
+      "path": "tests/test_supply_jina_routing.py",
+      "sha256": "53ec49e7c2c6ec382754305a73b6374a82a594fbd34c5044d6fdc1b4756903f9",
+      "bytes": 4151
+    },
+    {
+      "path": "tests/test_supply_jina_transport.py",
+      "sha256": "f6398ffbf35e928c73c3bbebe03cdce571fef220bc9bd81a4820e4a5268bbcb4",
+      "bytes": 14542
+    },
+    {
+      "path": "tests/test_supply_layered_plan.py",
+      "sha256": "aa9ad81f41d7272b5ecb16783ab618f302a20a251242496e4531b919d5f550a5",
+      "bytes": 9288
+    },
+    {
+      "path": "tests/test_supply_layered_research.py",
+      "sha256": "6225fc1c9943b8a01d5aee291ee195133cc368164141db13c130b4a8e3e284d6",
+      "bytes": 6531
+    },
+    {
+      "path": "tests/test_supply_layered_sources.py",
+      "sha256": "1da23fe8c31136818d033be50f90a56599bee347a0667275ab1440d8b715c6eb",
+      "bytes": 15575
+    },
+    {
+      "path": "tests/test_supply_normalization.py",
+      "sha256": "b7568cdfd4b7b6c1c0a49d67dc56ee60c8a080fbec28958d7ebeb8d3d68e2d11",
+      "bytes": 4582
+    },
+    {
+      "path": "tests/test_supply_normalization_review_regression.py",
+      "sha256": "fc43961f7219ec71da4197611f185c52b4c188ec9850ea0144949d586e593f52",
+      "bytes": 4739
+    },
+    {
+      "path": "tests/test_supply_plan_normalization.py",
+      "sha256": "3284cf028d135de85651fb95a2c5b2e3401913bae290cfce4030719a76b01e8d",
+      "bytes": 10177
+    },
+    {
+      "path": "tests/test_supply_planner_wire_normalization.py",
+      "sha256": "b08d35356b93b71a10bc9e808ab9a966c26761d2e57d7605ff3f0974a6b2691e",
+      "bytes": 15419
+    },
+    {
+      "path": "tests/test_supply_projection.py",
+      "sha256": "506cdcdec762c22b0d00e68cce55aa0b93d6eaa0eab7b4574830712e4dacc29e",
+      "bytes": 19514
+    },
+    {
+      "path": "tests/test_supply_quote_normalization.py",
+      "sha256": "0c7353b1d8dff46a1adc83c0d08f029dfbe9b5e5bfbbcd1fb00429cbcb9f960d",
+      "bytes": 7278
+    },
+    {
+      "path": "tests/test_supply_read_order.py",
+      "sha256": "9e810e5c1b8972f02abd9b395713be58442d3d6a307b8cd7d886656e7a343adf",
+      "bytes": 4815
+    },
+    {
+      "path": "tests/test_supply_render_queue.py",
+      "sha256": "9e669334aedbf8c4f01d2ea7139f00b7ecb0c88d47bb0b85fcbf0e09e82d8185",
+      "bytes": 3610
+    },
+    {
+      "path": "tests/test_supply_rendered_reader.py",
+      "sha256": "421461b8677cb59ea922aea3f38f8cb15dfa2b8da932f7239a4bad777cea7bd3",
+      "bytes": 2825
+    },
+    {
+      "path": "tests/test_supply_repair_budget.py",
+      "sha256": "ced7ec64be01d28ae6c89bb7e5d0331a16da4f075f79b5f984bc94d148083690",
+      "bytes": 2136
+    },
+    {
+      "path": "tests/test_supply_repair_entry.py",
+      "sha256": "2f79df28d936edff3e355adb9d32c8a274dfc3457429e0ea364404d86a3f3772",
+      "bytes": 6308
+    },
+    {
+      "path": "tests/test_supply_research.py",
+      "sha256": "c1d1c2e4fd5c2cc7798e14baaf531b2b847dc8d1b2a1f2e1c514407df0d8cc4d",
+      "bytes": 13316
+    },
+    {
+      "path": "tests/test_supply_serve_projection.py",
+      "sha256": "42d7ad6b1bd393c71f39a0d07ed3c6216bac79d94e89b613e7eebb42ed041304",
+      "bytes": 8758
+    },
+    {
+      "path": "tests/test_supply_server.py",
+      "sha256": "b5e239efa45631c159491055a00277bd607e2f3d0d43f63572bf5067524fa08b",
+      "bytes": 7654
+    },
+    {
+      "path": "tests/test_supply_wording.py",
+      "sha256": "0c5a1aef461a81d398cc4472c39851804c7e9faa6b5f6ed7f204d4c5ceb94857",
+      "bytes": 9184
+    },
+    {
+      "path": "tests/test_traveler_profile.py",
+      "sha256": "3ace35893f1c438c65eb2a0582cb7021fc11d6575b00e6f1d2f82a2a5e83a6b6",
+      "bytes": 5235
+    },
+    {
+      "path": "tests/test_uncertainty_actions.py",
+      "sha256": "f401842ff035099e60088cfc921cb5542fa59019bc3dd0c1e1e8322816768b0f",
+      "bytes": 12151
+    },
+    {
+      "path": "tests/test_uncertainty_audit.py",
+      "sha256": "e1d4b111f3d7f6298a720ed84c0ab3ab284aa3d19f00450c24073a8fe41d928f",
+      "bytes": 10096
+    },
+    {
+      "path": "tests/test_uncertainty_evaluation.py",
+      "sha256": "645d477dabd7539a7ca0e5a839b42524a0fbda8bf0baf6353b5b7e74e38fe3e9",
+      "bytes": 7071
+    },
+    {
+      "path": "tests/test_uncertainty_schedule.py",
+      "sha256": "80df7e2537e56d13a8a4e3a0538f409bb0a2db368af754ac46e6d49762a68314",
+      "bytes": 1377
+    },
+    {
+      "path": "tests/test_uncertainty_store.py",
+      "sha256": "b72cd13c6bd74f5916437b24a1cde0abb9235a09581b0a9e983af7eb6e8ffc7d",
+      "bytes": 12988
+    },
+    {
+      "path": "tests/test_uncertainty_verifier.py",
+      "sha256": "1010f902158fed2b657e4750c80366b34666acf07d7754fd9311be55cedd94da",
+      "bytes": 15837
+    },
+    {
+      "path": "tests/test_withdrawal_runtime.py",
+      "sha256": "045c4f4464b47d3ff97e598f409fb02a705a7d5ddd8354f646b03b1172f9bbfd",
+      "bytes": 4222
+    },
+    {
+      "path": "tests/test_writer_agi_mode.py",
+      "sha256": "d2664fa1ab295b17a973ae78c01fe86ea589ebe81b392bebb7671f12c2850f97",
+      "bytes": 12261
+    },
+    {
+      "path": "tests/test_writer_call_errors.py",
+      "sha256": "d088dad4d0640178900346d4c7df3d8289bcc16cbea603767155de935175bd27",
+      "bytes": 14837
+    },
+    {
+      "path": "tests/test_writer_context_manifest.py",
+      "sha256": "013ea252133a5cda85ae22626d719c450164562aa687615c23523954e270e540",
+      "bytes": 5947
+    },
+    {
+      "path": "tests/test_writer_context_prune.py",
+      "sha256": "80177005ca732a1f827bd388438b0312e08c278b81541ae8290b87a5f8167177",
+      "bytes": 18331
+    },
+    {
+      "path": "tests/test_writer_critic.py",
+      "sha256": "7aadcf7b0ec89502015e331cdb997183744d55003bb1651d47a69860e2feaaea",
+      "bytes": 33025
+    },
+    {
+      "path": "tests/test_writer_critic_api.py",
+      "sha256": "e7b40bdb6eeef4c4ec62a5373dc7e4a26819cb62d6cf0892feebf969d5c7bc38",
+      "bytes": 21374
+    },
+    {
+      "path": "tests/test_writer_critic_staging_api.py",
+      "sha256": "721462ba7d51a2d9841724cec443f8c1460042f9152460906dea00fe31ed2b94",
+      "bytes": 7257
+    },
+    {
+      "path": "tests/test_writer_failure_precedence.py",
+      "sha256": "b1d80848c1e4a5a49239595b91b1a4548a16ddb39c34abba9771b17602d17c2d",
+      "bytes": 3401
+    },
+    {
+      "path": "tests/test_writer_followup_contract.py",
+      "sha256": "5e05aaa0727788b35bbb4f39222f2ee4cc5f547e288db2f06659561f6a8b4e2c",
+      "bytes": 13224
+    },
+    {
+      "path": "tests/test_writer_legacy_refs.py",
+      "sha256": "c11b0db14530ab6c158bcf1f78137ec4d991e9fa71c937c60da3cb3ffeccb2b2",
+      "bytes": 2133
+    },
+    {
+      "path": "tests/test_writer_model_routing.py",
+      "sha256": "f23af5fa1b782f4f6eeddc44585010950d6e0c7e9d4eb196c2627e5d74b94d12",
+      "bytes": 3809
+    },
+    {
+      "path": "tests/test_writer_prompt_transport.py",
+      "sha256": "3053135174f57b54e5a1db417dcd92eacf5af62b9d4829d3846350d5812d32ef",
+      "bytes": 7890
+    },
+    {
+      "path": "tests/test_writer_repair_budget.py",
+      "sha256": "86cbcf254ca0607268fb76f94798548e4ad2f53d837021ab2eb5005db5c4cdf1",
+      "bytes": 4666
+    },
+    {
+      "path": "tests/test_writer_schema.py",
+      "sha256": "1e1d42c06b4c73595e5ff1ecfbc1e2bc374984685965801bc39205221ccb0231",
+      "bytes": 5455
+    },
+    {
+      "path": "tests/test_writer_scope.py",
+      "sha256": "8fad93785f175533355ffceba3b7b893ebb3fab4111e737523f96aa795542445",
+      "bytes": 10393
+    },
+    {
+      "path": "tests/test_writer_scope_source_dedup.py",
+      "sha256": "29f32d3df66ec3fbb4a759d88b4a721925eb972c5e13abe33cfd28daff27c0bc",
+      "bytes": 2704
+    },
+    {
+      "path": "tests/test_writer_shards.py",
+      "sha256": "77b9b6f13c9a0e3a66668dbaddc73298455a243e6f8e8b3976e9edd88ddca0b4",
+      "bytes": 54465
+    },
+    {
+      "path": "tests/test_writer_stream_limits.py",
+      "sha256": "bfa69dfe69342cf86ca00aa343f9a148af4cce8779298b5050e2986e334f0ac0",
+      "bytes": 3406
+    },
+    {
+      "path": "tests/test_writer_stream_observability.py",
+      "sha256": "a5f1065fbd1ed135fd058e45e265115d3638130ae960eb03ae1b868626b7274d",
+      "bytes": 16596
+    },
+    {
+      "path": "tests/test_writer_tokenizer.py",
+      "sha256": "52060e3e1d9f791752b21e445996b7bc3ebb176cef57955e09d534fdc2935253",
+      "bytes": 6574
+    },
+    {
+      "path": "tests/test_writer_transport.py",
+      "sha256": "54e775f8eb5a1206b43a3633a2bced137918524ec518871edc9c059fad6f9f2e",
+      "bytes": 30909
+    },
+    {
+      "path": "tests/test_writer_truncation.py",
+      "sha256": "29d491a2b26e9961fb82a19366dbd69c5321b801e4a5901a91afac914440c044",
+      "bytes": 20667
+    }
+  ],
+  "base_build_id": "a5adb2979c816bfdaadbf6da97f46a303cc424c1d58262017777e82fcfc3db32",
+  "release_overlays": [
+    {
+      "path": "tools/render_service.py",
+      "action": "retain existing public portable renderer adapter",
+      "why": "Frozen private snapshot hardcoded a local research path and ignored isolated launcher directories; baseline implementation is otherwise identical",
+      "frozen_snapshot_sha256": "84d77d802a10edb1ceb4f7dc709df83326b4e19c290b74d04425c55f9351db71",
+      "release_sha256": "d62558e3f7a143a29b0e125c15e61138d8fa2d1e57cca7282ed748af51eba848",
+      "diff_scope": "BRIDGE import + TRAVEL_RENDER_OUTPUT fallback; no render logic changes"
+    },
+    {
+      "path": "packages/travel_agent/supply_render_queue.py",
+      "action": "retain existing public env/home-directory queue adapter",
+      "frozen_snapshot_sha256": "fb853c2227c85e9f68a9b82d29e32856c9db048b42bc8c5ebecd4a1acd76a213",
+      "release_sha256": "4af6daf7d503f9bf414a6b9efb35e6a6540699acba0e87ff8c364494f8f1546e",
+      "diff_scope": "import os; read TRAVEL_RENDER_BRIDGE with user-local fallback only"
+    }
+  ],
+  "core_manifest_hash": "2bed10a01a743a7a7eff9d97efe25ccd05c124fb4a2916e1312649eeea68e538"
+}

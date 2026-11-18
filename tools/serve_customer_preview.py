@@ -15,21 +15,25 @@ from dataclasses import dataclass, field
 import hashlib
 import hmac
 from http.client import HTTPConnection, HTTPException
-from http.cookies import CookieError, SimpleCookie
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import ipaddress
 import json
 import os
+from pathlib import Path
 import re
 import secrets
 import threading
 import time
+import sys
 from urllib.parse import parse_qs, unquote, urlsplit
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from tools.material_limits import MAX_REQUEST_BYTES, MAX_TEXT_REQUEST_BYTES, UPLOAD_LIMITS
 
 AUTH_COOKIE = "__Host-trip_preview_auth"
 CSRF_COOKIE = "__Host-trip_preview_csrf"
 LOGIN_PATH = "/__preview/login"
-MAX_BODY = 256 * 1024
+MAX_BODY = MAX_REQUEST_BYTES
 MAX_LOGIN_BODY = 4096
 MAX_RESPONSE = 64 * 1024 * 1024
 LOGIN_ATTEMPTS = 8
@@ -37,6 +41,8 @@ LOGIN_WINDOW = 60
 CSRF_SECONDS = 600
 HOP_HEADERS = frozenset({"connection", "keep-alive", "proxy-authenticate",
     "proxy-authorization", "te", "trailer", "transfer-encoding", "upgrade"})
+COOKIE_OCTETS = r"[\x21\x23-\x2b\x2d-\x3a\x3c-\x5b\x5d-\x7e]*"
+COOKIE_PAIR = re.compile(r"([!#$%&'*+\-.^_`|~0-9A-Za-z]+)=(" + COOKIE_OCTETS + r'|"' + COOKIE_OCTETS + r'")')
 
 
 @dataclass(frozen=True)
@@ -160,14 +166,25 @@ class PreviewHandler(BaseHTTPRequestHandler):
         self._reply(status, json.dumps({"error": message}, ensure_ascii=False).encode(), headers=headers)
 
     def _cookie(self, name):
-        raw = self.headers.get("Cookie", "")
-        if sum(part.strip().partition("=")[0] == name for part in raw.split(";")) != 1:
-            return ""
-        try:
-            parsed = SimpleCookie(raw)
-            return parsed[name].value if name in parsed else ""
-        except CookieError:
-            return ""
+        return self._request_cookies.get(name, "")
+
+    def _validate_cookies(self):
+        # RFC 6265 cookie-pair grammar; one parse serves uniqueness and auth.
+        # Split fields have semicolon semantics (RFC 9113), never comma semantics.
+        self._request_cookies = {}
+        fields = self.headers.get_all("Cookie", [])
+        for raw in fields:
+            for part in raw.split(";"):
+                pair = COOKIE_PAIR.fullmatch(part.strip(" \t"))
+                if pair is None:
+                    self._reject_headers("invalid_cookie_syntax", "cookie", len(fields))
+                    return False
+                name, value = pair.groups()
+                if name in {AUTH_COOKIE, CSRF_COOKIE} and name in self._request_cookies:
+                    self._reject_headers("duplicate_gateway_cookie", "cookie", 2)
+                    return False
+                self._request_cookies[name] = value[1:-1] if value.startswith('"') else value
+        return True
 
     @staticmethod
     def _set_cookie(name, token, lifetime):
@@ -190,14 +207,37 @@ input{{border:1px solid #b7c0b9}}button{{background:#234d40;color:white;border:0
             self._set_cookie(CSRF_COOKIE, csrf, CSRF_SECONDS), ("Content-Security-Policy", policy)),
             referrer_policy="same-origin")
 
+    def _reject_headers(self, reason, field, count):
+        diagnostic_id = secrets.token_hex(8)
+        known_fields = {"host", "origin", "authorization", "cookie", "content-length",
+                        "content-type", "transfer-encoding"}
+        proxy_fields = ("forwarded", "x-forwarded-for", "x-forwarded-proto", "cf-ray",
+                        "cf-connecting-ip", "cf-visitor")
+        event = {"event": "preview_header_rejected", "diagnostic_id": diagnostic_id,
+                 "reason": reason, "field": field.lower() if field.lower() in known_fields else "other",
+                 "count": count,
+                 "http_version": self.request_version if self.request_version in {"HTTP/1.0", "HTTP/1.1"} else "other",
+                 "proxy_field_counts": {name: len(self.headers.get_all(name, [])) for name in proxy_fields}}
+        # No URL, method text, header value, cookie value, IP or credential is logged.
+        print(json.dumps(event, separators=(",", ":")), file=sys.stderr, flush=True)
+        self._error(400, "请求头格式无效。", (("X-Preview-Diagnostic-Id", diagnostic_id),))
+
     def _request_context(self):
-        for key in ("Host", "Origin", "Authorization", "Cookie", "Content-Length", "Content-Type"):
-            if len(self.headers.get_all(key, [])) > 1:
-                self._error(400, "请求头格式无效。")
+        for key in ("Host", "Origin", "Authorization", "Content-Length", "Content-Type"):
+            count = len(self.headers.get_all(key, []))
+            if count > 1:
+                self._reject_headers("duplicate_sensitive_header", key, count)
                 return None
-        if self.headers.get("Transfer-Encoding") or any(
-                "\r" in value or "\n" in value for value in self.headers.values()):
-            self._error(400, "请求头格式无效。")
+        # Reject presence, including an empty first value masking a second field.
+        encodings = self.headers.get_all("Transfer-Encoding", [])
+        if encodings:
+            self._reject_headers("unsupported_transfer_encoding", "transfer-encoding", len(encodings))
+            return None
+        for key, value in self.headers.items():
+            if "\r" in value or "\n" in value:
+                self._reject_headers("header_line_break", key, len(self.headers.get_all(key, [])))
+                return None
+        if not self._validate_cookies():
             return None
         local_hosts = {f"127.0.0.1:{self.server.server_port}", f"localhost:{self.server.server_port}"}
         host = self.headers.get("Host", "").lower()
@@ -283,6 +323,14 @@ input{{border:1px solid #b7c0b9}}button{{background:#234d40;color:white;border:0
             data = response.read(MAX_RESPONSE + 1)
             if len(data) > MAX_RESPONSE:
                 raise ValueError("response limit")
+            if response.status == 200 and urlsplit(target).path == "/api/agent/capabilities":
+                capability = json.loads(data)
+                if isinstance(capability, dict):
+                    limits = dict(UPLOAD_LIMITS)
+                    if capability.get("attachments") is False:
+                        limits["request_body_bytes"] = MAX_TEXT_REQUEST_BYTES
+                    capability["upload_limits"] = limits
+                    data = json.dumps(capability, ensure_ascii=False).encode()
             connection_headers = {item.strip().lower() for item in response.getheader("Connection", "").split(",")}
             excluded = HOP_HEADERS | connection_headers | {"content-length", "content-type", "cache-control",
                 "server", "date", "set-cookie", "x-content-type-options", "referrer-policy"}

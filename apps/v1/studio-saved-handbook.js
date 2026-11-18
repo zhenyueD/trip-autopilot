@@ -26,17 +26,22 @@
   function artifactURL(trip, field, locationHref) {
     const value = trip?.[field];
     if (!trip || !trip.capabilities?.single_session || !trip.document || typeof value !== 'string' || !value) return '';
+    const statusField = field === 'first_eye_pdf_url' ? 'first_eye_pdf_status' : 'pdf_status';
+    const status = trip.document[statusField] || trip[statusField];
+    // A stored first-eye file is not a qualified download until explicitly ready.
+    if (field === 'first_eye_pdf_url' ? status !== 'ready' : status && !['ready', 'below_standard'].includes(status)) return '';
     try {
       const target = new URL(value, locationHref);
       const page = new URL(locationHref);
-      if (target.origin !== page.origin || !target.pathname.startsWith(`/api/agent/trips/${trip.id}/pdf`)) return '';
+      if (target.origin !== page.origin || target.pathname !== `/api/agent/trips/${trip.id}/pdf`) return '';
+      if (target.searchParams.has('version') && target.searchParams.get('version') !== String(trip.document.version)) return '';
       return target.href;
     } catch (_) { return ''; }
   }
 
   const statusCopy = (trip, running) => running ? '新一轮正在准备，以下仍是当前已保存版本。'
-    : trip.delivery?.status === 'partial' ? '手册已保存，仍有几处交付缺口，已保存部分不受影响。'
-      : trip.status === 'failed' ? '本轮已停止，已保存的手册仍可阅读。'
+    : trip.status === 'failed' ? '本轮已停止，已保存的手册仍可阅读。'
+      : trip.delivery?.status === 'partial' ? '手册已保存，仍有几处交付缺口，已保存部分不受影响。'
         : '当前已保存版本，可直接阅读。';
 
   function update(trip, options = {}) {
@@ -45,10 +50,10 @@
     if (!panel) return false;
     const locationHref = options.locationHref || globalThis.location?.href || 'http://localhost/studio.html';
     const href = handbookURL(trip, locationHref);
-    if (!href) { panel.hidden = true; panel.replaceChildren(); return false; }
+    if (!href) { panel.hidden = true; panel.replaceChildren(); delete panel.dataset.handbookKey; return false; }
     const version = trip.document.version;
     const key = `${trip.id}@${version}@${href}`;
-    if (panel.dataset.handbookKey === key && panel.querySelector?.('iframe')) { panel.hidden = false; return true; }
+    const existingFrame = panel.dataset.handbookKey === key ? panel.querySelector?.('iframe') : null;
 
     const create = (tag, className, content) => {
       const node = doc.createElement(tag);
@@ -58,7 +63,6 @@
     };
     const running = trip.status === 'running';
     const title = text(trip.plan?.title) || text(trip.draft_plan?.title) || text(options.tripTitle) || '这趟旅行';
-    const gapCount = records(trip.delivery?.quality_gaps).length;
     const days = records(trip.plan?.days || trip.draft_plan?.days).length;
 
     const head = create('div', 'saved-handbook-head');
@@ -70,8 +74,7 @@
     open.href = href; open.target = '_blank'; open.rel = 'noopener noreferrer';
     head.append(heading, open);
 
-    const status = create('p', 'saved-handbook-status', statusCopy(trip, running)
-      + (gapCount ? '' : ' 内容与配图已齐备。'));
+    const status = create('p', 'saved-handbook-status', statusCopy(trip, running));
 
     const downloads = create('p', 'saved-handbook-downloads');
     const fullPDF = artifactURL(trip, 'pdf_url', locationHref);
@@ -85,20 +88,24 @@
       const eye = create('a', 'secondary-button', '下载第一眼 PDF ↗');
       eye.href = firstEye; eye.target = '_blank'; eye.rel = 'noopener noreferrer';
       downloads.append(eye);
-    } else if ((trip.document.first_eye_pdf_required || trip.first_eye_pdf_required)
-      && (trip.document.first_eye_pdf_status || trip.first_eye_pdf_status)
-      && (trip.document.first_eye_pdf_status || trip.first_eye_pdf_status) !== 'ready') {
+    } else if (trip.document.first_eye_pdf_required || trip.first_eye_pdf_required) {
       downloads.append(create('span', 'saved-handbook-note',
-        `第一眼 PDF 尚未达标（${trip.document.first_eye_pdf_status || trip.first_eye_pdf_status}），不会用旧文件替代。`));
+        '第一眼 PDF 尚未达标或尚未确认可下载，不会用旧文件替代。'));
     }
 
-    const frame = doc.createElement('iframe');
+    const frame = existingFrame || doc.createElement('iframe');
     frame.className = 'saved-handbook-frame';
-    frame.src = href;
+    if (!existingFrame) frame.src = href;
     frame.title = `已保存的旅行手册（版本 v${version}）`;
     frame.setAttribute('loading', 'lazy');
 
-    panel.replaceChildren(head, status, downloads, frame);
+    if (existingFrame) {
+      // Keep the iframe attached: moving it through replaceChildren reloads it
+      // in browsers even when the DOM node is the same object.
+      panel.children[0].replaceWith(head);
+      panel.children[1].replaceWith(status);
+      panel.children[2].replaceWith(downloads);
+    } else panel.replaceChildren(head, status, downloads, frame);
     panel.dataset.handbookKey = key;
     panel.hidden = false;
     return true;

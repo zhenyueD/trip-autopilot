@@ -10,6 +10,7 @@ from packages.travel_agent.single_session_agent import (
     SYSTEM, SingleSessionAgent, body_attribution_findings,
 )
 from tests.test_single_session_agent import call
+from tests.first_eye_fixtures import with_budget
 
 
 class DestinationDepthTests(unittest.TestCase):
@@ -53,7 +54,7 @@ class DestinationDepthTests(unittest.TestCase):
     def test_save_records_diagnostic_before_render_without_rewriting(self):
         import packages.travel_agent.single_session_document as document
         render = document.render_snapshot
-        text = '# 行程\n据本地宝，入口在东侧。'
+        text = with_budget('# 行程\n据本地宝，入口在东侧。')
 
         def inspect(*args, **kwargs):
             check = self.diagnostic('save')
@@ -73,9 +74,9 @@ class DestinationDepthTests(unittest.TestCase):
         self.assertEqual(self.agent.budget.snapshot()['used'], 0)
 
     def test_edit_checks_complete_candidate_before_render(self):
-        self.agent._execute_tool(call('save', 'save_handbook', markdown='# 行程\n从东门进。'))
+        self.agent._execute_tool(call('save', 'save_handbook', markdown=with_budget('# 行程\n从东门进。')))
         current = self.agent.documents.current()
-        args = dict(base_hash=current['hash'], edits=[dict(old='从东门进。', new='来源称从西门进。')],
+        args = dict(base_version=current['version'], edits=[dict(old='从东门进。', new='来源称从西门进。')],
                     receipt=dict(changes='调整入口', judgment='入口待确认', alternatives='暂缓', next_action='复核'))
         original = self.agent.documents.edit
 
@@ -86,7 +87,7 @@ class DestinationDepthTests(unittest.TestCase):
         with patch.object(self.agent.documents, 'edit', side_effect=inspect):
             result = self.agent._execute_tool(call('edit', 'edit_handbook', **args))
         self.assertTrue(result['document_saved'])
-        args['base_hash'] = current['hash']
+        args['base_version'] = current['version']
         result = self.agent._execute_tool(call('stale', 'edit_handbook', **args))
         self.assertTrue(result['not_completed'])
         self.assertEqual(self.agent.documents.current()['version'], 2)

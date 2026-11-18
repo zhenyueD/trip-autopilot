@@ -5,6 +5,23 @@ window.TravelIntake = (() => {
   const $ = id => document.getElementById(id);
   const str = value => typeof value === 'string' || typeof value === 'number' ? String(value) : '';
   const records = value => Array.isArray(value) ? value.filter(x => x && typeof x === 'object' && !Array.isArray(x)) : [];
+  // Mirrors tools/material_limits.py; capability responses may tighten budgets.
+  const uploadLimits = Object.freeze({ request_body_bytes: 16 * 1024 * 1024,
+    document_bytes: 2.5 * 1024 * 1024, zip_bytes: 8 * 1024 * 1024,
+    image_bytes: 600 * 1024, documents: 5, images: 3 });
+  function limitsFor(cap) {
+    return Object.fromEntries(Object.entries(uploadLimits).map(([key, maximum]) => {
+      const value = cap?.upload_limits?.[key];
+      return [key, Number.isSafeInteger(value) && value > 0 ? Math.min(value, maximum) : maximum];
+    }));
+  }
+  function checkBodyBudget(materials, context, limits) {
+    // Include UTF-8, base64/DataURL, JSON escapes and a bounded operation envelope.
+    const bytes = new TextEncoder().encode(JSON.stringify({ brief: context, ...materials })).length + 1024;
+    if (bytes > limits.request_body_bytes) {
+      throw new Error(`材料与文字编码后的总请求不能超过 ${limits.request_body_bytes / (1024 * 1024)}MiB；请减少材料后重试。`);
+    }
+  }
   function el(tag, className, text) {
     const node = document.createElement(tag);
     if (className) node.className = className;
@@ -19,7 +36,7 @@ window.TravelIntake = (() => {
       reader.readAsDataURL(file);
     });
   }
-  async function compressImage(file) {
+  async function compressImage(file, limits) {
     if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) throw new Error('只接受 JPEG、PNG 或 WebP 图片。');
     if (file.size > 15 * 1024 * 1024) throw new Error('单张原图请小于 15MB，避免浏览器处理失败。');
     const data = await readFile(file); const image = new Image();
@@ -37,19 +54,19 @@ window.TravelIntake = (() => {
     context.fillStyle = '#fff'; context.fillRect(0, 0, canvas.width, canvas.height);
     context.drawImage(image, 0, 0, canvas.width, canvas.height);
     let result = canvas.toDataURL('image/jpeg', 0.86);
-    for (let quality = 0.76; result.length > 600 * 1024 * 4 / 3 && quality >= 0.3; quality -= 0.1) {
+    for (let quality = 0.76; result.length > limits.image_bytes * 4 / 3 && quality >= 0.3; quality -= 0.1) {
       result = canvas.toDataURL('image/jpeg', quality);
     }
-    if (result.length > 600 * 1024 * 4 / 3) throw new Error('压缩后仍超过 600KB，请裁剪到关键信息后再试。');
-    return { name: (file.name || '粘贴图片').slice(0, 180), data_url: result };
+    if (result.length > limits.image_bytes * 4 / 3) throw new Error(`压缩后仍超过 ${limits.image_bytes / 1024}KiB，请裁剪到关键信息后再试。`);
+    return { name: (file.name || '粘贴图片').slice(0, 150), data_url: result };
   }
-  async function prepareDocument(file) {
+  async function prepareDocument(file, limits) {
     const extension = (file.name.match(/\.[^.]+$/)?.[0] || '').toLowerCase();
     if (!['.xlsx', '.pdf', '.eml', '.txt', '.md', '.csv', '.json', '.zip'].includes(extension)) {
       throw new Error('文件仅支持 XLSX、PDF、EML、TXT、MD、CSV、JSON 和 ZIP。');
     }
-    const limit = extension === '.zip' ? 8 * 1024 * 1024 : 2.5 * 1024 * 1024;
-    if (!file.size || file.size > limit) throw new Error(`单个${extension === '.zip' ? ' ZIP ' : '文件'}请小于 ${extension === '.zip' ? '8MB' : '2.5MB'}。`);
+    const limit = extension === '.zip' ? limits.zip_bytes : limits.document_bytes;
+    if (!file.size || file.size > limit) throw new Error(`单个${extension === '.zip' ? ' ZIP ' : '文件'}不能为空且不能超过 ${limit / (1024 * 1024)}MiB。`);
     return { name: file.name.slice(0, 180), data_url: await readFile(file) };
   }
   function extractURLs(text) {
@@ -65,7 +82,8 @@ window.TravelIntake = (() => {
     return links;
   }
   function createComposer(config) {
-    const queue = { images: [], documents: [], preparing: false, busy: false, vision: false, version: 0 };
+    const queue = { images: [], documents: [], preparing: false, busy: false, vision: false,
+      attachments: false, limits: limitsFor(null), version: 0 };
     const node = name => $(config[name]);
     const status = (message, error = false) => {
       node('status').textContent = message; node('status').classList.toggle('is-error', error);
@@ -133,7 +151,7 @@ window.TravelIntake = (() => {
     function controls() {
       node('file').disabled = queue.busy || queue.preparing || !queue.vision;
       node('choose').disabled = node('file').disabled;
-      node('documentFile').disabled = queue.busy || queue.preparing;
+      node('documentFile').disabled = queue.busy || queue.preparing || !queue.attachments;
       node('documentChoose').disabled = node('documentFile').disabled;
       node('evidence').disabled = queue.busy; node('links').disabled = queue.busy;
       node('zone').setAttribute('aria-disabled', String(node('file').disabled));
@@ -144,18 +162,24 @@ window.TravelIntake = (() => {
     async function addFiles(files) {
       if (!files.length) return;
       if (queue.busy || queue.preparing) { status('当前正在处理，请稍后再添加。', true); return; }
+      if (!queue.attachments) { status('当前服务不支持附件上传；已选材料保留，可先填写文字。', true); return; }
       const images = files.filter(file => ['image/jpeg', 'image/png', 'image/webp'].includes(file.type));
       const documents = files.filter(file => !images.includes(file));
       if (images.length && !queue.vision) { status('视觉能力尚不可用；可先添加表格、PDF、邮件或文本。', true); return; }
-      if (images.length + queue.images.length > 3) { status('最多添加 3 张图片；请先移除一些。', true); return; }
-      if (documents.length + queue.documents.length > 5) { status('每次最多添加 5 个文件；请先移除一些。', true); return; }
+      if (images.length + queue.images.length > queue.limits.images) { status(`最多添加 ${queue.limits.images} 张图片；请先移除一些。`, true); return; }
+      if (documents.length + queue.documents.length > queue.limits.documents) { status(`每次最多添加 ${queue.limits.documents} 个文件；请先移除一些。`, true); return; }
       const version = queue.version;
       queue.preparing = true; controls(); changed(); status('正在本地准备材料，尚未上传…');
       try {
         const preparedImages = []; const preparedDocuments = [];
-        for (const file of images) preparedImages.push(await compressImage(file));
-        for (const file of documents) preparedDocuments.push(await prepareDocument(file));
+        const minimumWireBytes = documents.reduce((total, file) => total + 4 * Math.ceil(file.size / 3), 0);
+        if (minimumWireBytes > queue.limits.request_body_bytes) throw new Error('本批文件编码后的总请求过大，请减少文件后重试。');
+        for (const file of images) preparedImages.push(await compressImage(file, queue.limits));
+        for (const file of documents) preparedDocuments.push(await prepareDocument(file, queue.limits));
         if (version !== queue.version) return;
+        checkBodyBudget({ evidence_text: node('evidence').value, links: node('links').value,
+          images: [...queue.images, ...preparedImages], documents: [...queue.documents, ...preparedDocuments] },
+        config.draftFeedback ? $(config.draftFeedback).value : '', queue.limits);
         queue.images.push(...preparedImages); queue.documents.push(...preparedDocuments);
         status(`已准备 ${queue.documents.length} 个文件、${queue.images.length} 张图片，提交时才会上传。`);
       } catch (error) { if (version === queue.version) status(`${error.message} 本批材料未加入，已有材料保留。`, true); }
@@ -197,15 +221,22 @@ window.TravelIntake = (() => {
       discardDraft(id) { queue.version += 1; queue.preparing = false; return draft ? draft.discard(id) : true; },
       get preparing() { return queue.preparing; },
       update({ busy, cap }) {
-        queue.busy = busy; queue.vision = Boolean(cap?.vision_available); controls();
+        queue.busy = busy; queue.attachments = Boolean(cap) && cap.attachments !== false;
+        queue.limits = limitsFor(cap); queue.vision = queue.attachments && Boolean(cap?.vision_available); controls();
         node('vision').hidden = queue.vision;
-        node('vision').textContent = cap ? '当前没有可用视觉模型；图片入口暂不可用，可粘贴文字或链接。' : '正在确认图片能力；文字和链接可先填写。';
-        node('help').textContent = `最多 3 张 JPEG / PNG / WebP · 每张压缩至 600KB 内${queue.vision ? ` · 由 ${str(cap.vision_model) || '已配置视觉模型'} 处理` : ''}`;
+        node('vision').textContent = cap?.attachments === false ? '当前单会话服务不支持附件；可填写文字，已有附件草稿不会发送或清除。'
+          : cap ? '当前没有可用视觉模型；图片入口暂不可用，可粘贴文字或链接。' : '正在确认图片能力；文字和链接可先填写。';
+        node('help').textContent = `最多 ${queue.limits.images} 张 JPEG / PNG / WebP · 每张压缩至 ${queue.limits.image_bytes / 1024}KiB 内 · 普通文件 ${queue.limits.document_bytes / (1024 * 1024)}MiB / ZIP ${queue.limits.zip_bytes / (1024 * 1024)}MiB · 编码后总请求 ${queue.limits.request_body_bytes / (1024 * 1024)}MiB 内${queue.vision ? ` · 由 ${str(cap.vision_model) || '已配置视觉模型'} 处理` : ''}`;
       },
       payload(context = '') {
+        if (!queue.attachments && (queue.images.length || queue.documents.length)) {
+          throw new Error('当前服务不支持附件，已有材料草稿已保留。请移除附件后提交文字。');
+        }
         const evidence_text = node('evidence').value.trim();
-        return { evidence_text, links: collectLinks(node('links').value.trim(), `${context}\n${evidence_text}`, config.safeURL),
+        const materials = { evidence_text, links: collectLinks(node('links').value.trim(), `${context}\n${evidence_text}`, config.safeURL),
           images: [...queue.images], documents: [...queue.documents] };
+        checkBodyBudget(materials, context, queue.limits);
+        return materials;
       },
       hasMaterials(payload) { return Boolean(payload.evidence_text || payload.links.length || payload.images.length || payload.documents.length); },
       reset(message = '') {

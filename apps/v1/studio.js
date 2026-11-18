@@ -10,7 +10,10 @@
   const LIBRARY_KEY = 'atom-travel-studio-library-v2';
   const CREATE_PROOF_KEY = 'atom-travel-studio-create-proof-v1';
   const DEMO_FEEDBACK = '加一个6岁孩子，每天中午回酒店休息2小时，不自驾。';
-  const DEMO_BRIEF = '我们是2个成年人，从杭州出发，2026年10月2日至5日在阿布扎比玩4天。当地预算12000元人民币，不含国际机票。喜欢建筑、光影和当地饮食，不想每天赶景点。请安排具体体验、每天的路线、住宿餐饮和行前准备。';
+  const demoStart = new Date(); demoStart.setDate(demoStart.getDate() + 30);
+  const demoEnd = new Date(demoStart); demoEnd.setDate(demoEnd.getDate() + 3);
+  const demoDate = value => `${value.getFullYear()}年${value.getMonth() + 1}月${value.getDate()}日`;
+  const DEMO_BRIEF = `我们是2个成年人，从杭州出发，${demoDate(demoStart)}至${demoDate(demoEnd)}在阿布扎比玩4天。当地预算12000元人民币，不含国际机票。喜欢建筑、光影和当地饮食，不想每天赶景点。请安排具体体验、每天的路线、住宿餐饮和行前准备。`;
   const state = { trip: null, session: null, cap: null, busy: false,
     library: { sessions: [], activeId: null, forgottenIds: [] }, exampleDraft: false, pendingCreate: null,
     storageFailed: false, pollTimer: null, pollFailures: 0, generation: 0, mutationNotice: '',
@@ -25,18 +28,39 @@
     activities: '体验', packing: '行前', other: '其他' };
   const labels = { proposed: '方案建议', provided: '用户已提供', needs_check: '待核验',
     user_action: '需要你行动', not_applicable: '本次不适用' };
+  function savedDeliveryReady(trip) {
+    const requiredEye = trip.first_eye_pdf_required || trip.document?.first_eye_pdf_required;
+    const artifact = field => window.TravelSavedHandbook?.artifactURL?.(trip, field, location.href);
+    return trip.status === 'completed' && trip.delivery?.status === 'ready' && Boolean(artifact('pdf_url'))
+      && (!requiredEye || Boolean(artifact('first_eye_pdf_url')));
+  }
   function singleSessionBaseCopy(trip) {
     const generating = trip.generation_status && trip.generation_status !== 'completed'
       && trip.generation_status !== trip.status;
     if (generating) return `生成状态：${trip.generation_status}。已保存的手册保持可读，完成后会切换到新版本。`;
     if (trip.document) return trip.delivery?.status === 'partial'
       ? '手册已保存，部分交付内容仍有缺口，现有文件可继续查看和下载。'
-      : trip.delivery?.status === 'ready' ? '手册与导出文件已准备好。' : '手册已保存，可以继续查看交付进度。';
+      : savedDeliveryReady(trip) ? '手册与导出文件已准备好。' : '手册已保存，可以继续查看交付进度。';
     return '这轮尚未保存手册草稿，可以调整需求后继续。';
   }
   const list = value => Array.isArray(value) ? value : [];
   const records = value => list(value).filter(item => item && typeof item === 'object' && !Array.isArray(item));
   const str = value => typeof value === 'string' || typeof value === 'number' ? String(value) : '';
+  function recordedProgressEvents(trip) {
+    const events = records(trip.events);
+    if (events.length || !trip.capabilities?.single_session) return events;
+    const progress = trip.progress;
+    if (!progress || typeof progress !== 'object') return [];
+    const count = value => Number.isSafeInteger(value) && value > 0 ? value : 0;
+    const rows = [
+      ['检索', count(progress.tool_counts?.search), '次'],
+      ['读取原文', count(progress.tool_counts?.read_page), '次'],
+      ['已登记证据', count(progress.evidence_count), '条']
+    ].filter(row => row[1]);
+    // Tool counts record attempts, not verified facts or successful delivery.
+    return rows.length ? [{at: progress.last_activity_at,
+      label: `本任务已记录：${rows.map(([label, n, unit]) => `${label} ${n} ${unit}`).join(' · ')}`}] : [];
+  }
   const currentPlan = () => state.trip?.plan || state.trip?.draft_plan;
   const managedTrip = (trip = state.trip) => maincore?.enabled && trip?.id === maincore.client.state.snapshot?.trip?.id
     && list(maincore.client.state.snapshot?.goals).length > 0;
@@ -160,20 +184,48 @@
     } catch { notice('本机未能清除未确认提交的凭证，请保留当前页面后重试。', true); return false; }
   }
   const operationProof = window.TravelOperationProof || null;
-  const randomHex = bytes => Array.from(bytes, byte => byte.toString(16).padStart(2, '0')).join('');
+  const reviewedOperations = new Map();
   function versionBinding() {
     try { return operationProof?.versionBinding?.(state.trip) || {}; } catch { return {}; }
   }
-  // One pending identity per trip: an undetermined submission keeps its request_id
-  // for explicit replay; changed input mints a new id. Never resends by itself.
-  function bindOperation(kind, input) {
-    if (operationProof && state.trip?.capabilities?.single_session && state.trip?.document) {
-      try { return operationProof.bind({ tripId: state.trip.id, kind, input, storage: localStorage }); } catch { /* fall through */ }
-    }
-    return { request_id: randomHex(crypto.getRandomValues(new Uint8Array(16))), replay: false };
+  function operationReview(trip) {
+    const previous = $('operation-review'); previous?.remove?.();
+    const button = el('button', 'secondary-button', '已核对当前结果，开始新的修改');
+    button.id = 'operation-review'; button.type = 'button';
+    button.addEventListener('click', () => {
+      if (state.trip?.id !== trip.id || state.trip?.job?.request_id !== trip.job.request_id || tripRunning()) return;
+      reviewedOperations.set(trip.id, trip.job.request_id); button.remove?.();
+      state.mutationNotice = '当前结果已核对。草稿仍保留，请再次提交来开始新的修改。';
+      notice(state.mutationNotice); revisionMaterials.status(state.mutationNotice);
+    });
+    $('notice').append(button);
   }
-  function confirmOperation() {
-    try { operationProof?.confirm?.({ tripId: state.trip?.id, storage: localStorage }); } catch { /* pending proof stays */ }
+  async function bindOperation(kind, input) {
+    if (!operationProof) throw Object.assign(new Error('提交保护未加载，本次操作尚未发送。请刷新并重新连接。'), { operationBlocked: true });
+    const tripId = state.trip.id, generation = state.generation;
+    let result;
+    try { result = await api(tripPath()); }
+    catch (error) { throw Object.assign(new Error(`状态核查未完成，本次操作尚未发送。${error.message}`), { operationBlocked: true }); }
+    if (generation !== state.generation || result.trip?.id !== tripId)
+      throw Object.assign(new Error('任务状态已变化，本次操作尚未发送。请重新核查当前旅行。'), { operationBlocked: true });
+    acceptTrip(result.trip);
+    if (tripRunning()) throw Object.assign(new Error('上一操作仍在执行，已更新当前状态，本次操作尚未发送。'), { operationBlocked: true });
+    const pending = operationProof.status({ tripId, storage: localStorage });
+    if (!pending && result.trip.job?.request_id && reviewedOperations.get(tripId) !== result.trip.job.request_id) {
+      operationReview(result.trip);
+      throw Object.assign(new Error('未找到上一操作的本机凭证。已读取服务端状态，请核对当前结果后明确开始新的修改；本次操作尚未发送。'), { operationBlocked: true });
+    }
+    return operationProof.bind({ tripId, kind, input, storage: localStorage });
+  }
+  function confirmOperation(proof) {
+    if (!proof) return;
+    operationProof.confirm({ tripId: state.trip.id, storage: localStorage, requestId: proof.request_id });
+    reviewedOperations.set(state.trip.id, state.trip.job?.request_id || proof.request_id);
+  }
+  function releaseRejectedOperation(proof, error) {
+    if (!proof || error.status !== 409 || error.code !== 'revision_conflict') return;
+    try { operationProof.confirm({ tripId: state.trip.id, storage: localStorage, requestId: proof.request_id }); }
+    catch (storageError) { error.message = `${error.message} ${storageError.message}`; error.operationBlocked = true; }
   }
   const SINGLE_SESSION_MUTATIONS = ['/revise', '/resume', '/artifacts/retry'];
   async function createWithProof(payload) {
@@ -270,8 +322,11 @@
         signal: controller.signal, credentials: 'same-origin', cache: 'no-store' });
       const data = await response.json().catch(() => ({}));
       if (!response.ok) {
-        const error = new Error(data.error?.message_zh || `服务暂时无法处理请求（${response.status}）。`);
+        const error = new Error(data.error?.message_zh || (response.status === 404
+          ? path.includes('/trips/') ? '这趟旅行暂时无法读取，可能已移除或当前服务没有对应记录。' : '旅行服务入口尚未就绪，请检查本地后端启动地址后重新连接。'
+          : `服务暂时无法处理请求（${response.status}）。`));
         error.status = response.status;
+        error.code = data.error?.code;
         error.retryAfter = Math.min(60, Math.max(2, Number(response.headers.get('Retry-After')) || 5));
         throw error;
       }
@@ -290,7 +345,7 @@
     if (session) headers.Authorization = `Bearer ${session.token}`;
     try {
       const response = await fetch(path, { method, headers, signal: controller.signal, credentials: 'same-origin', cache: 'no-store' });
-      if (!response.ok) throw new Error(`saved document ${response.status}`);
+      if (!response.ok) throw new Error(response.status === 404 ? '已保存手册暂时无法读取，请重新连接确认当前版本。' : '已保存手册暂时无法读取，请稍后重试。');
       return await response.text();
     } catch (error) {
       if (error.name === 'AbortError') throw new Error('连接超时。');
@@ -350,6 +405,7 @@
   function renderControls() {
     const running = tripRunning();
     const busy = state.busy || maincore?.busy;
+    if ($('handbook-nav')) $('handbook-nav').hidden = !state.trip || !Boolean(currentPlan() || state.trip.document);
     const routingPending = !maincore?.known || (maincore.enabled && state.session && maincore.client.state.snapshot?.trip?.id !== state.session.id);
     profileEditor?.update();
     revisionReceipt?.render();
@@ -521,6 +577,9 @@
     }
   }
   function acceptTrip(trip) {
+    if (state.session && trip.id !== state.session.id) return;
+    if (state.trip?.id === trip.id && (Number.isInteger(trip.revision) && trip.revision < state.trip.revision
+      || Number.isInteger(trip.document?.version) && trip.document.version < (state.trip.document?.version || 0))) return;
     const previousStatus = state.trip?.status;
     state.trip = trip;
     const hasSavedDelivery = Boolean(trip.plan || (trip.capabilities?.single_session && trip.document));
@@ -556,7 +615,9 @@
       : running && trip.job_kind === 'prepare'
       ? '正在查漏补缺，现有行程保持不变' : running && hasSavedDelivery
         ? '正在调整，原方案仍可阅读' : statuses[trip.status] || '正在读取任务状态';
-    const events = records(trip.events);
+    if (trip.capabilities?.single_session && trip.status === 'completed' && trip.document && !savedDeliveryReady(trip))
+      $('state-title').textContent = '手册已保存，导出状态仍待确认';
+    const events = recordedProgressEvents(trip);
     const elapsedLabel = revisionElapsed?.label(trip) || '';
     const candidates = records(trip.discovery?.supplies);
     const visibleResults = candidates.length
@@ -1017,16 +1078,21 @@
     }
     revisionReceipt?.dismiss();
     clearTimeout(state.pollTimer); revisionStage?.reset(); setBusy(true); const generation = ++state.generation;
-    const binding = versionBinding();
-    const proof = SINGLE_SESSION_MUTATIONS.includes(suffix) && state.trip?.capabilities?.single_session
-      ? bindOperation(suffix, { ...body, ...binding }) : null;
-    const envelope = proof ? { ...body, ...binding, request_id: proof.request_id } : body;
+    let proof;
     try {
+      proof = SINGLE_SESSION_MUTATIONS.includes(suffix) && state.trip?.capabilities?.single_session
+        ? await bindOperation(suffix, { ...body, ...versionBinding() }) : null;
+      const envelope = proof ? { ...proof.input, request_id: proof.request_id } : body;
       const result = await api(tripPath(suffix), 'POST', envelope);
       if (generation !== state.generation) return false;
       if (!result.trip) throw new Error('服务未返回更新后的任务，请重新连接确认。');
-      acceptTrip(result.trip); confirmOperation(); state.mutationNotice = ''; notice(successMessage); schedulePoll(); return true;
+      acceptTrip(result.trip); confirmOperation(proof); state.mutationNotice = ''; notice(successMessage); schedulePoll(); return true;
     } catch (error) {
+      if (generation !== state.generation) return false;
+      releaseRejectedOperation(proof, error);
+      if (error.operationBlocked) {
+        state.mutationNotice = error.message; notice(error.message, true); return false;
+      }
       const code = error.code || error.error?.code;
       notice(error.status === 409 ? '方案已在其他页面更新，正在重新读取。你的调整文字保留，请看过最新版后再次提交。' : error.message, true);
       await syncTrip(true);
@@ -1037,7 +1103,7 @@
         : `${error.message} 本次提交未确认。已尝试重新读取任务，不会自动重复提交；再次提交同一内容时沿用本次请求编号。`;
       notice(state.mutationNotice, true);
       return false;
-    } finally { setBusy(false); }
+    } finally { if (generation === state.generation) setBusy(false); }
   }
   async function toggleLock(id) {
     const locked = new Set(list(state.trip.locked_item_ids));
@@ -1052,20 +1118,20 @@
     clearTimeout(state.pollTimer); revisionStage?.reset(); setBusy(true); const generation = ++state.generation;
     state.messageContext = ''; $('message-response').replaceChildren(); $('message-response').hidden = true;
     revisionMaterials.status('正在理解这次输入；提问会直接回答，修改要求会进入修订。');
-    const binding = versionBinding();
-    const proof = state.trip?.capabilities?.single_session ? bindOperation('message', { ...body, ...binding }) : null;
-    const envelope = proof ? { ...body, ...binding, request_id: proof.request_id } : body;
+    let proof;
     try {
+      proof = state.trip?.capabilities?.single_session ? await bindOperation('message', { ...body, ...versionBinding() }) : null;
+      const envelope = proof ? { ...proof.input, request_id: proof.request_id } : body;
       const result = await api(tripPath('/message'), 'POST', envelope);
       if (generation !== state.generation) return;
       if (result.kind === 'revision') {
         if (!result.trip) throw new Error('服务未返回更新后的任务，请重新连接确认。');
-        acceptTrip(result.trip); confirmOperation(); state.mutationNotice = '';
+        acceptTrip(result.trip); confirmOperation(proof); state.mutationNotice = '';
         if ($('feedback').value.trim() === body.feedback) $('feedback').value = '';
         revisionMaterials.reset('调整已提交。新版本准备好前，原方案保持可读。');
         notice('调整已提交。新版本准备好前，原方案保持可读。');
       } else if (['answer', 'clarify'].includes(result.kind)) {
-        confirmOperation();
+        confirmOperation(proof);
         window.TravelPresentation.renderMessage($('message-response'), result, intent => {
           let current;
           try { current = revisionMaterials.payload($('feedback').value.trim()); } catch { return; }
@@ -1086,6 +1152,10 @@
       schedulePoll();
     } catch (error) {
       if (generation !== state.generation) return;
+      releaseRejectedOperation(proof, error);
+      if (error.operationBlocked) {
+        state.mutationNotice = error.message; notice(error.message, true); revisionMaterials.status(error.message, true); return;
+      }
       await syncTrip(true);
       const code = error.code || error.error?.code;
       state.mutationNotice = code === 'duplicate_request'

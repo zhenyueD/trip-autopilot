@@ -69,7 +69,7 @@ class ContextTests(unittest.TestCase):
         self.assertNotIn('季节差异提醒', Path(legacy['html_path']).read_text())
         self.assertEqual(context.markdown(None), '')
 
-    def test_raw_prices_and_missing_fields_rejected_before_save(self):
+    def test_raw_prices_rejected_but_missing_fields_allowed(self):
         for value in ('100', 'CNY 100', '一百元未核验', '{{price:E1}} + 100', '{{evidence:E1}}', '经济档', 100):
             self.overview['budget_tiers'][0]['total_range']['lower'] = value
             with self.subTest(value=value), self.assertRaisesRegex(ValueError, 'unbound price'):
@@ -78,8 +78,7 @@ class ContextTests(unittest.TestCase):
         for section, key in [('season_note', 'daylight'), ('pace_note', 'one_day_more')]:
             value = fixture()
             del value[section][key]
-            with self.assertRaises(ValueError):
-                context.validate(value)
+            context.validate(value)
 
     def test_amount_items_cannot_bypass_price_binding(self):
         for key in ('verified_items', 'estimated_items'):
@@ -92,8 +91,7 @@ class ContextTests(unittest.TestCase):
         value['budget_tiers'][0]['verified_items'] = ['2026-11-05 核验范围待确认']
         context.validate(value)
         value['time_context']['sun_events'][0].pop('basis')
-        with self.assertRaises(ValueError):
-            context.validate(value)
+        context.validate(value)
 
     def test_bound_range_uses_existing_ledger(self):
         self.store.register_source('s', 'https://example.test', 'Synthetic amounts 10 and 20', '2026-11-05')
@@ -106,7 +104,7 @@ class ContextTests(unittest.TestCase):
         self.assertIn('20 元', page)
         self.assertEqual(len(result['price_checks']), 2)
 
-    def test_solar_metadata_required_and_clock_validation(self):
+    def test_solar_metadata_and_clock_formats_do_not_block(self):
         event = dict(method='lookup', date='2026-11-05', timezone='Etc/UTC',
                      coordinates=dict(latitude=0, longitude=0, crs='WGS84'),
                      basis='合成格式测试值，非真实查表结果', sunrise='06:00', sunset='18:00')
@@ -118,20 +116,43 @@ class ContextTests(unittest.TestCase):
                              ('coordinates', None), ('basis', ''), ('sunrise', '25:00'), ('method', 'unknown')]:
             broken = deepcopy(self.overview)
             broken['time_context']['sun_events'][0][key] = invalid
-            with self.subTest(key=key), self.assertRaises(ValueError):
+            with self.subTest(key=key):
                 context.validate(broken)
+                context.markdown(broken)
+                context.render(broken, str)
+
+    def test_missing_budget_tiers_can_save_and_render(self):
+        del self.overview['budget_tiers']
+        result, page = self.save()
+        self.assertEqual(result['version'], 1)
+        self.assertIn('合成手册', page)
+        self.assertEqual(self.store.current()['version'], 1)
+
+    def test_sparse_and_unusual_overview_shapes_render_without_schema_gate(self):
+        values = [None, [], 'writer notes', {}, {'season_note': [], 'pace_note': False},
+                  {'budget_tiers': [None, {}, {'name': '任意档', 'selected': 'yes'}]},
+                  {'budget_tiers': [{'name': '同名'}, {'name': '同名'}, {}, {}]},
+                  {'time_context': {'sun_events': [None, {'method': 'other', 'coordinates': []}]}},
+                  {'time_context': {'sun_events': [{'method': 'lookup', 'coordinates': {'x': []}}]}}]
+        for value in values:
+            with self.subTest(value=value):
+                context.validate(value)
+                context.markdown(value)
+                context.render(value, str)
+                context.render_budget(value, str)
+                context.pending_conditions(value)
 
     def test_edit_reload_undo_and_html_escape(self):
         first, _ = self.save()
         changed = deepcopy(self.overview)
         changed['pace_note']['one_day_less'] = '<img src=x onerror=alert(1)>'
         receipt = dict(changes='调整合成节奏', judgment='测试', alternatives='原版', next_action='查看')
-        second = self.store.edit(first['hash'], [dict(old=document(self.overview), new=document(changed))], receipt)
+        second = self.store.edit(first['version'], [dict(old=document(self.overview), new=document(changed))], receipt)
         page = Path(second['html_path']).read_text()
         self.assertNotIn('<img src=x', page)
         self.assertIn('&lt;img src=x', page)
         self.assertEqual(DocumentStore(self.tmp.name).current()['hash'], second['hash'])
-        restored = self.store.undo(second['hash'])
+        restored = self.store.undo(second['version'])
         self.assertIn('少一天：删去合成支线', Path(restored['html_path']).read_text())
 
     def test_renderer_preserves_source(self):

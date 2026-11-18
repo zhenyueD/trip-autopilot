@@ -1,5 +1,6 @@
 """Offline malformed-response boundary and actual incident replay."""
 import asyncio
+from first_eye_fixtures import with_budget
 from copy import deepcopy
 import hashlib
 import json
@@ -35,7 +36,7 @@ class DegradeTests(unittest.TestCase):
                  call(query='q', context='c', extra=True), call(query='x'*129, context='c'),
                  call(name='record_evidence', source_id='S1', quote='q', claim='c', kind='bad'),
                  call(name='record_evidence', source_id='S1', quote='q', claim='c', kind='price', quantity=True),
-                 call(name='edit_handbook', base_hash='x', edits=[{'old': 1, 'new': 'x'}], receipt={})]
+                 call(name='edit_handbook', base_version='x', edits=[{'old': 1, 'new': 'x'}], receipt={})]
         for arguments in ('{', '[]', '{"q":NaN}', '{"q":1,"q":2}', 3, None):
             c = call(); c['function']['arguments'] = arguments; cases.append(c)
         for bad in cases:
@@ -53,23 +54,44 @@ class DegradeTests(unittest.TestCase):
         self.assertEqual([r['rule'] for r in rejected], ['duplicate_tool_call_id']*2)
 
     def test_cap_uses_original_ordinal_and_strict_caller_unchanged(self):
-        raw = body([call(str(i), query='q', context='c') for i in range(18)])
+        raw = body([call(str(i), query='q', context='c') for i in range(52)])
         raw['choices'][0]['message']['content'] = ''
         raw['choices'][0]['message']['tool_calls'][0] = None
         with self.assertRaises(_Rejected):
             _assistant(raw, NAMES, set())
         msg, rejected = session_assistant(raw, TOOLS, set())
-        self.assertEqual(len(msg['tool_calls']), 15)
-        self.assertEqual([r['ordinal'] for r in rejected], [1,17,18])
-        self.assertIn('MAX_TOOL_CALLS=16', rejected[-1]['rule'])
+        self.assertEqual(len(msg['tool_calls']), 49)
+        self.assertEqual([r['ordinal'] for r in rejected], [1,51,52])
+        self.assertIn('MAX_TOOL_CALLS=50', rejected[-1]['rule'])
+
+    def test_fifty_valid_calls_and_integer_revision_protocol(self):
+        raw = body([call(str(i), query='q', context='c') for i in range(50)])
+        msg, rejected = session_assistant(raw, TOOLS, set())
+        self.assertEqual(len(msg['tool_calls']), 50)
+        self.assertEqual(rejected, [])
+        self.assertEqual(len(_assistant(raw, NAMES, set())['tool_calls']), 50)
+        receipt = dict(changes='change', judgment='judgment', alternatives='alternative', next_action='next')
+        valid = call('edit', 'edit_handbook', base_version=3,
+                     edits=[{'old': 'before', 'new': 'after'}], receipt=receipt)
+        self.assertEqual(session_assistant(body([valid]), TOOLS, set())[1], [])
+        for version in (True, 3.0, '3'):
+            invalid = deepcopy(valid)
+            arguments = json.loads(invalid['function']['arguments'])
+            arguments['base_version'] = version
+            invalid['function']['arguments'] = json.dumps(arguments)
+            self.assertIn('type must be integer', session_assistant(body([invalid]), TOOLS, set())[1][0]['rule'])
 
     def test_all_invalid_round_continues_with_valid_protocol_and_persists(self):
         with tempfile.TemporaryDirectory() as temp:
             agent = SingleSessionAgent(temp)
-            replies = [body([None, call(query=[])]), body([call('save', 'save_handbook', markdown='# Offline')])]
+            replies = [body([None, call(query=[])]), body([call('save', 'save_handbook', markdown=with_budget('# Offline'))])]
             async def model():
-                if len(replies) == 1:
-                    validate_messages(agent._messages(), NAMES)
+                stage = agent._stage_payload.get()
+                if stage['role'] == 'research' and len(replies) == 1:
+                    validate_messages(stage['messages'], {'search', 'read_page'})
+                    return dict(role='assistant', content='Research finished.'), 'stop'
+                if stage['role'] == 'adjudicator':
+                    return dict(role='assistant', content='{"decisions": []}'), 'stop'
                 msg, rejected = agent._accept_response(replies.pop(0), f'offline-{len(replies)}')
                 return msg, 'tool_calls_degraded' if rejected else 'tool_calls'
             with patch.object(agent, '_model', side_effect=model), patch.dict(os.environ, {'TRAVEL_ORCH': '0'}):
@@ -125,27 +147,56 @@ class DegradeTests(unittest.TestCase):
             for sid, source in source_ledger['sources'].items():
                 agent.documents.register_source(sid, source['url'], source['content'], source['retrieved_at'])
             replies = [deepcopy(raw), body([call('offline-synthetic-save', 'save_handbook',
-                markdown='# Offline incident replay\n\nSynthetic continuation for format-boundary testing only. '
-                         'This is not a model-authored travel deliverable.\n\n[证据 E1]')])]
+                markdown=with_budget('# Offline incident replay\n\nSynthetic continuation for format-boundary testing only. '
+                         'This is not a model-authored travel deliverable.\n\n[证据 E1]'))])]
+            seen = {}
             async def model():
-                if len(replies) == 1:
-                    validate_messages(agent._messages(), NAMES)
-                msg, rejects = agent._accept_response(replies.pop(0), 'offline-' + str(len(replies)))
+                stage = agent._stage_payload.get()
+                role = stage['role']
+                seen[role] = seen.get(role, 0) + 1
+                lease = agent.request_budget.reserve('llm', 'offline-'+role+str(seen[role]))
+                agent.request_budget.settle(lease, status='completed')
+                if role in {'research', 'adjudicator'} and seen[role] > 1:
+                    validate_messages(stage['messages'], {t['function']['name'] for t in stage['tools']})
+                    decisions = [{'candidate_id': sid,
+                        'status': 'accepted' if any(e['source_id'] == sid for e in agent.documents.evidence.values()) else 'unknown',
+                        'reason': 'offline incident binding or explicitly unverified source'}
+                        for sid in agent.documents.sources]
+                    return dict(role='assistant', content=json.dumps({'decisions': decisions})), 'stop'
+                if role == 'writer':
+                    response = replies[1]
+                else:
+                    response = deepcopy(raw)
+                    response['choices'][0]['message']['tool_calls'] = [
+                        c for c in response['choices'][0]['message']['tool_calls']
+                        if (c['function']['name'] in {'search', 'read_page'}) == (role == 'research')]
+                msg, rejects = agent._accept_response(response, 'offline-' + role)
                 return msg, 'tool_calls_degraded' if rejects and not msg.get('tool_calls') else 'tool_calls'
             unavailable = {'status': 'offline_unavailable', 'results': [], 'evidence_available': False,
                            'reason': 'No historical response exists for this incident search; network disabled'}
+            def read(url, rid):
+                source = next((row for row in source_ledger['sources'].values() if row['url'] == url), None)
+                return {**source, 'status': 'read'} if source else unavailable
             with patch.object(agent, '_model', side_effect=model), \
                     patch.object(agent, '_search', return_value=unavailable) as search, \
+                    patch.object(agent, '_read', side_effect=read), \
                     patch.dict(os.environ, {'TRAVEL_ORCH': '0'}):
-                result = asyncio.run(agent.run_turn('offline incident replay', intake={'case_id': 'offline'}))
+                result = asyncio.run(agent.run_turn('offline incident replay', intake={
+                    'case_id': 'offline', 's1_price_items': [{'id': 'fixture',
+                    'label': 'Historical tool protocol fixture', 'conditions': 'offline only'}]}))
             self.assertEqual(search.call_count, 2)
             self.assertEqual(len(agent.session['tools']), 17)
+            transcript = json.loads((directory/'roles/research/messages.json').read_text())
+            refused = [json.loads(m['content']) for m in transcript if m['role'] == 'tool'
+                       and json.loads(m['content']).get('error') == 'ResearchSearchBatchLimit']
+            self.assertEqual(len(refused), 2)
             self.assertTrue(result['document_saved'])
-            rejects = agent.session['tool_call_rejections'][0]['rejected_calls']
-            self.assertEqual([r['ordinal'] for r in rejects], [17, 18])
+            rejects = agent.session.get('tool_call_rejections', [{}])[0].get('rejected_calls', [])
+            self.assertEqual(rejects, [])
             evidence = {'product_calls': 0, 'network_calls': 0, 'incident_sha256': hashlib.sha256(artifact.read_bytes()).hexdigest(),
                         'continuation': 'explicit synthetic offline save; not actual model continuation',
-                        'searches': unavailable, 'accepted_incident_calls': 16,
+                        'searches': unavailable, 'accepted_incident_calls': 18,
+                        'scheduler_refused_searches': refused,
                         'executed_incident_calls': agent.session['tools'][:-1], 'rejected_calls': rejects,
                         'accepted_evidence_count': len(agent.documents.evidence), 'document': result,
                         'turn_status': agent.session['turns'][-1]['status']}

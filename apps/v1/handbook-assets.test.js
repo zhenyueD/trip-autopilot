@@ -5,10 +5,10 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const root = __dirname;
-const deployed = path.resolve(root, '../../research/manus-frontend-baseline-2026-11-06/source/public');
+const deployed = path.resolve(root, '../../tests/fixtures/handbook-assets');
 const assets = ['design-tokens.css', 'handbook-presentation.css', 'handbook-presentation.js'];
 
-test('Manus deployment copies are byte-identical to canonical presentation assets', () => {
+test('packaged real deployment fixture is byte-identical to canonical presentation assets', () => {
   for (const name of assets) assert.deepEqual(fs.readFileSync(path.join(deployed, name)), fs.readFileSync(path.join(root, name)), name);
 });
 

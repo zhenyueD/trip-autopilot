@@ -1,3 +1,5 @@
+> 历史说明保留。本次版本以 [当前 README](README.md)、[运行说明](docs/RUNNING.md) 和 [发布记录](docs/RELEASE-2026-11-18.md) 为准；下文旧包/地址/验收不能当作本版状态。
+
 # Demo script (≈5 minutes)
 
 For a live walkthrough of Trip Autopilot. Everything below runs locally; the only external dependency is the model API key for *new* generations — all review steps work on pre-generated trips with no waiting.

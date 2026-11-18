@@ -1,0 +1,6 @@
+# Selected-file extraction for the Trip Autopilot material intake.
+openpyxl>=3.1,<4
+pypdf>=6,<7
+requests>=2.32,<3
+# Pinned runtime for the vendored DeepSeek-V4-Pro tokenizer.json.
+tokenizers==0.23.3

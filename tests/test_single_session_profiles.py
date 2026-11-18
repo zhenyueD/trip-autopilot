@@ -161,10 +161,8 @@ class ProfileTests(unittest.TestCase):
         profile = self.profile()
         path = self.root / 'traveler-profiles.json'
         before = path.read_bytes()
-        invalid = [None, [], {'travelers': True}, {'travelers': 0}, {'travelers': 101},
-                   {'composition': {}}, {'preferences': [3]}, {'preferences': [' ']},
-                   {'pace': None}, {'pace': ''}, {'preferences': []}, {'notes': ''},
-                   {'notes': {}}, {'is_default': 1}, {'destination': '不应保存'},
+        invalid = [None, [], {'preferences': [' ']}, {'pace': None}, {'pace': ''},
+                   {'preferences': []}, {'notes': ''}, {'is_default': 1},
                    {'clear_fields': 'notes'}, {'clear_fields': ['id']},
                    {'clear_fields': ['pace'], 'pace': '慢'}]
         for payload in invalid:
@@ -177,8 +175,19 @@ class ProfileTests(unittest.TestCase):
             with self.subTest(profile_id=bad_id):
                 with self.assertRaises(APIError) as error:
                     self.trip(profile_id=bad_id)
-                self.assertEqual(error.exception.status, 422)
+                self.assertEqual(error.exception.status, 404)
         self.assertEqual(self.service.records, {})
+
+    def test_profile_hygiene_values_no_longer_rejected(self):
+        profile = self.profile()
+        for payload in ({'travelers': True}, {'travelers': 0}, {'travelers': 101},
+                        {'composition': {}}, {'preferences': [3]}, {'notes': {}},
+                        {'notes': 'x' * 30001}, {'destination': 'not a profile field'}):
+            with self.subTest(payload=str(payload)[:100]):
+                status, result = self.request('PATCH', '/api/agent/profiles/' + profile['id'], payload)
+                self.assertEqual(status, 200)
+                for key in set(payload) - {'destination'}:
+                    self.assertEqual(result['profile'][key], payload[key])
 
     def test_public_values_do_not_alias_store(self):
         profile = self.profile()

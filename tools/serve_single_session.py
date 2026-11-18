@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import os
 from pathlib import Path
 import sys
 
@@ -17,10 +18,19 @@ def main():
     parser.add_argument("--directory", type=Path, required=True, help="private persistent session directory")
     parser.add_argument("--port", type=int, default=7392)
     parser.add_argument("--static-root", type=Path, help="optional prebuilt apps/v1 dist directory")
+    parser.add_argument("--max-requests", type=int,
+                        default=int(os.environ.get('TRAVEL_SESSION_MAX_REQUESTS', '50')),
+                        help="cumulative physical product-call ceiling per trip (default: 50)")
+    parser.add_argument("--turn-seconds", type=float,
+                        default=float(os.environ.get('TRAVEL_SESSION_TURN_SECONDS', '3600')),
+                        help="maximum model execution time per turn (default: 3600 seconds)")
     args = parser.parse_args()
     if args.port == 7377:
         parser.error("7377 is reserved for the existing service")
-    service = SessionService(args.directory)
+    if args.max_requests < 1 or not 0 < args.turn_seconds <= 86400:
+        parser.error("positive request ceiling and turn time (at most 86400 seconds) required")
+    os.environ['TRAVEL_SESSION_MAX_REQUESTS'] = str(args.max_requests)
+    service = SessionService(args.directory, turn_seconds=args.turn_seconds)
     try:
         server = SessionHTTPServer(("127.0.0.1", args.port), service, args.static_root)
         print(f"Single-session API: http://127.0.0.1:{server.server_address[1]}", flush=True)

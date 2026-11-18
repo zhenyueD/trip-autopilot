@@ -1,15 +1,18 @@
-"""Offline HTTP contracts: stub execution with the real document store."""
+"""Offline HTTP-handler contracts: in-memory transport and real document store."""
 import asyncio
 from datetime import date, timedelta
-import http.client
 import json
 from pathlib import Path
 import tempfile
 import threading
 import time
 import unittest
+from email.message import Message
+from io import BytesIO
+from types import SimpleNamespace
 
-from travel_agent.single_session_api import APIError, MAX_BODY, SessionHTTPServer, SessionService
+from travel_agent.single_session_api import APIError, MAX_BODY, SessionHTTPServer, SessionHandler, SessionService, validate_intake, validate_revision
+from unittest.mock import Mock, patch
 from travel_agent.single_session_document import DocumentStore
 
 
@@ -58,7 +61,7 @@ class OfflineAgent:
             result = self.documents.save(source)
         else:
             assert self.session["turns"]
-            result = self.documents.edit(self.documents.current()["hash"],
+            result = self.documents.edit(self.documents.current()["version"],
                 [{"old": "原来的行程", "new": "修改后的行程"}],
                 {"changes": "已修改", "judgment": "放慢节奏", "alternatives": "原计划", "next_action": "阅读手册"})
         self.session["turns"].append({"status": "completed"})
@@ -76,29 +79,34 @@ class SessionAPITests(unittest.TestCase):
         self.static = self.root / "static"
         self.static.mkdir()
         (self.static / "studio.html").write_text("<html>studio</html>")
-        self.server = SessionHTTPServer(("127.0.0.1", 0), self.service, self.static)
-        threading.Thread(target=self.server.serve_forever, daemon=True).start()
+        self.server = SimpleNamespace(service=self.service, static_root=self.static.resolve(),
+                                      server_address=("127.0.0.1", 7392), server_port=7392)
 
     def tearDown(self):
         if OfflineAgent.release:
             OfflineAgent.release.set()
-        self.server.shutdown()
-        self.server.server_close()
         self.service.close()
         self.temporary.cleanup()
 
     def request(self, method, path, payload=None, token=None, headers=None):
-        connection = http.client.HTTPConnection("127.0.0.1", self.server.server_port, timeout=5)
-        body = json.dumps(payload) if payload is not None else None
-        values = {"Content-Type": "application/json"}
+        handler = object.__new__(SessionHandler)
+        handler.server = self.server
+        body = json.dumps(payload).encode() if payload is not None else b''
+        values = {"Host": "127.0.0.1:7392", "Content-Type": "application/json", "Content-Length": str(len(body))}
         if token:
             values["Authorization"] = "Bearer " + token
         values.update(headers or {})
-        connection.request(method, path, body=body, headers=values)
-        response = connection.getresponse()
-        data, content_type = response.read(), response.getheader("Content-Type")
-        connection.close()
-        return response.status, json.loads(data) if "application/json" in content_type else data
+        handler.headers = Message()
+        for key, value in values.items():
+            handler.headers[key] = value
+        handler.connection = Mock()
+        handler.rfile = BytesIO(body)
+        handler.command, handler.path = method, path
+        replies = []
+        handler._reply = lambda status, value, content_type=None: replies.append((status, value))
+        handler._handle()
+        self.assertEqual(len(replies), 1)
+        return replies[0]
 
     def completed(self, trip_id, token):
         deadline = time.monotonic() + 5
@@ -114,10 +122,69 @@ class SessionAPITests(unittest.TestCase):
         self.assertEqual(status, 202)
         return created["trip"]["id"], created["token"]
 
+    def assert_saved_with_first_eye_gap(self, trip, *, status='partial'):
+        """The OfflineAgent saves prose, but deliberately authors no first-eye layer."""
+        self.assertEqual(trip['status'], status)
+        self.assertEqual(trip['delivery']['status'], 'partial')
+        self.assertEqual(trip['delivery']['artifacts'], {
+            'handbook_html': 'ready', 'handbook_pdf': 'ready', 'first_eye_pdf': 'ready'})
+        self.assertEqual(trip['document']['first_eye']['status'], 'incomplete')
+        self.assertIn({'artifact': 'first_eye', 'field_path': 'first_eye', 'rule': 'required',
+                       'message': '第一眼层尚未生成；深入层仍可阅读。'}, trip['delivery']['quality_gaps'])
+        self.assertIsNone(trip['delivery']['error'])
+        self.assertIsNone(trip['delivery']['retry_url'])
+        html_status, page = self.request('GET', trip['handbook_url'])
+        self.assertEqual(html_status, 200)
+        self.assertIn(b'<!doctype html>', page)
+        pdf_status, pdf = self.request('GET', trip['pdf_url'])
+        self.assertEqual(pdf_status, 200)
+        self.assertTrue(pdf.startswith(b'%PDF'))
+
+    def test_initial_text_readable_during_media_but_revision_keeps_published_base(self):
+        from travel_agent.single_session_presentation_delivery import present_saved
+        entered, release = threading.Event(), threading.Event()
+        self.addCleanup(release.set)
+
+        def delayed(*args, **kwargs):
+            entered.set()
+            if not release.wait(5):
+                raise RuntimeError('offline media barrier timed out')
+            return present_saved(*args, **kwargs)
+
+        with patch('travel_agent.single_session_presentation_delivery.present_saved', side_effect=delayed):
+            trip_id, token = self.create()
+            self.assertTrue(entered.wait(5))
+            trip = self.service.get(trip_id, token)['trip']
+            self.assertEqual(trip['status'], 'running')
+            self.assertEqual(trip['generation_status'], 'completed')
+            self.assertEqual(trip['document']['version'], 1)
+            self.assertEqual(trip['delivery']['status'], 'partial')
+            self.assertIsNone(trip['pdf_url'])
+            status, page = self.request('GET', trip['handbook_url'])
+            self.assertEqual(status, 200)
+            self.assertIn('原来的行程', page.decode())
+            # Read capability is read-only even during progressive publication.
+            self.assertEqual(self.request('POST', f'/api/agent/trips/{trip_id}/message',
+                {'feedback': 'adjust'}, token=trip['handbook_url'].split('read=')[1])[0], 404)
+            release.set()
+            old = self.completed(trip_id, token)
+            entered.clear(); release.clear()
+            status, _ = self.request('POST', f'/api/agent/trips/{trip_id}/message',
+                {'feedback': '放慢一点', 'expected_revision': 1}, token)
+            self.assertEqual(status, 202)
+            self.assertTrue(entered.wait(5))
+            during = self.service.get(trip_id, token)['trip']
+            self.assertEqual(during['document']['hash'], old['document']['hash'])
+            self.assertEqual(during['document']['version'], 1)
+            self.assertEqual(self.service.records[trip_id]['document']['version'], 1)
+            release.set()
+            self.assertEqual(self.completed(trip_id, token)['document']['version'], 2)
+
     def test_http_generation_revision_read_only_link(self):
         trip_id, token = self.create()
         trip = self.completed(trip_id, token)
-        self.assertEqual(trip["status"], "completed")
+        self.assert_saved_with_first_eye_gap(trip)
+        self.assertEqual(trip['generation_status'], 'completed')
         self.assertEqual(trip["revision"], 1)
         self.assertIsNone(trip["plan"])
         self.assertNotIn(token, trip["handbook_url"])
@@ -130,6 +197,7 @@ class SessionAPITests(unittest.TestCase):
         self.assertEqual(status, 202)
         self.assertEqual(revision["kind"], "revision")
         revised = self.completed(trip_id, token)
+        self.assert_saved_with_first_eye_gap(revised)
         self.assertEqual(revised["revision"], 2)
         self.assertIn("修改后的行程", revised["diff"])
         self.assertEqual(revised["receipt"]["changes"], "已修改")
@@ -138,6 +206,17 @@ class SessionAPITests(unittest.TestCase):
         read_token = trip["handbook_url"].split("read=")[1]
         self.assertEqual(self.request("POST", f"/api/agent/trips/{trip_id}/message", {"feedback": "修改"}, token=read_token)[0], 404)
         self.assertEqual(self.request("POST", f"/api/agent/trips/{trip_id}/message", {"feedback": "修改", "expected_revision": 1}, token=token)[0], 409)
+
+    def test_saved_receipt_hash_mismatch_does_not_block_version_bound_delivery(self):
+        original = OfflineAgent.run_turn
+        async def mismatched_receipt(agent, text, *, intake=None):
+            return {**await original(agent, text, intake=intake), 'hash': 'different receipt hash'}
+        with patch.object(OfflineAgent, 'run_turn', mismatched_receipt):
+            trip_id, token = self.create()
+            trip = self.completed(trip_id, token)
+        self.assert_saved_with_first_eye_gap(trip)
+        self.assertEqual(trip['revision'], 1)
+        self.assertNotEqual(trip['document']['hash'], 'different receipt hash')
 
     def test_busy_and_directory_lock(self):
         OfflineAgent.entered, OfflineAgent.release = threading.Event(), threading.Event()
@@ -149,11 +228,11 @@ class SessionAPITests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, "already owns"):
             SessionService(self.service.directory, OfflineAgent)
         OfflineAgent.release.set()
-        self.assertEqual(self.completed(trip_id, token)["status"], "completed")
+        self.assert_saved_with_first_eye_gap(self.completed(trip_id, token))
 
     def test_restart_completed_and_interrupted_never_replays(self):
         trip_id, token = self.create()
-        self.assertEqual(self.completed(trip_id, token)["status"], "completed")
+        self.assert_saved_with_first_eye_gap(self.completed(trip_id, token))
         for interrupted in (False, True):
             directory = self.service.directory
             self.service.close()
@@ -166,7 +245,7 @@ class SessionAPITests(unittest.TestCase):
             self.service = SessionService(directory, lambda _: self.fail("restore called model"))
             self.server.service = self.service
             trip = self.service.get(trip_id, token)["trip"]
-            self.assertEqual(trip["status"], "failed" if interrupted else "completed")
+            self.assert_saved_with_first_eye_gap(trip, status='failed' if interrupted else 'partial')
             self.assertEqual(trip["document"]["version"], 1)
             self.assertIn(b"<!doctype html>", self.service.handbook(trip_id, token))
             if interrupted:
@@ -188,42 +267,71 @@ class SessionAPITests(unittest.TestCase):
         trip = self.completed(trip_id, token)
         route = f"/api/agent/trips/{trip_id}/message"
         payload = {"feedback": "放慢", "expected_revision": 1,
-                   "expected_hash": trip["document"]["hash"], "request_id": "edit-1"}
-        status, error = self.request("POST", route, {**payload, "expected_hash": "wrong"}, token)
-        self.assertEqual(status, 409)
-        self.assertEqual(error["error"]["code"], "revision_conflict")
+                   "expected_hash": "wrong", "request_id": "edit-1"}
+        status, rejected = self.request("POST", route, payload, token)
+        self.assertEqual((status, rejected['error']['code']), (409, 'revision_conflict'))
+        self.assertEqual(len(self.service.records[trip_id]['jobs']), 1)
+        payload['expected_hash'] = trip['document']['hash']
         status, accepted = self.request("POST", route, payload, token)
         self.assertEqual(status, 202)
         self.assertEqual(accepted["kind"], "revision")
         self.assertEqual(self.completed(trip_id, token)["revision"], 2)
+        # Unknown-result retries retain the original version/hash and payload.
         status, replay = self.request("POST", route, payload, token)
         self.assertEqual(status, 202)
         self.assertEqual(replay["kind"], "revision")
         self.assertEqual(replay["trip"]["revision"], 2)
         self.assertEqual(len(self.service.records[trip_id]["jobs"]), 2)
+        status, mismatch = self.request("POST", route, {**payload, "expected_hash": "another hash"}, token)
+        self.assertEqual(status, 409)
+        self.assertEqual(mismatch['error']['code'], 'idempotency_conflict')
         status, error = self.request("POST", route, {**payload, "feedback": "换方案"}, token)
         self.assertEqual(status, 409)
         self.assertEqual(error["error"]["code"], "idempotency_conflict")
 
-    def test_invalid_inputs_and_cross_origin_make_no_records(self):
-        invalid = [{"brief": "city", "images": ["secret.png"]}, {"brief": "city", "documents": ["private.pdf"]},
-                   {"brief": "city", "travelers": True}, {"brief": "city", "links": ["file:///etc/passwd"]},
-                   {"brief": "city", "unexpected": 1}, {"destination": "city", "start_date": "bad"}]
-        for value in invalid:
-            self.assertEqual(self.request("POST", "/api/agent/trips", value)[0], 422)
+    def test_input_shape_and_ranges_are_preserved_without_422(self):
+        values = [{"brief": "city", "images": ["secret.png"]},
+                  {"brief": "city", "documents": ["private.pdf"]},
+                  {"brief": "city", "travelers": 101},
+                  {"brief": "city", "links": ["file:///etc/passwd"]},
+                  {"brief": "city", "unexpected": {"raw": True}},
+                  {"destination": "city", "start_date": "bad", "end_date": "earlier"},
+                  {"brief": "x" * 30001, "preferences": [3] * 51}, [], {}]
+        with patch.object(self.service.executor, 'submit'):
+            for value in values:
+                with self.subTest(value=str(value)[:100]):
+                    status, created = self.request("POST", "/api/agent/trips", value)
+                    if isinstance(value, dict) and (value.get('images') or value.get('documents')):
+                        self.assertEqual(status, 422)
+                        self.assertEqual(created['error']['code'], 'attachments_unavailable')
+                        continue
+                    self.assertEqual(status, 202)
+                    saved = dict(self.service.records[created['trip']['id']]['intake'])
+                    saved.pop('case_id')
+                    self.assertEqual(saved, validate_intake(value))
+
+    def test_cross_origin_and_transport_guards_make_no_records(self):
         for header in ({"Origin": "https://evil.example"}, {"Host": "evil.example"}):
             self.assertEqual(self.request("POST", "/api/agent/trips", {"brief": "city"}, headers=header)[0], 403)
         self.assertEqual(self.request("POST", "/api/agent/trips", {"brief": "city"}, headers={"Content-Type": "text/plain"})[0], 415)
         self.assertEqual(self.request("POST", "/api/agent/trips", {"brief": "x" * MAX_BODY})[0], 413)
         self.assertFalse(self.service.records)
 
-    def test_unsupported_revision_fields_rejected(self):
-        trip_id, token = self.create()
-        self.completed(trip_id, token)
-        for payload in ({"feedback": "x", "message": "x"}, {"feedback": "x", "locked_item_ids": ["item"]}, {"feedback": "x", "materials": {"text": "secret"}}):
-            status, response = self.request("POST", f"/api/agent/trips/{trip_id}/message", payload, token=token)
-            self.assertEqual(status, 422)
-            self.assertIn("message_zh", response["error"])
+    def test_revision_fields_reach_model_without_hygiene_gate(self):
+        payloads = ({"feedback": "x", "message": "x"},
+                    {"feedback": "x", "locked_item_ids": ["item"]},
+                    {"feedback": "x", "materials": {"text": "selected text"}},
+                    {"feedback": {"raw": True}, "unknown": 3}, {})
+        for payload in payloads:
+            with self.subTest(payload=payload):
+                trip_id, token = self.create()
+                self.completed(trip_id, token)
+                with patch.object(self.service.executor, 'submit') as submit:
+                    status, _ = self.request("POST", f"/api/agent/trips/{trip_id}/message", payload, token=token)
+                self.assertEqual(status, 202)
+                self.assertEqual(json.loads(submit.call_args.args[2]), payload)
+                # Make the next synthetic initial request distinct.
+                self.service.records[trip_id]['intake']['brief'] += str(len(self.service.records))
 
     def test_failure_durable_and_redacted(self):
         OfflineAgent.failure = True
@@ -249,7 +357,7 @@ class SessionProgressTests(unittest.TestCase):
     """No listening sockets, workers, model calls or external requests."""
 
     def setUp(self):
-        from unittest.mock import patch
+        from unittest.mock import Mock, patch
         self.temporary = tempfile.TemporaryDirectory()
         self.addCleanup(self.temporary.cleanup)
         self.root = Path(self.temporary.name)
@@ -321,7 +429,7 @@ class SessionProgressTests(unittest.TestCase):
                 self.assertEqual(self.progress()["completed_turns"], 1)
 
     def test_public_contract_additive_and_token_unchanged(self):
-        from unittest.mock import patch
+        from unittest.mock import Mock, patch
         self.assertEqual(set(self.created), {"trip", "token"})
         self.assertNotIn("progress", self.created["trip"])
         baseline = self.service._public(self.record)

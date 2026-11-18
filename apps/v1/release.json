@@ -1,1 +1,10 @@
-{"release": "customer-preview-20261118-writer-finalization", "core_manifest_hash": "4d343e6fcb0d7c2aa803cc37305364ea5f57b9720a470ab178e6a7572d76bac3"}
+{
+  "release": "reliability-demo-20261118",
+  "base_build_id": "a5adb2979c816bfdaadbf6da97f46a303cc424c1d58262017777e82fcfc3db32",
+  "core_manifest_hash": "2bed10a01a743a7a7eff9d97efe25ccd05c124fb4a2916e1312649eeea68e538",
+  "core_archive_sha256": "53d27cdcf8ab9d0e7003f73057cd86f2c7a26753e196aa125bcc286b4370dbf7",
+  "release_overlays": [
+    "tools/render_service.py",
+    "packages/travel_agent/supply_render_queue.py"
+  ]
+}
