@@ -4,11 +4,11 @@
 
 Trip Autopilot 是一个旅行规划 Agent 原型。它围绕你的日期、同行人、预算、节奏和已订安排组织旅行资料，生成可继续修改的手册，并提供完整版与「第一眼」速览 PDF。
 
-[看 90 秒真实演示](docs/DEMO.md) · [读完整手册](docs/examples/yangzhou-v3-full.pdf) · [读第一眼速览](docs/examples/yangzhou-v3-first-eye.pdf) · [授权运行](docs/RUNNING.md) · [技术架构](docs/ARCHITECTURE.md)
+[看旅行杂志版演示](docs/DEMO.md) · [读完整手册](docs/examples/yangzhou-v3-full.pdf) · [读第一眼速览](docs/examples/yangzhou-v3-first-eye.pdf) · [授权运行](docs/RUNNING.md) · [技术架构](docs/ARCHITECTURE.md)
 
-[![扬州 v3 工作台：保存后的旅行手册与修订结果](docs/media/workspace-v3.png)](docs/DEMO.md)
+[![旅行杂志版作品演示封面，点击查看视频](docs/media/demo-magazine-cover.jpg)](docs/DEMO.md)
 
-*扬州案例真实操作后的 v3 工作台。点击图片查看演示与交付说明。*
+*旅行杂志版作品演示 · 约 2 分 12 秒。包含历史案例、实际操作片段与编辑讲解；点击封面查看视频。*
 
 ## 先看一次真实修改
 
@@ -22,7 +22,7 @@ Trip Autopilot 是一个旅行规划 Agent 原型。它围绕你的日期、同�
 | 第一、三天已有安排 | 其他两天保持 | 两天的完整结构保持不变 |
 | 当前手册为 v2 | 修改后继续阅读、带走 | v3 刷新恢复；HTML 与双 PDF 绑定同一版本 |
 
-**实际等待 8 分 15 秒，视频压缩为 90 秒。** 一次用户提交经历了内部旧值匹配重试，共新增 4 次产品调用；费用保守估算约 ¥1.65，服务商实际账单未知。
+**该次修订实际等待 8 分 15 秒，演示中的等待经过压缩。** 一次用户提交经历了内部旧值匹配重试，共新增 4 次产品调用；费用保守估算约 ¥1.65，服务商实际账单未知。
 
 这次演示验证了缓存续改的限定链路。它没有验证从零首册一次成功，也没有重新核验全册旅行事实；购物活动仍缺图，照片覆盖为 3/4，展示为 `degraded`，与 API 的 `ready` 存在状态差异。
 
@@ -102,7 +102,7 @@ flowchart LR
 
 | 想做什么 | 从这里开始 |
 | --- | --- |
-| 先看产品实际怎样修改行程 | [90 秒演示与说明](docs/DEMO.md) |
+| 先看产品实际怎样修改行程 | [旅行杂志版演示与说明](docs/DEMO.md) |
 | 直接检查成品 | [完整 PDF](docs/examples/yangzhou-v3-full.pdf) · [第一眼 PDF](docs/examples/yangzhou-v3-first-eye.pdf) |
 | 理解产品判断与能力边界 | [产品逻辑](docs/PRODUCT-LOGIC.md) |
 | 理解实现与状态归属 | [技术架构](docs/ARCHITECTURE.md) |

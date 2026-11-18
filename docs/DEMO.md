@@ -1,14 +1,16 @@
-# 扬州缓存续改：一次真实演示
+# Trip Autopilot · 旅行杂志版演示
 
-这段演示记录了 **缓存 v2 → 一次用户纠正 → 保存 v3 → 刷新恢复 → 导出双 PDF**。素材来自 2026-11-18 的真实前端操作和本次产物，演示使用已有扬州行程的隔离副本。
+本页使用作者提供的旅行杂志版视频，约 **2 分 12 秒**，包含扬州操作片段、福冈历史案例与编辑讲解。视频用于介绍产品，不代表新增运行或全部案例验收。
 
-[播放 / 下载 90 秒视频](media/trip-autopilot-demo.mp4?raw=1) · [完整手册 PDF](examples/yangzhou-v3-full.pdf) · [下载只读 HTML](examples/yangzhou-v3.html?raw=1) · [第一眼速览 PDF](examples/yangzhou-v3-first-eye.pdf) · [返回 README](../README.md)
+下方 HTML、双 PDF 与调用记录仍对应同一扬州案例的 **缓存 v2 → 一次用户纠正 → 保存 v3 → 刷新恢复 → 导出双 PDF**。福冈片段不与这份扬州版本或账目混用。
 
-[![保存后的扬州 v3 工作台](media/workspace-v3.png)](media/trip-autopilot-demo.mp4?raw=1)
+[播放 / 下载旅行杂志版视频](media/trip-autopilot-demo.mp4?raw=1) · [完整手册 PDF](examples/yangzhou-v3-full.pdf) · [下载只读 HTML](examples/yangzhou-v3.html?raw=1) · [第一眼速览 PDF](examples/yangzhou-v3-first-eye.pdf) · [返回 README](../README.md)
 
-视频将等待压缩为剪辑片段，**实际从用户提交到终态观测为 494.628 秒，约 8 分 15 秒**，包含内部重试。90 秒是视频长度，不是产品响应时间；GitHub 若未直接播放，可通过上方链接下载。
+[![旅行杂志版视频封面](media/demo-magazine-cover.jpg)](media/trip-autopilot-demo.mp4?raw=1)
 
-## 这一次改了什么
+视频将等待压缩为剪辑片段，**实际从用户提交到终态观测为 494.628 秒，约 8 分 15 秒**，包含内部重试。约 2 分 12 秒是作品演示长度，不是产品响应时间；GitHub 若未直接播放，可通过上方链接下载。
+
+## 扬州修订案例：实际改了什么
 
 用户在已有 v2 上提出：
 
@@ -32,7 +34,7 @@
 | [只读 HTML](examples/yangzhou-v3.html?raw=1) | 下载后在浏览器本地打开，无需登录或模型凭据 | v3，与本次保存 HTML 字节一致 |
 | [完整旅行手册](examples/yangzhou-v3-full.pdf) | 详细阅读行程、交通、预算口径与待确认内容 | v3，18 页 |
 | [第一眼速览](examples/yangzhou-v3-first-eye.pdf) | 快速查看路线与重点 | v3，3 页 |
-| [演示视频](media/trip-autopilot-demo.mp4?raw=1) | 查看纠正、等待、回执和成品过程 | 90 秒，等待已压缩 |
+| [旅行杂志版视频](media/trip-autopilot-demo.mp4?raw=1) | 产品介绍，含历史案例与实际操作节选 | 约 2 分 12 秒，等待已压缩 |
 
 ![扬州 v3 第一眼速览](media/first-eye-v3.png)
 
@@ -65,7 +67,7 @@
 
 本次有界独立复核支持的是修正、保持、版本、导出和刷新链路。它没有证明从零新行程的首次自主完整交付，也没有证明全部事实正确、图片完整或跨浏览器恢复已完成。
 
-演示使用隔离副本，原始行程文件未变。剪辑采用实际录屏和本次 PDF 渲染，区分缓存 v2、本次真实提交、压缩等待和 v3；旁白采用离线系统语音。临时演示服务在录制后已停止。
+扬州原始运行使用隔离副本，原始行程文件未变，临时演示服务在录制后已停止。当前公开视频采用作者提供的旅行杂志版成片，原文件直接发布，未重新剪辑；其历史案例与编辑讲解不用于补齐运行证据。
 
 公开素材用于查看产品结果，私有会话、原始付费回包和凭据不随仓库分发。本次仓库更新没有重新部署现有服务，也没有新增产品模型调用。
 

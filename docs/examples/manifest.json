@@ -1,5 +1,5 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "case": "yangzhou-cached-revision-demo",
   "business_version": "v3",
   "recorded_at": "2026-11-18",
@@ -34,11 +34,6 @@
       "bytes": 739332
     },
     {
-      "path": "../media/trip-autopilot-demo.mp4",
-      "sha256": "331446fafa09b33b762ea6dc72d9b1729ce8958d3fd9b35397826e8eaea753f1",
-      "bytes": 6931551
-    },
-    {
       "path": "../examples/yangzhou-v3-full.pdf",
       "sha256": "94a2ba832df0c00489f861de6d195dec580b69cd7d6eba98cdda5d7ea9481629",
       "bytes": 2655030
@@ -53,5 +48,18 @@
       "sha256": "ebb9d3737af7009b1642b8ca954c63ef8a9638cf77424d3a3d4d3f89c4cd4ad0",
       "bytes": 3929355
     }
-  ]
+  ],
+  "presentation_video": {
+    "path": "../media/trip-autopilot-demo.mp4",
+    "origin": "author-supplied travel-magazine interview demo; original bytes",
+    "scope": "historical cases and editorial explanation; separate from the Yangzhou v3 artifact identity",
+    "duration_seconds": 131.633333,
+    "bytes": 18392190,
+    "sha256": "28ab7f01485cc7d962ad1ef9b1db12937d2c1a4dc8d528dd1213a96c7fc217f4"
+  },
+  "presentation_cover": {
+    "path": "../media/demo-magazine-cover.jpg",
+    "origin": "unmodified frame at 3 seconds from the author-supplied video",
+    "sha256": "e48d674960c2c6669366bfb50beb56f5326d0e8725b6d94a3d47d28c88a3478a"
+  }
 }
