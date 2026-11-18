@@ -1,8 +1,8 @@
 {
-  "release": "customer-preview-20261118",
-  "core_manifest_hash": "ac279b1f2e0738c4513153fea17f94a9a33f7284afa2dc0b8473b6ceeea8882c",
+  "release": "customer-preview-20261118-writer-finalization",
+  "core_manifest_hash": "4d343e6fcb0d7c2aa803cc37305364ea5f57b9720a470ab178e6a7572d76bac3",
   "archive": "core/packages-session-20261118.tar.gz.enc",
-  "archive_sha256": "c42f5ff3b3cb53bacff781c3806bafab7d2d122b6e90a2ee4f27527e405f0577",
+  "archive_sha256": "70dd9a5862ade1de1ef4f5d929e332a8801ba522a084d8c7928223eb92354611",
   "files": [
     {
       "path": "packages/__init__.py",
@@ -541,8 +541,8 @@
     },
     {
       "path": "packages/travel_agent/single_session_progress.py",
-      "sha256": "87bc338237d7c75b49c1cfa3a8c17b0f281a4e7c479054030eec68a4e6b82b38",
-      "bytes": 15279
+      "sha256": "184b92f21516aa79f7d4475bf366d25f9c063fbc88b065596a443b9c58b6bd93",
+      "bytes": 18536
     },
     {
       "path": "packages/travel_agent/single_session_reader_copy.py",
@@ -566,8 +566,8 @@
     },
     {
       "path": "packages/travel_agent/single_session_roles.py",
-      "sha256": "f3163f0a7d0c73d4b7177308fc15618fbe35937057d965f3ad3e877e3bce2ead",
-      "bytes": 33954
+      "sha256": "86dafbe39a975ba06897e2fa5c3db3f46345db98b1c1431f0e6115a9f29ce72b",
+      "bytes": 36593
     },
     {
       "path": "packages/travel_agent/single_session_runtime_media.py",

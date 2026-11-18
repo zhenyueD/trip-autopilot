@@ -41,16 +41,18 @@ class DetailTests(unittest.TestCase):
         self.assertNotIn('12 千米；25 分钟',page.split('</article>')[0])
         self.assertIn('12 千米；25 分钟',canonical(result['markdown'])[0])
         self.assertIn('class="destination-card"',page)
-        self.assertIn('未找到对应图片',page)
+        # Reader delivery omits technical placeholders; the authored gap stays
+        # in the persisted source, never silently replaced by an invented image.
+        self.assertNotIn('未找到对应图片',page)
+        self.assertIn('未找到对应图片',result['markdown'])
         self.assertNotIn('<img ',page)
-        self.assertNotIn('destination-detail-v1',page.split('</article>')[0])
-        self.assertIn('destination-detail-v1',page.split('</article>')[1])
+        self.assertNotIn('destination-detail-v1',page)
+        self.assertIn('destination-detail-v1',self.store.current()['markdown'])
         self.assertIn('早餐',result['rendered_markdown'])
 
     def test_conflict_structured_wins_and_audit_is_persisted(self):
         result,page = self.save('# 夹具\n## 第一天\n06:00 旧行程错误数据\n### 测试景点\n停多久：999分钟\n## 行前准备\n携带证件。\n')
-        self.assertNotIn('999分钟',page.split('</article>')[0])
-        self.assertIn('999分钟',page.split('</article>')[1])
+        self.assertNotIn('999分钟',page)
         self.assertNotIn('旧行程错误数据',canonical(result['markdown'])[0])
         self.assertIn('携带证件',page)
         check=json.loads((Path(self.tmp.name)/('detail-check-'+result['hash']+'.json')).read_text())
@@ -63,10 +65,10 @@ class DetailTests(unittest.TestCase):
         changed=deepcopy(self.data)
         changed['days'][0]['timeline'][0]['time']='08:45'
         receipt=dict(changes='调整早餐',judgment='更从容',alternatives='原时间',next_action='查看')
-        second=self.store.edit(first['hash'],[dict(old=markdown(self.data),new=markdown(changed))],receipt)
+        second=self.store.edit(first['version'],[dict(old=markdown(self.data),new=markdown(changed))],receipt)
         self.assertIn('<time>08:45</time>',Path(second['html_path']).read_text())
         self.assertEqual(DocumentStore(self.tmp.name).current()['hash'],second['hash'])
-        restored=self.store.undo(second['hash'])
+        restored=self.store.undo(second['version'])
         self.assertIn('<time>08:30</time>',Path(restored['html_path']).read_text())
 
     def test_coordinates_and_distances_do_not_get_inferred(self):
@@ -81,13 +83,14 @@ class DetailTests(unittest.TestCase):
         self.assertIn('出发前准备',page)
         self.assertIn('<time>09:00</time>',page)
 
-    def test_bad_structure_never_falls_back_to_prose(self):
+    def test_semantic_and_format_rules_no_longer_block_save(self):
         original=deepcopy(self.data)
         for mutation in (lambda d:d.update(version=2),lambda d:d['days'][0]['timeline'][0].update(time='25:00'),lambda d:d['days'][0]['segments'][0].update(distance_km=-3),lambda d:d['days'][0]['segments'][0].update(to='missing')):
             data=deepcopy(original);mutation(data)
-            with self.assertRaises(ValueError):self.store.save(markdown(data))
+            result = self.store.save(markdown(data))
+            self.assertEqual(result["markdown"], markdown(data))
         with self.assertRaises(ValueError):self.store.save('```destination-detail-v1\nnot json\n```')
-        self.assertIsNone(self.store.current())
+        self.assertIsNotNone(self.store.current())
 
     def test_price_cannot_bypass_guard_in_structure(self):
         for price in ('CNY 80', 80, '80', '80/人', '{{price:E1}} + 80'):
@@ -100,6 +103,14 @@ class DetailTests(unittest.TestCase):
         result,page=self.save()
         self.assertIn('160 元',page)
         self.assertEqual(len(result['price_checks']),1)
+
+    def test_unfamiliar_date_values_do_not_crash_undated_save(self):
+        for value in (20261201, ['local date'], {'label': 'arrival day'}):
+            with self.subTest(value=value):
+                self.data['days'][0]['date'] = value
+                result, page = self.save()
+                self.assertEqual(result['markdown'], markdown(self.data))
+                self.assertIn('class="document-version"', page)
 
     def test_images_require_source_safe_urls_and_text_is_escaped(self):
         spot=self.data['days'][0]['attractions'][0]
@@ -130,6 +141,20 @@ class DetailTests(unittest.TestCase):
         before=deepcopy(self.data)
         self.save()
         self.assertEqual(before,self.data)
+
+    def test_authored_street_card_is_visible_when_written_once_in_structured_day(self):
+        # Source-only cards under legacy day headings are intentionally replaced.
+        # The writer must put already-authored copy in the existing authority;
+        # this replay must not turn narrative extraction into a city heuristic.
+        copy = ('沿平江河两岸南北慢走，南段商铺与临河人家较密、往北渐静；'
+                '看点是小桥、马头墙、临水石阶与摇橹船。')
+        self.data['days'][0]['attractions'].append(dict(id='street', name='平江路历史街区',
+                                                       see=copy, images=[]))
+        self.data['days'][0]['core_attraction_ids'] = ['street']
+        result, page = self.save()
+        self.assertIn('平江路历史街区</h3>', page)
+        self.assertIn(copy, page)
+        self.assertIn(copy, result['rendered_markdown'])
 
 
 if __name__=='__main__':unittest.main()
