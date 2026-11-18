@@ -1,0 +1,8 @@
+/* Single-session delivery receipt — reuses the Studio card language, zero new colors. */
+.revision-receipt .receipt-heading h2, .receipt-heading h2 { margin: 2px 0 10px; font-size: 21px; line-height: 1.25; font-weight: 600; color: var(--ink, #1D1D1F); }
+.receipt-body { display: grid; gap: 14px; }
+.receipt-section h3 { margin: 0 0 4px; font-size: 15px; font-weight: 600; color: var(--ink, #1D1D1F); }
+.receipt-section p { margin: 0; font-size: 14px; line-height: 1.6; color: var(--text-2, #6E6E73); white-space: pre-wrap; }
+.receipt-diff summary { font-size: 13px; color: var(--link, #0071E3); cursor: pointer; }
+.receipt-diff pre { margin: 8px 0 0; padding: 12px 14px; max-height: 320px; overflow: auto; font-size: 12px; line-height: 1.5; background: var(--soft, #F5F5F7); border-radius: 10px; white-space: pre-wrap; word-break: break-word; }
+@media (max-width: 740px) { .receipt-heading h2 { font-size: 17px; } }

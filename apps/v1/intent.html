@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="referrer" content="no-referrer"><title>原子旅行 · 先理清想法</title>
+  <link rel="stylesheet" href="./studio.css"><link rel="stylesheet" href="./studio-comparison.css">
+  <link rel="stylesheet" href="./studio-intent.css"><script defer src="./studio-intent.js"></script>
+</head>
+<body class="comparison-mode">
+  <a class="skip-link" href="#main">跳到旅行内容</a>
+  <header class="masthead"><a class="brand" href="./intent.html"><span class="brand-symbol" aria-hidden="true">a.</span><span>原子旅行<small>TRAVEL STUDIO</small></span></a><nav class="header-context" aria-label="旅行工作区"><span>先理清想法</span></nav></header>
+  <main id="main"><section class="comparison-view" aria-label="理清旅行想法">
+    <div class="comparison-case-picker"><label for="intent-case">这次旅行</label><select id="intent-case"></select></div>
+    <div class="comparison-hero"><p class="comparison-context">不必先把一切想清楚</p><h1 id="intent-title">先安排起来，<br>再问关键的几句。</h1><p id="intent-brief" class="intent-brief"></p></div>
+    <details class="comparison-evidence"><summary>这些已经记住，不用再回答</summary><ul id="intent-known"></ul></details>
+    <div class="intent-actions"><button id="intent-generate" class="primary-button" disabled>帮我理清安排</button><button id="intent-refresh" class="text-button">读取已有结果</button><p id="intent-status" role="status" aria-live="polite"></p></div>
+    <section id="intent-result" hidden>
+      <div class="intent-start comparison-judgment"><p class="comparison-recommendation-label">不回答，也先这样安排</p><p id="intent-framing"></p><ol id="intent-plan"></ol><details><summary>我暂时作了这些假设，你随时可以改</summary><ul id="intent-assumptions"></ul></details></div>
+      <div id="intent-questions"></div>
+      <details id="intent-unknown-section" class="comparison-evidence"><summary>留待后面确认</summary><ul id="intent-unknowns"></ul></details>
+    </section>
+  </section></main><footer class="footer">原子旅行 · 从想法，到出发。</footer>
+</body>
+</html>

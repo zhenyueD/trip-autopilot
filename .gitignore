@@ -1,11 +1,17 @@
+.env
+.env.*
+!.env.example
+.venv/
 __pycache__/
 *.pyc
-node_modules/
-.env
-*.env
-api-sessions/
-.DS_Store
-
-# core engine ships encrypted only
+*.sqlite3*
+*.db
+*.log
+private/
+sessions/
+runtime-data/
+access.json
+core.tar.gz
 packages/
-*.tar.gz
+node_modules/
+.DS_Store

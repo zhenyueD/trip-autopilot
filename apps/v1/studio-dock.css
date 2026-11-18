@@ -1,0 +1,144 @@
+/* 对话坞与档案抽屉（PRD-工作室前端交互重构 v0.2 · P0）
+   视觉方向（用户拍板）：一套灰 + 一个强调色；字号层级拉开；圆角、留白、细分割线。 */
+:root {
+  --dock-ink: #1d1d1f;
+  --dock-sub: #6e6e73;
+  --dock-line: #d2d2d7;
+  --dock-bg: #f5f5f7;
+  --dock-card: #ffffff;
+  --dock-accent: #0071e3;
+  --dock-height: min(40vh, 460px);
+}
+#chat-dock {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+  display: flex; flex-direction: column; height: var(--dock-height);
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-top: 1px solid var(--dock-line);
+  color: var(--dock-ink);
+}
+#chat-dock[hidden] { display: none; }
+body.has-chat-dock main { padding-bottom: var(--dock-clearance, 360px); }
+
+/* 一行状态条：修订进度 / 最新事件，结束即隐 */
+.dock-status {
+  display: flex; align-items: baseline; gap: 10px;
+  padding: 7px 20px; margin: 0;
+  font-size: 13px; color: var(--dock-sub);
+  border-bottom: 1px solid var(--dock-line);
+}
+.dock-status[hidden] { display: none; }
+.dock-status .preparation-progress { margin: 0; padding: 0; font-size: 13px; color: var(--dock-ink); background: none; border: 0; }
+.dock-status .preparation-progress[hidden] { display: none; }
+
+/* 对话流：系统的每句话一张卡 */
+.dock-stream {
+  flex: 1; overflow-y: auto;
+  display: flex; flex-direction: column; gap: 12px;
+  padding: 14px 20px 6px;
+  background: var(--dock-bg);
+}
+.dock-stream > section[hidden], .dock-stream > .message-response[hidden] { display: none; }
+.dock-stream > section, .dock-stream > .message-response {
+  margin: 0; padding: 16px 18px;
+  background: var(--dock-card);
+  border: 1px solid var(--dock-line);
+  border-radius: 14px;
+  box-shadow: none;
+}
+/* 字号层级：卡片标题 17 / 小节 15 / 正文 14 / 辅助 12.5 */
+.dock-stream h2 { font-size: 17px; line-height: 1.35; margin: 0 0 8px; font-weight: 600; }
+.dock-stream h3 { font-size: 15px; line-height: 1.4; margin: 14px 0 6px; font-weight: 600; }
+.dock-stream h4 { font-size: 15px; margin: 10px 0 4px; font-weight: 600; }
+.dock-stream p, .dock-stream li { font-size: 15px; line-height: 1.6; }
+.dock-stream summary { font-size: 13px; color: var(--dock-sub); }
+.dock-stream .field-hint, .dock-stream small, .dock-stream .image-credit { font-size: 13px; color: var(--dock-sub); }
+.dock-stream details { border-top: 1px solid var(--dock-line); padding-top: 8px; margin-top: 8px; }
+.dock-stream blockquote { border-left: 2px solid var(--dock-line); margin: 10px 0; padding-left: 12px; color: var(--dock-sub); }
+/* 回执里的建议 / 确认标签：灰底，不用大色块 */
+.dock-stream .receipt-suggestion-label {
+  display: inline-block; margin: 2px 0 6px; padding: 2px 8px;
+  font-size: 13px; color: var(--dock-sub);
+  background: var(--dock-bg); border-radius: 999px; border: 1px solid var(--dock-line);
+}
+.dock-stream .receipt-diff-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.dock-stream .receipt-next-action button, .dock-stream .secondary-button {
+  border: 1px solid var(--dock-line); background: var(--dock-card); color: var(--dock-accent);
+  border-radius: 999px; padding: 7px 16px; font-size: 13px;
+}
+/* 问答答复卡 */
+.dock-stream .message-response { font-size: 15px; }
+.dock-stream .message-response .message-answer { white-space: pre-wrap; }
+/* 建议卡（plan-suggestions 内部结构由 studio-profile 渲染） */
+.dock-stream .plan-suggestions article { border-top: 1px solid var(--dock-line); padding-top: 10px; margin-top: 10px; }
+.dock-stream .plan-suggestions article:first-of-type { border-top: 0; padding-top: 0; margin-top: 0; }
+/* 提问卡（reaction-section 降级进流） */
+.dock-stream .reaction-section { padding: 16px 18px; }
+.dock-stream .reaction-section h2 { font-size: 15px; }
+.dock-stream .reaction-section > div > p { font-size: 13px; color: var(--dock-sub); }
+.dock-stream .reactions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.dock-stream .reaction-button {
+  border: 1px solid var(--dock-line); background: var(--dock-card); color: var(--dock-ink);
+  border-radius: 999px; padding: 7px 14px; font-size: 13px;
+}
+.dock-stream .reaction-button[aria-pressed="true"] { border-color: var(--dock-accent); color: var(--dock-accent); }
+.dock-stream .reaction-section .text-link { font-size: 13px; }
+
+/* 输入区：常驻底部，主操作一个强调色 */
+#chat-dock .feedback-section {
+  display: block; padding: 12px 20px 14px; margin: 0;
+  background: rgba(255, 255, 255, 0.94); border-top: 1px solid var(--dock-line); border-radius: 0;
+}
+#chat-dock .feedback-section > div:first-child {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
+}
+#chat-dock #feedback-form { display: flex; flex-direction: column; gap: 8px; margin: 0; }
+#chat-dock #feedback-form > label {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
+}
+#chat-dock #feedback-form textarea#feedback {
+  width: 100%; height: 44px; min-height: 44px; max-height: 120px; box-sizing: border-box; overflow-y: auto;
+  border: 1px solid var(--dock-line); border-radius: 12px;
+  padding: 10px 14px; font-size: 15px; line-height: 1.5; background: var(--dock-card);
+}
+#chat-dock #feedback-form textarea#feedback:focus { outline: 2px solid var(--dock-accent); outline-offset: -1px; }
+#chat-dock .feedback-section .materials { margin-top: 0; }
+#chat-dock .feedback-section .materials > summary {
+  font-size: 13px; color: var(--dock-sub); padding: 4px 0;
+}
+#chat-dock .feedback-section .material-body { padding-top: 10px; border-top: 1px solid var(--dock-line); }
+#chat-dock .feedback-section .material-status { font-size: 13px; color: var(--dock-sub); margin: 4px 0 0; }
+#chat-dock .feedback-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 2px; }
+#chat-dock .feedback-footer #lock-count { font-size: 13px; color: var(--dock-sub); }
+#chat-dock #revise {
+  border: 0; border-radius: 999px; background: var(--dock-accent); color: #fff;
+  padding: 9px 22px; font-size: 15px; font-weight: 600;
+}
+#chat-dock #revise:disabled { background: var(--dock-line); color: var(--dock-sub); }
+#chat-dock #pending-materials { font-size: 13px; }
+#chat-dock #pending-materials ul { margin: 6px 0 0; padding-left: 18px; }
+
+/* 档案抽屉：统一档案观感 */
+.archive-drawer { margin-top: 28px; border-top: 1px solid var(--dock-line); }
+.archive-drawer > summary { font-size: 15px; font-weight: 600; padding: 14px 0; }
+.archive-drawer .archive-item { border-top: 1px solid var(--dock-line); padding: 4px 0 10px; }
+.archive-drawer .archive-item > summary { font-size: 15px; padding: 8px 0; }
+.qa-history-list { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+.qa-history-list .qa-entry { border: 1px solid var(--dock-line); border-radius: 12px; padding: 12px 14px; background: var(--dock-card); }
+.qa-history-list .qa-question { font-size: 13px; color: var(--dock-sub); margin: 0 0 6px; }
+.qa-history-list .qa-answer p { font-size: 15px; line-height: 1.6; margin: 0 0 6px; }
+.qa-history-list .qa-judgment { font-size: 13px; color: var(--dock-sub); }
+
+@media (max-width: 740px) {
+  :root { --dock-height: min(44vh, 420px); }
+  .dock-stream { padding: 12px 14px 4px; gap: 10px; }
+  #chat-dock .feedback-section { padding: 10px 14px 12px; }
+  .dock-status { padding: 6px 14px; }
+  .dock-stream .receipt-diff-columns { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-transparency: reduce) {
+  #chat-dock, #chat-dock .feedback-section { background: #fff; backdrop-filter: none; -webkit-backdrop-filter: none; }
+}

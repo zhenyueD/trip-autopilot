@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer"><title>原子旅行 · 找到值得比较的选择</title>
+<link rel="stylesheet" href="./studio.css"><link rel="stylesheet" href="./studio-comparison.css"><link rel="stylesheet" href="./studio-intent.css"><link rel="stylesheet" href="./studio-supply.css">
+<script defer src="./studio-supply.js"></script>
+</head>
+<body class="comparison-mode supply-mode">
+<a class="skip-link" href="#main">跳到旅行内容</a>
+<header class="masthead"><a class="brand" href="./supply.html"><span class="brand-symbol" aria-hidden="true">a.</span><span>原子旅行<small>TRAVEL STUDIO</small></span></a><nav class="header-context" aria-label="旅行工作区">从值得去，到适合你。</nav></header>
+<main id="main"><section class="comparison-view" aria-label="旅行候选集">
+<div class="comparison-case-picker"><label for="supply-case">这次旅行</label><select id="supply-case" disabled></select></div>
+<div class="comparison-hero"><p class="comparison-context">找到值得比较的选择</p><h1 id="supply-title">先找到，真正适合你的。</h1><p id="supply-brief" class="intent-brief"></p><p id="supply-framing" class="supply-framing" hidden></p></div>
+<div class="supply-research-actions"><button class="primary-button" id="supply-generate" disabled>研究适合的候选</button><button class="text-button" id="supply-refresh">读取已有结果</button><p id="supply-budget" class="supply-budget"></p></div>
+<p id="supply-status" class="comparison-status" role="status" aria-live="polite"></p>
+<section id="supply-result" aria-label="值得比较的候选" hidden>
+<div class="supply-selection-heading"><h2>把选择缩小一点。</h2><p id="supply-pair-hint">选出两项，再细看取舍。</p></div>
+<div id="supply-candidates" class="comparison-options"></div>
+<aside id="supply-off-list" class="supply-off-list" aria-label="常见清单之外的选择" hidden></aside>
+<section class="supply-export" aria-label="准备比较输入">
+<p id="supply-selected" class="supply-selected" aria-live="polite"></p>
+<button class="primary-button" id="supply-export" disabled>选两项，备好比较</button>
+<p class="supply-export-note">下载这两项的比较输入。本轮不会调用比较模型，也不会生成比较卡。</p>
+<p id="supply-export-receipt" class="supply-export-receipt" role="status" aria-live="polite" hidden></p>
+</section>
+<details id="supply-unknown-section" class="comparison-evidence" hidden><summary>这次选择，还有哪些未知</summary><ul id="supply-unknowns"></ul></details>
+<details id="supply-evidence" class="comparison-evidence"><summary>查看候选依据与来源</summary><p id="supply-evidence-status" role="status" aria-live="polite"></p><ul id="supply-sources" class="comparison-sources"></ul><button id="supply-evidence-refresh" class="text-button">读取来源</button></details>
+</section>
+<noscript><p class="comparison-status">请启用 JavaScript 读取候选。此页面不会自动发起新研究。</p></noscript>
+</section></main><footer class="page-footer"><span>原子旅行 · 从想法，到出发。</span></footer>
+</body></html>

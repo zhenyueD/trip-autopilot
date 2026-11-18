@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer"><title>原子旅行 · 把选择放进行程</title>
+<link rel="stylesheet" href="./studio.css"><link rel="stylesheet" href="./studio-comparison.css"><link rel="stylesheet" href="./studio-intent.css"><link rel="stylesheet" href="./studio-intent-apply.css">
+<script defer src="./studio-intent-apply.js"></script>
+</head>
+<body class="comparison-mode">
+<a class="skip-link" href="#main">跳到旅行内容</a>
+<header class="masthead"><a class="brand" href="./intent-apply.html"><span class="brand-symbol" aria-hidden="true">a.</span><span>原子旅行<small>TRAVEL STUDIO</small></span></a><nav class="header-context" aria-label="旅行工作区">让安排，跟着你变。</nav></header>
+<main id="main"><section class="comparison-view" aria-label="把选择放进行程">
+<div class="comparison-case-picker"><label for="apply-case">这次旅行</label><select id="apply-case"></select></div>
+<div class="comparison-hero"><p class="comparison-context">把选择放进行程</p><h1 id="apply-title">改得刚刚好。</h1><p id="apply-brief" class="intent-brief"></p><p id="apply-boundary" class="apply-boundary"></p></div>
+<details class="comparison-evidence"><summary>已经记住的安排</summary><ul id="apply-known"></ul></details>
+<div id="apply-questions"></div>
+<div class="intent-actions"><button class="primary-button" id="apply-submit" disabled>按这些选择修改行程</button><button class="text-button" id="apply-refresh">读取最新行程</button><p id="apply-status" role="status" aria-live="polite"></p></div>
+<section id="apply-receipt" class="apply-receipt" aria-label="本次修订回执" hidden>
+<p id="apply-receipt-state" class="comparison-context"></p><h2>这次，给你留出了什么</h2>
+<h3>改了什么</h3><ul id="apply-diff"></ul>
+<h3>我的建议</h3><p id="apply-judgment"></p>
+<h3>也可以这样选</h3><ul id="apply-alternatives"></ul>
+<div class="apply-receipt-actions"><button id="apply-undo" class="text-button">撤销本次修改</button><button id="apply-reapply" class="text-button" hidden>恢复这版修改</button><a href="#apply-plan" class="text-button">查看当前行程</a></div>
+<details><summary>本次采用了哪些答案</summary><ul id="apply-answers"></ul></details>
+</section>
+<section id="apply-plan" class="apply-plan" aria-label="当前保存的行程"><div class="apply-plan-heading"><h2>当前行程</h2><span id="apply-version"></span></div><div id="apply-days"></div></section>
+<details class="comparison-evidence"><summary>仍需确认的外部信息</summary><ul id="apply-unknowns"></ul></details>
+</section></main><footer class="footer">原子旅行 · 从想法，到出发。</footer>
+</body></html>

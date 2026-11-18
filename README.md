@@ -1,79 +1,62 @@
 # Trip Autopilot
 
-**An AI-native travel agent.** Give it a destination you know nothing about. It researches the trip, verifies the facts that can ruin it, and hands you a handbook you can actually travel with — then revises it from a single sentence, and shows its work.
+旅行规划 Agent：在同一个行程会话中研究、生成和修订旅行手册，展示保存后的 HTML，并导出速览版与完整版 PDF。
 
-Built solo by a product manager orchestrating AI coding agents (a human-on-the-loop workflow: the PM sets acceptance standards and verifies evidence; agents write the code). This repository is both the product and the process record.
+当前交付入口是 `/studio.html`。历史版本已有真实生成、同会话修订、HTML 手册展示、双 PDF 和同浏览器恢复的验收记录；**2026-11-18 这次打包及临时 HTTPS 部署的完整实测仍待完成**。历史首次生成约需 10–12 分钟，具体耗时随行程、来源和网络变化。
 
-## The problem with AI travel planning today
+## 仓库内容
 
-Chatbots write plausible itineraries with invented prices, last year's opening hours, and buses that stopped running. The failure mode isn't bad prose — it's **one wrong fact that sends you on a wasted trip**: a closed museum, a missed last boat, a pass that costs more than the fares it replaces.
+| 路径 | 内容 |
+| --- | --- |
+| `apps/v1/` | 对话、进度与手册界面 |
+| `tools/start_customer_preview.py` | 启动隔离的应用、渲染服务、认证网关和临时 HTTPS 隧道 |
+| `tools/serve_customer_preview.py` | 口令登录与 Cookie 认证网关 |
+| `core/packages-session-20261118.tar.gz.enc` | 本次版本的加密后端源码包，解密后得到 `packages/` |
+| `core/packages-core.tar.gz.enc` | 保留的旧版本加密归档 |
+| `requirements.txt`、`.env.example` | Python 依赖与环境变量示例 |
+| `docs/CUSTOMER-PREVIEW-2026-11-18.md` | 运行、访问、验收边界与故障处理说明 |
 
-Trip Autopilot is designed around that failure mode.
+后端源码属于作者保留的 IP，以 AES-256-CBC、PBKDF2 加密交付。解密口令由作者单独提供给授权使用者，不包含在仓库中。新版本使用 `packages-session-20261118.tar.gz.enc`；旧归档保留供历史追溯。
 
-## How it works
+## 快速启动临时验收环境
 
-**1. Single-session agent, verified inline.**
-One agent session drafts the handbook, and checks *on the spot* — while writing — only the facts that will be printed and can hurt you: prices, last trains, opening days, seasonal closures. Every checked fact enters an **evidence ledger** with its verbatim source quote, URL, and check date. Facts that aren't checked are labelled, never silently asserted.
+以下命令在一个干净的仓库克隆根目录执行，按 macOS、Python 3.13 环境准备。需先安装 Python 3.13、`cloudflared` 和 Poppler（`pdfinfo`、`pdfimages`），并将其加入 `PATH`。例如使用 Homebrew：`brew install python@3.13 cloudflared poppler`。Windows/Linux 未在本轮实测。
 
-**2. Errors are graded, not averaged.**
-- **S1 — trip-ruining** (closed venue, wrong date, non-existent booking, wrong last train): hard gate, must be sourced.
-- **S2 — adjustment-level** (an unpriced estimate, a time buffer): shipped, labelled.
-- **S3 — imperceptible** (a bus at 4:15 vs 4:20): trusted to the model, no machinery wasted.
+```sh
+# OpenSSL 会交互式询问解密口令；不要把口令写进命令参数。
+openssl enc -d -aes-256-cbc -pbkdf2 \
+  -in core/packages-session-20261118.tar.gz.enc -out core.tar.gz
+tar -xzf core.tar.gz
 
-**3. A completeness gate, not a hope.**
-A draft cannot be marked complete unless it covers every day of the trip, every day has real content, and no placeholder survives. Validation errors name the exact field path and rule, so the agent can fix them instead of guessing. (This gate exists because an earlier version once "completed" an empty shell — the failure, the diagnosis, and the fix are all in the commit history and docs.)
+python3.13 -m venv .venv
+. .venv/bin/activate
+python -m pip install -r requirements.txt
+python -m playwright install chromium
 
-**4. Revision is the product: the receipt.**
-Say *"Day 2 is too rushed — slow it down."* You get back a **revision receipt**: what changed (a real diff), one line of judgment ("Day 2 had three timed commitments before noon; the boat now leaves after lunch instead"), the alternative that was considered, and one-tap actions. Judgment and facts are kept visibly separate.
-
-**5. Two-layer handbook.**
-The first-eye layer is at most 3 pages — why this design, a real map with the day-by-day table, the photos that make you want to go — because that's all a first reader will grant you. The full handbook (every sight: what to see, how to get there, how long, when it's best, where the trap is; transport down to boarding point and departure time) sits behind it for after the decision.
-
-## What's in this repo
-
-| Path | What it is |
-|---|---|
-| `core/packages-core.tar.gz.enc` | The engine, encrypted (see below): the single-session agent — drafting, tool-checked facts, evidence ledger, revision, completeness gate — plus the earlier research/verification pipeline |
-| `apps/v1/` | The product frontend (conversation, progress, handbook, revision receipt) |
-| `tools/` | Service entry points (API on :7392), PDF rendering |
-| `tests/` | Test suites for the agent, API, document and presentation layers |
-| `docs/` | Product contracts, battle reports, acceptance records |
-| `samples/` | Real outputs: a West Lake winter handbook, a 9-day South of France handbook (3-page first-eye layer + full edition) |
-
-### The core is encrypted — on purpose
-
-The interface, contracts, acceptance records, tests and real outputs in this repo are open. The engine source itself is the author's working IP, so it ships as an AES-256-CBC (PBKDF2) encrypted archive: `core/packages-core.tar.gz.enc`. The passphrase is shared separately by the author with authorized reviewers and testers. With it:
-
-```bash
-openssl enc -d -aes-256-cbc -pbkdf2 -in core/packages-core.tar.gz.enc -out core.tar.gz
-tar -xzf core.tar.gz   # restores packages/
+cp .env.example .env
+chmod 600 .env
 ```
 
-## Run it
+编辑 `.env`，填写 `DEEPSEEK_API_KEY`。`JINA_API_KEY`、`PEXELS_API_KEY` 和 `UNSPLASH_ACCESS_KEY` 是可选来源/图片服务配置。启动脚本读取进程环境，不会自动加载 `.env`：
 
-(First decrypt the core archive as shown above, so `packages/` exists.)
+```sh
+set -a
+. ./.env
+set +a
 
-```bash
-# backend (single-session agent service)
-python tools/serve_single_session.py --port 7392 --static-root apps/v1
-
-# create a trip
-curl -X POST localhost:7392/api/agent/trips \
-  -d '{"destination":"Hangzhou West Lake","start_date":"2026-12-12","end_date":"2026-12-13","travelers":2,"pace":"relaxed"}'
-# → 202 {trip, token}; poll GET /api/agent/trips/<id> for the handbook + PDF
-# revise with one sentence:
-curl -X POST localhost:7392/api/agent/trips/<id>/message -d '{"message":"Day 2 is too rushed, slow it down"}'
+python tools/start_customer_preview.py \
+  --state-dir ../trip-autopilot-preview-20261118 \
+  --app-port 7393 --gateway-port 7394 --render-port 7395
 ```
 
-Requires a DeepSeek API key (`DEEPSEEK_API_KEY`) for live generation.
+脚本输出本次 `https://…trycloudflare.com/studio.html` 地址。验收口令保存在仓库外的 `../trip-autopilot-preview-20261118/access.json`，由运行者私下提供给授权验收者。浏览器打开该地址，输入口令进入产品。
 
-## Design principles (learned the hard way)
+Mac、网络连接和启动进程须持续在线。终端按 `Ctrl+C` 会关闭本次子服务；重新启动可能获得新的临时域名。新域名属于新的浏览器来源，不承诺沿用旧域名的本地写凭证。
 
-- **The harness only keeps the books.** Verbatim-quote ledgers, arithmetic checks, state records. All semantic judgment belongs to the model — every rule that tried to out-judge the model eventually blocked good output.
-- **Verification is inline, not a review stage.** Facts arrive verified or labelled; nothing enters the printable set unverified.
-- **Degrade per stage, never empty the run.** One failed lookup degrades one card, not the handbook.
-- **Rent engines, own the acceptance.** Generation and rendering are commodities; the moat is the verified supply ledger, the user's travel memory, and a revision receipt people learn to trust.
+## 数据与验收边界
 
-## Status
+`--state-dir` 必须在仓库外。应用使用其下的 `sessions/`，渲染使用独立目录；新建一个空目录即得到新的验收数据空间。解密源码本身不会连接或读取旧私有库。保留同一个数据目录可以保留服务端会话，但客户端写凭证仍需保留。
 
-Working MVP: end-to-end generation → verified handbook → PDF → one-sentence revision, proven live on real orders (see `samples/`). Built Nov 2026.
+恢复目前限定为同一浏览器、同一访问来源且写凭证仍在的情况。Undo 端点，以及跨浏览器或写凭证丢失后的恢复尚未完成。首次生成速度、小修订速度和本轮完整实测应分别记录，不以测试通过或页面可打开替代产品验收。
+
+完整步骤与本轮待验清单见 [临时 HTTPS 验收说明](docs/CUSTOMER-PREVIEW-2026-11-18.md)。

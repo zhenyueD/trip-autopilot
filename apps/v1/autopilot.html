@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="referrer" content="no-referrer">
+  <title>原子旅行 · 旅行助手</title>
+  <link rel="stylesheet" href="./autopilot.css">
+  <script defer src="./autopilot.js?v=20261021-options"></script>
+</head>
+<body>
+  <a class="skip" href="#main">跳到旅行助手</a>
+  <header class="masthead"><a class="brand" href="./studio.html"><span aria-hidden="true">a.</span><span>原子旅行<small>TRAVEL STUDIO</small></span></a><a id="handbook" href="./studio.html">打开旅行手册</a></header>
+  <main id="main">
+    <div class="heading"><div><p class="eyebrow">你的旅行，接着往前走</p><h1>旅行助手</h1><p class="muted">说一次目标，一起把这趟旅行准备好。</p></div><button id="refresh" type="button" class="secondary">刷新进展</button></div>
+    <p id="fixture-notice" class="notice fixture-notice" role="status" hidden></p>
+    <p id="notice" class="notice" role="status" aria-live="polite">正在连接助手…</p>
+    <div id="storage-warning" class="notice warning" role="alert" hidden>浏览器未能保存草稿或访问凭证，关闭后可能无法恢复。<button id="save-recovery" type="button">重试保存</button></div>
+    <p id="error" class="notice warning" role="alert" hidden></p>
+    <div class="workspace">
+      <aside aria-label="旅行与目标">
+        <section class="panel"><h2>从这里开始</h2><div class="entry-options" role="group" aria-label="选择入口"><button type="button" data-mode="new" aria-pressed="true">规划一趟新旅行</button><button type="button" data-mode="existing" aria-pressed="false">从现有旅行继续</button><button type="button" data-mode="change" aria-pressed="false">带来新材料 / 变化</button></div>
+          <div id="session-picker" hidden><label for="sessions">这个浏览器里的旅行</label><select id="sessions"><option value="">选择旅行</option></select><p class="hint">访问凭证仅保存在本浏览器。</p></div>
+          <form id="goal-form"><label for="objective" id="objective-label">这次希望助手帮你完成什么？</label><textarea id="objective" rows="5" maxlength="6000" required placeholder="例如：带爸妈去京都五天，少走路。帮我安排顺路的日程，把需要提前准备的事列清楚。"></textarea>
+            <label for="public-search-entities">公开查询范围（城市、车站、景点） <span class="optional">可选</span></label><input id="public-search-entities" type="text" maxlength="12832" autocomplete="off" aria-describedby="public-search-help" placeholder="例如：京都，京都站，清水寺"><p id="public-search-help" class="hint">只把这些地点及通用查询主题用于公开搜索。留空仍可处理已有材料。用逗号分隔，最多 32 个地点，每个不超过 200 字。</p>
+            <details id="initial-materials"><summary>补充笔记或订单文字（可选）</summary><label for="evidence">材料正文</label><textarea id="evidence" rows="3" maxlength="20000"></textarea><label for="initial-file">导入文字文件</label><input id="initial-file" type="file" accept=".txt,text/plain"><p class="hint">目前直接读取 TXT。其他文件请先粘贴正文。</p></details>
+            <label class="check" id="authorization"><input id="auto-apply" type="checkbox"><span>允许自动应用可撤销的行程调整<small>默认先看提案。此授权不包含预订、付款、取消或外部发送。</small></span></label>
+            <label class="check" id="background-authorization"><input id="background-check" type="checkbox"><span>允许一次到期检查<small>仅在助手实际安排后执行，使用单独的后续处理额度。默认不安排。</small></span></label>
+            <button type="submit" class="primary" id="start">开始准备</button>
+          </form>
+          <button id="new-goal" class="secondary" type="button" hidden>为这趟旅行建立新目标</button>
+        </section>
+        <section id="goal-panel" class="panel" hidden><p class="eyebrow">当前目标</p><h2 id="goal-title"></h2><p id="goal-status" class="muted"></p><p id="goal-policy" class="hint"></p><p id="goal-search-scope" class="hint"></p><div class="actions"><button id="confirm-goal" type="button">我确认已达成</button><button id="cancel-goal" type="button">停止后续工作</button></div></section>
+        <p class="boundary">这里的方案和检查结果不代表已预订或已办理。外部预订、付款与取消均未执行。</p>
+      </aside>
+      <div class="content">
+        <section class="panel result-panel" aria-labelledby="result-title"><div class="section-heading"><h2 id="result-title">这趟旅行的进展</h2><span id="run-status" class="badge">尚未开始</span></div><div id="result"><p class="empty">先告诉我目标。已有旅行可以接着准备，不必重新开始。</p></div><div id="proposals"></div><div id="revisions"></div></section>
+        <section id="questions-panel" class="panel" hidden><h2>需要你决定</h2><div id="questions"></div></section>
+        <section class="panel"><h2>正在推进的事</h2><div id="work"><p class="empty">收到目标后，实际工作会显示在这里。</p></div><details><summary>查看实际操作进展</summary><div id="operations"></div></details></section>
+        <section id="sources-panel" class="panel" hidden><h2>依据与来源</h2><div id="sources"></div></section>
+        <section id="memory-panel" class="panel" hidden><h2>本趟已记录的理解</h2><p class="hint">仅用于这趟旅行；待确认的理解不会显示为你的既定偏好。</p><div id="memories"></div></section>
+        <section id="followup-panel" class="panel" hidden><h2>补充这趟旅行</h2><form id="followup-form"><label for="followup-kind">这次补充的是</label><select id="followup-kind"><option value="events">新想法 / 变化</option><option value="materials">新材料</option><option value="corrections">纠正本趟理解</option></select><label for="followup">补充内容</label><textarea id="followup" rows="3" maxlength="20000" required placeholder="例如：周三可能下雨，帮我看看当天安排是否需要调整。"></textarea><div id="material-file-wrap" hidden><label for="material-file">读取 TXT 材料</label><input id="material-file" type="file" accept=".txt,text/plain"></div><p class="hint" id="followup-hint">补充后，助手将根据当前旅行继续处理。</p><button type="submit" class="primary">提交补充</button></form></section>
+        <section class="panel"><h2>后续检查</h2><p class="hint">仅显示服务端已保存的检查安排；没有安排就不会自动跟进。</p><div id="jobs"><p class="empty">尚无已安排的检查。</p></div><details id="budget-panel" hidden><summary>处理额度与后续授权</summary><div id="budget"></div></details></section>
+      </div>
+    </div>
+  </main><footer>原子旅行 · 为下一步做准备</footer>
+</body>
+</html>

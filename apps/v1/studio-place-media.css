@@ -1,0 +1,52 @@
+/* A compact contact sheet: city/landmark → day action → source. Real photos only.
+   Invariant: warm travel folio; variation: each place's real shape and light.
+   Variance 3 / motion 1 / density 5. No automatic carousel or decorative motion. */
+.trip-places{min-width:0;margin:0 0 24px;padding:0 0 18px;border-bottom:1px solid var(--line)}
+.trip-places-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:13px}
+.trip-places-heading h2{font-family:var(--display);font-size:23px;line-height:1.4;font-weight:400}
+.trip-places-controls{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.trip-places-count{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.trip-places-button{min-height:44px;min-width:44px;padding:8px 12px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);font-size:12px}
+.trip-places-button:hover:not(:disabled){background:var(--soft)}
+.trip-places-button:active:not(:disabled){transform:translateY(1px)}
+.trip-places-button:disabled{cursor:default}
+.trip-places-button:focus-visible,.place-media-credit a:focus-visible{outline:3px solid #ad5c25;outline-offset:3px}
+.trip-places-strip{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(210px,calc((100% - 32px)/3));align-items:start;gap:16px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;padding-bottom:10px;scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+.trip-place-card{display:flex;flex-direction:column;min-width:0;scroll-snap-align:start;overflow-wrap:anywhere}
+.trip-place-card>.trip-place-title{order:1}
+.trip-place-card .place-media-credit,.trip-place-card>.place-media-missing{order:2}
+.trip-place-title{margin-top:8px}
+.trip-place-title h3{font-size:15px;line-height:1.5;font-weight:600}
+.trip-place-title>span{display:block;margin-top:3px;font-size:11px;color:var(--muted)}
+.trip-place-card .place-media-photo{display:contents;margin:0;background:none;border:0;border-radius:0;overflow:visible}
+.trip-places .place-media-photo>img{display:block;width:100%;height:auto;aspect-ratio:8/5;object-fit:cover;border-radius:var(--radius);background:var(--soft)}
+.place-media-credit{display:flex;flex-wrap:wrap;align-items:baseline;gap:0 8px;color:var(--muted);font-size:11px;line-height:1.55;overflow-wrap:anywhere;padding:5px 0 0}
+.place-media-credit a{display:inline-flex;align-items:center;min-height:44px;padding:4px 0;text-underline-offset:3px}
+.place-media-credit span{padding:5px 0}
+.place-media-missing,.place-media-note{margin-top:7px;padding:8px 0;font-size:12px;color:var(--muted);line-height:1.65;border-top:1px solid var(--line)}
+.trip-places-status{padding:8px 0;font-size:13px;color:var(--muted)}
+.trip-places-caveat{margin-top:7px;max-width:70em;font-size:11px;color:var(--muted);line-height:1.7}
+#plan-content .place-media-photo.handbook-item-photo{margin:14px 0 6px;max-width:620px;background:none;border:0;overflow:visible}
+#plan-content .place-media-photo.handbook-item-photo>img{display:block;width:100%;height:auto;max-height:260px;aspect-ratio:8/5;object-fit:cover;border-radius:var(--radius)}
+#plan-content .place-media-photo.handbook-item-photo .place-media-credit{font-size:11px;line-height:1.6}
+@media(min-width:1500px){.trip-places-strip{grid-auto-columns:calc((100% - 48px)/4)}}
+@media(max-width:700px){
+ .trip-places-heading{align-items:flex-start;flex-wrap:wrap;gap:8px}
+ .trip-places-heading h2{font-size:22px}
+ .trip-places-controls{margin-left:auto;gap:6px}
+ .trip-places-strip{grid-auto-columns:78%;gap:12px;padding-bottom:12px}
+ .trip-place-title h3{font-size:16px}
+ .trip-places{margin-bottom:18px}
+ #plan-content .place-media-photo.handbook-item-photo>img{max-height:220px}
+}
+@media(prefers-reduced-motion:reduce){
+ .trip-places-button{transition:none!important;animation:none!important}
+ .trip-places-button:active:not(:disabled){transform:none}
+ .trip-places-strip{scroll-behavior:auto;scroll-snap-type:none}
+}
+@media print{
+ .trip-places-controls{display:none}
+ .trip-places-strip{display:grid;grid-auto-flow:row;grid-template-columns:repeat(2,minmax(0,1fr));overflow:visible}
+ .trip-place-card,.place-media-photo{break-inside:avoid}
+ .place-media-credit a{min-height:0}
+}

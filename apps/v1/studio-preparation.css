@@ -1,0 +1,47 @@
+/* Preparation folio: an about-to-depart traveler should feel sure of the next
+   action because steps, evidence and personal reports remain distinct.
+   VARIANCE 4 / MOTION 2 / DENSITY 4. Existing paper/ink and numbered instructions
+   are invariant. Accent means action, never a verified booking. Attention:
+   personal action → one-line unresolved warning → optional detail. Feedback is local;
+   no looping progress, ambient movement or new visual system. */
+.preparation-pack{min-width:0;max-width:960px;overflow-wrap:anywhere;padding-bottom:16px}
+.preparation-heading h2{font:500 27px/1.5 var(--display);letter-spacing:-.025em;margin:0 0 18px}
+.preparation-note{font:13px/1.85 var(--body);color:var(--muted);margin:7px 0;white-space:pre-line;max-width:80em}
+.preparation-action{border-top:1px solid var(--line);padding:18px 0 12px;margin:0;min-width:0}
+.preparation-action-heading{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.preparation-action h3{font:600 16px/1.7 var(--body);margin:0;min-width:0}
+.preparation-when{font:12px/1.75 var(--body);color:var(--muted);max-width:45%;text-align:right}
+.preparation-preview{font:14px/1.85 var(--body);color:var(--ink);margin:6px 0 0;max-width:65em}
+.preparation-personal>.preparation-action{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:24px}
+.preparation-personal .preparation-action-heading,.preparation-personal .preparation-operation{grid-column:1/-1}
+.preparation-personal>.preparation-action>.preparation-controls{grid-column:2;grid-row:2;align-self:center;margin-top:4px}
+.preparation-report-note{font:11px/1.8 var(--body);color:var(--muted);margin:0 0 18px}
+.preparation-steps{font:14px/1.85 var(--body);padding-left:24px;margin:12px 0;max-width:80em}
+.preparation-steps li+li{margin-top:6px}
+.preparation-controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px}
+.preparation-controls .handbook-download{flex:0 1 auto;margin:0;min-height:44px;min-width:44px;white-space:normal}
+.preparation-link{display:inline-flex;align-items:center;min-height:44px;min-width:44px;max-width:100%;color:var(--accent);font:13px/1.7 var(--body);text-underline-offset:4px;overflow-wrap:anywhere}
+.preparation-controls>.preparation-link{background:var(--accent);color:var(--surface);border-radius:var(--radius);padding:9px 14px;text-decoration:none;justify-content:center;transition:background-color 120ms ease}
+.preparation-controls>.preparation-link:hover{background:var(--ink)}
+.preparation-controls>.preparation-link:active{transform:translateY(1px)}
+.preparation-pack summary{min-height:44px;padding:11px 0;cursor:pointer;font:13px/1.8 var(--body);color:var(--muted)}
+.preparation-operation>summary{width:fit-content;font-size:12px;color:var(--accent)}
+.preparation-operation[open]{padding-bottom:8px}
+.preparation-evidence{margin-top:8px}.preparation-evidence[open]{background:var(--soft);padding:0 14px 12px;border-radius:var(--radius)}
+.preparation-source+.preparation-source{border-top:1px solid var(--line);margin-top:12px;padding-top:7px}
+.preparation-source .preparation-note{font-size:12px}
+.preparation-more{border-top:1px solid var(--line);margin:0}
+.preparation-more>summary{color:var(--accent)}
+.preparation-more[open]{padding-bottom:16px}
+.preparation-research{border-left:2px solid #a26d3c;background:#efe7d8;padding:0 14px;margin:0 0 20px;min-width:0}
+.preparation-research>summary{color:#705638;font-weight:500;font-size:13px;line-height:1.8}
+.preparation-research[open]{padding-bottom:14px}
+.preparation-research>.preparation-note{font-size:12px;margin:0 0 14px}
+.preparation-research .preparation-action{border-top-color:#d8cbb8}
+.preparation-progress{font:13px/1.8 var(--body);color:var(--accent);border-left:2px solid var(--accent);padding:10px 14px;background:var(--soft);margin:0 0 14px}
+.preparation-progress[hidden]{display:none}
+.preparation-pack button:disabled{opacity:.5;cursor:not-allowed}
+.preparation-pack button:focus-visible,.preparation-pack a:focus-visible,.preparation-pack summary:focus-visible,#open-preparation:focus-visible{outline:3px solid #ad5c25;outline-offset:3px}
+#open-preparation{min-height:44px;min-width:44px}
+@media(max-width:740px){.preparation-heading h2{font-size:25px}.preparation-personal>.preparation-action{display:block}.preparation-action-heading{display:block}.preparation-when{display:block;max-width:none;text-align:left;margin-top:3px;font-size:11px}.preparation-action{padding:16px 0 8px}.preparation-preview{font-size:13px}.preparation-personal>.preparation-action>.preparation-controls{margin-top:10px}.preparation-note{font-size:12px}.preparation-steps{font-size:13px}.preparation-pack>.handbook-download{width:auto;max-width:100%;white-space:normal}.preparation-research{margin-bottom:16px;padding-inline:12px}.preparation-research>summary{font-size:12px}.preparation-controls>.preparation-link{font-size:12px}.preparation-report-note{font-size:10px}}
+@media(prefers-reduced-motion:reduce){.preparation-pack button,.preparation-controls>.preparation-link{transition:none!important;transform:none!important}}

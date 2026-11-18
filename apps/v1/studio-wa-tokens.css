@@ -1,0 +1,176 @@
+/* ============================================================
+   studio-wa-tokens.css — Web Awesome → Apple token 映射层
+   红线 2：先把 --wa-* 映射到 Apple token，再套组件，禁止原样上脸。
+   红线 3：::part() 只许用 token，不许硬编码色值/字号。
+   本文件必须最后加载（unlayered 覆盖 theme 的 @layer wa-theme）。
+   ============================================================ */
+
+:root {
+  /* ---- 中性灰阶 → Apple 灰 ---- */
+  --wa-color-neutral-95: #F5F5F7;
+  --wa-color-neutral-90: #E8E8ED;
+  --wa-color-neutral-80: #D2D2D7;
+  --wa-color-neutral-70: #C7C7CC;
+  --wa-color-neutral-60: #86868B;
+  --wa-color-neutral-50: #86868B;
+  --wa-color-neutral-40: #6E6E73;
+  --wa-color-neutral-30: #48484A;
+  --wa-color-neutral-20: #1D1D1F;
+  --wa-color-neutral-10: #1D1D1F;
+  --wa-color-neutral-05: #000000;
+
+  /* ---- 品牌蓝阶 → 唯一蓝 #0071E3 梯度 ---- */
+  --wa-color-brand-95: #F2F8FF;
+  --wa-color-brand-90: #E5F0FD;
+  --wa-color-brand-80: #C4DFFD;
+  --wa-color-brand-60: #4D9BF0;
+  --wa-color-brand-50: #2280E8;
+  --wa-color-brand-40: #0071E3;
+  --wa-color-brand-30: #005BB8;
+  --wa-color-brand-20: #00468F;
+
+  /* ---- 语义色 ---- */
+  --wa-color-surface-raised: #FFFFFF;
+  --wa-color-surface-default: #FFFFFF;
+  --wa-color-surface-lowered: #F5F5F7;
+  --wa-color-surface-border: #E8E8ED;
+  --wa-color-text-normal: #1D1D1F;
+  --wa-color-text-quiet: #6E6E73;
+  --wa-color-text-link: #0071E3;
+
+  /* ---- 字体 ---- */
+  --wa-font-family-body: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --wa-font-family-heading: var(--wa-font-family-body);
+
+  /* ---- 字号：全站 6 档（56/32/21/17/15/13），wa 档位并入 ---- */
+  --wa-font-size-scale: 1;
+  --wa-font-size-3xs: 13px;
+  --wa-font-size-2xs: 13px;
+  --wa-font-size-xs: 13px;
+  --wa-font-size-s: 13px;
+  --wa-font-size-m: 15px;
+  --wa-font-size-l: 17px;
+  --wa-font-size-xl: 21px;
+  --wa-font-size-2xl: 32px;
+  --wa-font-size-3xl: 32px;
+  --wa-font-size-4xl: 56px;
+  --wa-font-size-5xl: 56px;
+
+  /* ---- 圆角 ---- */
+  --wa-border-radius-s: 8px;
+  --wa-border-radius-m: 12px;
+  --wa-border-radius-l: 16px;
+  --wa-border-radius-pill: 980px;
+  --wa-panel-border-radius: 16px;
+  --wa-form-control-border-radius: 12px;
+
+  /* ---- 动效：iOS 缓出 ---- */
+  --wa-transition-fast: 0.2s;
+  --wa-transition-medium: 0.3s;
+  --wa-transition-easing: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+/* ---- 组件微调：::part() 只许 token ---- */
+
+/* ① wa-badge：行内小徽标，琥珀圆点 + 13px 灰字，不占整行（variant 色在 host 上，双管齐下） */
+wa-badge.unverified {
+  background: transparent;
+  color: var(--wa-color-text-quiet);
+  font-size: var(--wa-font-size-s);
+  font-weight: 400;
+  padding: 0;
+  border-radius: 0;
+}
+wa-badge.unverified::part(base) {
+  background: transparent;
+  color: var(--wa-color-text-quiet);
+  font-size: var(--wa-font-size-s);
+  font-weight: 400;
+  padding: 0;
+}
+wa-badge.unverified::part(base)::before {
+  content: '';
+  display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--wa-color-attention-50, #B25000);
+  margin-right: 6px; vertical-align: 1px;
+}
+
+/* ② wa-details：统一 chevron 与 300ms 旋转（组件默认已是 SVG icon + 旋转） */
+wa-details::part(summary) {
+  font-size: inherit;
+  color: inherit;
+  min-height: 44px;
+}
+wa-details::part(content) {
+  padding-top: 4px;
+}
+
+/* ③ wa-card：零阴影、细边框（Linear 式） */
+wa-card::part(base) {
+  border: 1px solid var(--wa-color-surface-border);
+  border-radius: var(--wa-border-radius-l);
+  box-shadow: none;
+  background: var(--wa-color-surface-raised);
+}
+
+/* ④ wa-skeleton：浅灰骨架，永不裸奔 */
+wa-skeleton::part(base) {
+  border-radius: var(--wa-border-radius-m);
+}
+
+/* 天卡无图：骨架铺满媒体区，颜色走 token */
+.day-card-skeleton { position: absolute; inset: 0; display: block; }
+.day-card-skeleton::part(base) {
+  width: 100%; height: 100%; border-radius: 0;
+  --wa-color-neutral-95: #F5F5F7;
+  --wa-color-neutral-90: #E8E8ED;
+}
+
+/* ⑤ wa-callout：系统提示条，白底细边（宿主直接走 token） */
+wa-callout {
+  background: var(--wa-color-surface-raised);
+  border: 1px solid var(--wa-color-surface-border);
+  border-radius: var(--wa-border-radius-m);
+  box-shadow: none;
+  color: var(--wa-color-text-normal);
+  font-size: var(--wa-font-size-m);
+}
+
+/* 顶部横幅：callout 的细条形态——一行横排、无图标位、底部分隔线 */
+#chrome-notice {
+  border-bottom: 1px solid var(--wa-color-surface-border);
+}
+#chrome-notice::part(icon) { display: none; }
+#chrome-notice::part(message) {
+  display: flex; align-items: center; justify-content: center;
+  gap: 8px 16px; flex-wrap: wrap; width: 100%;
+  padding: 8px 16px;
+  font-size: var(--wa-font-size-s); color: var(--wa-color-text-quiet);
+}
+#chrome-notice[hidden] { display: none; }
+
+/* 每日指南「这一天出发前」：callout 白卡形态，替代旧米色条 */
+#workspace .delivery-day-prep {
+  background: var(--wa-color-surface-raised);
+  border: 1px solid var(--wa-color-surface-border);
+  border-left: 3px solid var(--wa-color-brand-40);
+  border-radius: var(--wa-border-radius-m);
+  margin: 4px 0 15px;
+}
+#workspace .delivery-day-prep::part(icon) { display: none; }
+#workspace .delivery-day-prep::part(message) {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 14px; width: 100%; padding: 12px 16px;
+}
+#workspace .delivery-day-prep p {
+  font-size: var(--wa-font-size-s); color: var(--wa-color-text-quiet);
+  line-height: 1.7; margin: 3px 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  wa-details::part(summary-icon) { transition: none; }
+}
+
+/* 例外：溢出菜单（…）不是展开行，不要 chevron */
+.chrome-overflow::part(icon) { display: none; }
+.chrome-overflow::part(header) { min-height: 0; padding: 0; }

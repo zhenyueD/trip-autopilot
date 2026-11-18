@@ -1,0 +1,12 @@
+.uncertainty-panel { margin: 2rem 0; padding: 1.25rem; border: 1px solid #c8c2b8; border-radius: 8px; }
+.uncertainty-cards { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,250px),1fr)); gap: 1rem; }
+.uncertainty-card { padding: 1rem; background: #f4f2ec; border-left: 3px solid #7d776c; overflow-wrap: anywhere; }
+.uncertainty-verified { border-color: #386752; }
+.uncertainty-conditional { border-color: #946721; }
+.uncertainty-card h4 { margin: 0 0 .75rem; }
+.uncertainty-card p, .uncertainty-warning { font-size: .9rem; line-height: 1.65; }
+.uncertainty-panel details { margin-top: 1rem; }
+.uncertainty-panel form { display: flex; flex-wrap: wrap; align-items: end; gap: 1rem; padding-top: 1rem; }
+.uncertainty-panel label { display: grid; gap: .35rem; }
+.uncertainty-panel input { width: 100%; min-width: 0; padding: .55rem; font: inherit; }
+@media(max-width: 600px) { .uncertainty-panel label { width: 100%; } .uncertainty-panel { padding: .8rem; } }

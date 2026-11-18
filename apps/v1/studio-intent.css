@@ -1,0 +1,16 @@
+.intent-brief { max-width: 760px; margin-top: 22px; color: var(--muted); font-size: 17px; line-height: 1.8; }
+.intent-actions { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; margin: 25px 0; }
+.intent-actions p { flex-basis: 100%; font-size: 14px; color: var(--muted); }
+.intent-start { margin-bottom: 34px; padding-block: 4px; }
+.intent-start ol { margin: 18px 0; padding-left: 23px; line-height: 1.9; font-size: 17px; }
+.intent-start details { font-size: 13px; color: var(--muted); }
+.intent-start summary { cursor: pointer; padding-block: 8px; }
+.intent-start ul, #intent-known, #intent-unknowns { line-height: 1.9; padding-left: 22px; }
+.intent-question { margin: 24px 0; padding: 28px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
+.intent-question h2 { font-size: 23px; line-height: 1.5; }
+.intent-question .comparison-question-choices { margin-bottom: 16px; }
+.intent-default, .intent-effect { font-size: 14px; line-height: 1.8; }
+.intent-default { color: var(--muted); margin: 15px 0; }
+.intent-effect { padding: 14px 18px; background: var(--soft); border-radius: 8px; }
+.intent-effect strong { display: block; margin-bottom: 4px; }
+@media(max-width:740px) { .intent-question { padding: 20px; } .intent-question h2 { font-size: 20px; } .intent-start ol { font-size: 16px; } .intent-actions { gap: 14px; } .intent-actions .primary-button { width: 100%; justify-content: center; } }

@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="referrer" content="no-referrer">
+  <title>原子旅行 · 你的旅行手册</title>
+  <link rel="stylesheet" href="./studio.css?v=20261013-wa3">
+  <link rel="stylesheet" href="./studio-journey.css?v=20261012-apple2">
+  <link rel="stylesheet" href="./studio-handbook.css?v=20260916-handbook">
+  <link rel="stylesheet" href="./studio-preparation.css?v=20260924-preparation">
+  <link rel="stylesheet" href="./studio-place-media.css?v=20260916-google">
+  <link rel="stylesheet" href="./studio-delivery.css?v=20261012-apple">
+  <link rel="stylesheet" href="./studio-uncertainty.css?v=20261011-phase1">
+  <link rel="stylesheet" href="./studio-receipt.css?v=20261012-apple">
+  <link rel="stylesheet" href="./studio-dock.css?v=20261013-wa3">
+  <link rel="stylesheet" href="./studio-theme.css?v=20261012-apple2">
+  <link rel="stylesheet" href="./studio-v2.css?v=20261016-polish">
+  <link rel="stylesheet" href="./studio-maincore.css?v=20261022">
+  <link rel="stylesheet" href="./vendor/webawesome/styles/themes/default.css?v=20261013-wa2">
+  <link rel="stylesheet" href="./studio-wa-tokens.css?v=20261013-wa3">
+  <link rel="stylesheet" href="./studio-comparison.css?v=20261024">
+  <link rel="stylesheet" href="./studio-saved-handbook.css?v=20261116">
+  <link rel="stylesheet" href="./studio-delivery-receipt.css?v=20261116">
+  <script type="importmap">
+  {
+    "imports": {
+      "lit": "./vendor/lit/index.js",
+      "lit/": "./vendor/lit/",
+      "lit-html": "./vendor/lit-html/lit-html.js",
+      "lit-html/": "./vendor/lit-html/",
+      "lit-element/": "./vendor/lit-element/",
+      "@lit/reactive-element": "./vendor/@lit/reactive-element/reactive-element.js",
+      "@lit/reactive-element/": "./vendor/@lit/reactive-element/",
+      "@lit/context": "./vendor/@lit/context/index.js",
+      "@shoelace-style/localize": "./vendor/@shoelace-style/localize/dist/index.js",
+      "nanoid": "./vendor/nanoid/index.browser.js"
+    }
+  }
+  </script>
+  <script type="module" src="./webawesome-local.js?v=20261013-wa5"></script>
+  <script defer src="./studio-google-maps.js?v=20260916-google"></script>
+  <script defer src="./studio-place-media.js?v=20261013-wa3"></script>
+  <script defer src="./studio-draft.js?v=20261016"></script>
+  <script defer src="./studio-intake.js?v=20261016-polish"></script>
+  <script defer src="./studio-experience.js?v=20261013-wa3"></script>
+  <script defer src="./studio-journey.js?v=20261013-wa3"></script>
+  <script defer src="./studio-day-guide.js?v=20261013-wa3"></script>
+  <script defer src="./studio-preparation.js?v=20261016-polish"></script>
+  <script defer src="./studio-presentation.js?v=20261021-compact"></script>
+  <script defer src="./studio-delivery.js?v=20261013-wa3"></script>
+  <script defer src="./studio-handbook.js?v=20261016-polish"></script>
+  <script defer src="./studio-version.js?v=20261009-code-version"></script>
+  <script defer src="./studio-revision-progress.js?v=20261011-revision-stage"></script>
+  <script defer src="./studio-profile.js?v=20261011-agi-r2"></script>
+  <script defer src="./studio-uncertainty.js?v=20261013-wa3"></script>
+  <script defer src="./studio-receipt.js?v=20261021-compact"></script>
+  <script defer src="./studio-dock.js?v=20261021-compact"></script>
+  <script defer src="./studio-icons.js?v=20261013-v85k"></script>
+  <script defer src="./studio-chrome.js?v=20261021-compact"></script>
+  <script defer src="./autopilot.js?v=20261022" data-mount="false"></script>
+  <script defer src="./studio-maincore.js?v=20261022"></script>
+  <script defer src="./studio-comparison.js?v=20261024"></script>
+  <script defer src="./studio-session-comparison.js?v=20261116"></script>
+  <script defer src="./studio-saved-handbook.js?v=20261116"></script>
+  <script defer src="./studio-operation-proof.js?v=20261116"></script>
+  <script defer src="./studio-delivery-receipt.js?v=20261116"></script>
+  <script defer src="./studio.js?v=20261024-comparison"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到旅行内容</a>
+  <header class="masthead">
+    <a href="./studio.html" class="brand" aria-label="原子旅行工作区首页"><span class="brand-symbol" aria-hidden="true">a.</span><span>原子旅行<small>TRAVEL STUDIO</small></span></a>
+    <nav class="header-context" aria-label="旅行工作区"><span>你的目的地 · 你的旅行</span><a class="comparison-entry" href="./studio.html?view=comparison">比较两个选择</a><button id="new-trip" class="text-button" type="button" hidden>新的旅行</button><button id="recent-toggle" class="text-button" type="button" aria-expanded="false" aria-controls="recent-trips" hidden>最近旅行</button></nav>
+  </header>
+  <main id="main">
+    <section id="comparison-view" class="comparison-view" aria-label="比较两个旅行选择" hidden></section>
+    <div id="notice" class="notice" role="status" aria-live="polite" hidden><p id="notice-text"></p><button id="reconnect" class="text-button" type="button">重新连接</button></div>
+    <div id="storage-warning" class="notice" role="alert" hidden><p>浏览器未能保存旅行访问凭证。当前页面仍可切换旅行，但关闭或刷新后可能无法恢复。请先重试保存。</p><button id="save-recovery" class="text-button" type="button">重试保存</button></div>
+    <section id="recent-trips" class="recent-trips" aria-labelledby="recent-title" hidden><div class="recent-heading"><div><h2 id="recent-title">接着上次的旅行</h2><p>访问凭证只保存在这个浏览器；切换不会删除任务。</p></div><button id="recent-close" class="text-button" type="button">收起</button></div><ul id="recent-list"></ul></section>
+    <section id="onboarding" class="onboarding" aria-labelledby="welcome-title">
+      <div class="intro">
+        <p class="edition">不是景点清单，是一趟值得出发的旅行</p>
+        <h1 id="welcome-title">先有一趟<br><em>想去的旅行。</em></h1>
+        <p class="intro-copy">想去哪，就从哪里开始。<br>把零散想法变成随身手册：每天怎么玩、怎么走、出发前要做什么。</p>
+        <div class="demo-entry"><button id="start-demo" class="primary-button" type="button"><span>填入一段需求示例</span><span aria-hidden="true">↗</span></button><p id="demo-entry-note">目的地由你决定。示例可以任意修改，确认后实时规划，不使用预生成行程。</p></div>
+        <div class="scope-note"><span class="route-line" aria-hidden="true"></span><p>从你想去的地方开始<br><span>一个想法 → 旅行提案 → 调成你的那一趟</span></p></div>
+      </div>
+      <form id="brief-form" class="brief-form">
+        <div class="form-heading"><span class="folio">先说个大概</span><p>不必先做功课</p></div>
+        <label for="brief" class="brief-label">你想要怎样的一趟旅行？</label>
+        <textarea id="brief" name="brief" rows="4" maxlength="6000" placeholder="比如：和爸妈去京都五天，爸爸走路容易累。想看建筑，也想吃点当地人会吃的东西，不想每天赶景点。"></textarea>
+        <details id="start-material-drawer" class="materials"><summary>有收藏、订单或截图？一起放进来 <span>可选</span></summary>
+        <div id="start-materials" class="material-composer" aria-label="出发材料">
+          <label for="links">公开收藏链接 <span class="optional">最多 5 条</span></label>
+          <textarea id="links" class="links-input" rows="2" maxlength="10000" placeholder="粘贴酒店、景点或游记的公开链接，每行一条" aria-describedby="links-help"></textarea>
+          <p id="links-help" class="field-hint">只读取 HTTPS 公开页面，不登录账号。读不了会告诉你，也可以改放截图。</p>
+          <label for="evidence">订单文字或零散笔记</label>
+          <textarea id="evidence" rows="3" maxlength="20000" placeholder="已订哪家酒店、收藏里的几句话……直接粘贴就好。请去掉护照号、支付信息等无关敏感内容。"></textarea>
+          <div class="image-drop-heading"><button id="choose-documents" class="secondary-button" type="button">导入订单 / 行程表 / AI 对话</button><span>直接读取，不用重新填写</span></div>
+          <input id="documents" type="file" accept=".xlsx,.pdf,.eml,.txt,.md,.csv,.json,.zip" multiple hidden>
+          <p class="field-hint">XLSX / PDF / EML / TXT / CSV · 每个 2.5MB 内 · 最多 5 个</p>
+          <ul id="document-list" class="image-list" aria-label="待提交文件"></ul>
+          <div id="image-input-wrap" class="image-dropzone" tabindex="0" role="group" aria-label="添加或粘贴图片材料" aria-describedby="image-help vision-note">
+            <div class="image-drop-heading"><button id="choose-images" class="secondary-button" type="button">添加截图 / 照片</button><span>也可粘贴或拖到这里</span></div>
+            <input id="images" type="file" accept="image/jpeg,image/png,image/webp" multiple hidden>
+            <p id="image-help" class="field-hint">最多 3 张 · JPEG / PNG / WebP · 上传前本地压缩</p>
+            <p id="vision-note" class="field-hint">正在确认图片能力；文字和公开链接始终可填写。</p>
+            <ul id="image-list" class="image-list" aria-label="待提交图片"></ul>
+          </div>
+          <p id="start-material-status" class="material-status" role="status" aria-live="polite">可直接导入订单、行程表或 AI 对话导出；材料仅在提交时上传。</p>
+        </div>
+        </details>
+        <details id="maincore-settings" class="materials" hidden><summary>公开查询与方案应用</summary><div class="material-composer"><label for="maincore-search">允许公开查询的地点 <span class="optional">可选，用逗号分隔</span></label><input id="maincore-search" type="text" maxlength="6400" placeholder="如：新加坡，八方经典酒店，圣淘沙"><p class="field-hint">仅查询你列出的地点；留空仍可整理已提供的材料。</p><label class="maincore-check"><input id="maincore-auto-apply" type="checkbox">允许把可撤销的方案调整应用到这趟旅行</label><p class="field-hint">未勾选时先给提案，由你确认应用。不预订、不付款。</p></div></details>
+        <p id="start-draft-status" class="material-status" role="status">文字与材料会自动保存为草稿 · 仅在此浏览器</p>
+        <p id="capability" class="capability" role="status">正在连接旅行规划模型…</p>
+        <button id="create-trip" class="primary-button" type="submit" disabled><span>按这个需求开始实时规划</span><span aria-hidden="true">↗</span></button>
+        <p class="privacy-note">材料会交由本服务已配置的模型处理。方案是提案，不自动下单；价格、库存与开放安排需进一步核验。</p>
+      </form>
+    </section>
+    <section id="workspace" class="workspace" aria-label="我的旅行工作区" hidden>
+      <div class="workspace-top"><p id="trip-meta" class="folio"></p><wa-details class="workspace-tools"><summary slot="summary">旅行管理</summary><div class="workspace-actions"><button id="open-preparation" class="text-button" type="button" hidden>看看出发前要做什么 ↓</button><button id="undo" class="text-button" type="button" hidden>撤销上次方案更新</button><button id="delete-trip" class="text-button danger" type="button">删除这趟任务</button></div></wa-details></div>
+      <aside id="demo-guide" class="demo-guide" aria-label="试用提示" hidden><div><p class="demo-label">从示例需求开始的实时提案</p><p id="demo-provenance">这份提案由模型实时规划；提交后会按影响范围局部调整，需要新地点或事实核对时才走完整研究。</p><p>试着改一句：加一个6岁孩子，每天中午回酒店休息2小时，不自驾。</p></div><button id="try-demo-feedback" class="secondary-button" type="button">填入这句，再调整 ↘</button></aside>
+      <section id="task-state" class="task-state" aria-labelledby="state-title"><div class="state-heading"><span id="state-mark" class="state-mark" aria-hidden="true"></span><div><h2 id="state-title" tabindex="-1"></h2><p id="state-copy"></p></div><button id="retry" class="secondary-button" type="button" hidden>重试未完成研究</button></div><p id="revision-stage" class="preparation-progress" role="status" aria-live="polite" hidden></p><wa-details id="event-details"><summary slot="summary">查看任务进展</summary><ol id="events" class="event-list"></ol></wa-details></section>
+      <section id="saved-handbook" class="saved-handbook" aria-label="已保存的旅行手册" hidden></section>
+      <wa-details id="traveler-profile" class="traveler-profile"><summary slot="summary">同行人与旅行偏好 · 查看 / 编辑</summary><p>这些资料会用于后续问答和调整；保存资料不会自动改动行程。列表每行填写一项。</p><form id="profile-form"><label for="profile-traveler_groups">同行人</label><textarea id="profile-traveler_groups" rows="2"></textarea><label for="profile-mobility_preferences">行动与交通偏好</label><textarea id="profile-mobility_preferences" rows="2"></textarea><label for="profile-pace_preference">旅行节奏</label><textarea id="profile-pace_preference" rows="2"></textarea><label for="profile-preferences">其他偏好</label><textarea id="profile-preferences" rows="2"></textarea><label for="profile-user_notes">补充说明</label><textarea id="profile-user_notes" rows="2"></textarea><p id="profile-status" role="status" aria-live="polite"></p><button id="profile-save" class="secondary-button" type="submit">保存资料</button><button id="profile-reload" class="text-button" type="button">恢复已保存的偏好（替换草稿）</button><button id="profile-rebase" class="text-button" type="button" hidden>保留草稿，确认覆盖已保存的偏好</button></form></wa-details>
+      <section id="plan-suggestions" class="plan-suggestions" aria-label="模型建议" hidden></section>
+      <section id="maincore-panel" class="maincore-panel" aria-label="旅行目标、选择与结果" hidden></section>
+      <section id="uncertainty-panel" class="uncertainty-panel" aria-label="安排核验与下一步" hidden></section>
+      <section id="revision-receipt" class="revision-receipt" aria-label="这次行程调整的结果与建议" hidden></section>
+      <section id="discovery" class="discovery" aria-label="已经找到的地点" hidden></section>
+      <section id="preview" class="preview" aria-label="正在核验的初步方向" hidden></section>
+      <div id="plan-content" hidden>
+        <p id="draft-note" class="draft-note" role="status" hidden>日程草案先到了。路线与准备内容仍在补充，完成前暂不能锁定或修改。</p>
+        <section id="story" class="story" aria-labelledby="plan-title"></section>
+        <section id="signature" class="signature-section" aria-label="本次体验构想"></section>
+        <section id="reaction-section" class="reaction-section" aria-labelledby="reaction-title" hidden><div><h2 id="reaction-title">哪一种，更像你的旅行？</h2><p>点选即调整整份方案。已锁定的安排会保留。</p></div><div id="reactions" class="reactions"></div><p id="reaction-status" role="status" aria-live="polite"></p><a class="text-link" href="#feedback">也可以自己说想改哪里 ↓</a></section>
+        <section id="replan-impact" class="replan-impact" aria-labelledby="impact-title" hidden></section>
+        <wa-details id="plan-assumptions" class="understanding" hidden><summary slot="summary">这份提案先按哪些假设安排</summary><ul id="assumption-list"></ul></wa-details>
+        <section class="itinerary-section" aria-labelledby="itinerary-title">
+          <div class="section-heading"><div><span class="folio">02 / 每一天</span><h2 id="itinerary-title">让想法落到行程里</h2></div><p>时间为安排建议，不代表营业时间。</p></div>
+          <nav id="day-nav" class="day-nav" aria-label="选择行程日期"></nav>
+          <div class="view-switch" aria-label="日程和地图视图"><button id="show-timeline" type="button" aria-pressed="true">日程</button><button id="show-map" type="button" aria-pressed="false">Google 地图</button></div>
+          <div id="itinerary-layout" class="itinerary-layout"><div id="timeline" class="timeline"></div>
+            <aside id="map-pane" class="map-pane" aria-label="当天Google地图">
+              <div id="map" class="map" role="region" aria-label="Google Maps当天地点地图"></div>
+              <div id="map-overlay" class="map-overlay" hidden><p id="map-load-label" role="status" aria-live="polite"></p><a id="map-open-external" target="_blank" rel="noopener noreferrer">在 Google Maps 打开 ↗</a><button id="map-reload" class="secondary-button" type="button">重试Google地图</button></div>
+              <p id="map-note" class="map-note">Google Maps地点地图；地图标记不代表已确认入口、营业或预约。</p><div id="map-links" class="source-links"></div>
+            </aside>
+          </div>
+        </section>
+        <section id="decision-section" class="decision-section" aria-labelledby="decision-title"><div class="section-heading"><div><span class="folio">03 / 把整趟旅行串起来</span><h2 id="decision-title">住哪里、怎么吃，为什么这样选</h2></div></div><div class="preparation-layout"><div><h3>这趟旅行的选择</h3><div id="decisions"></div></div><div><h3>出发前，下一步做什么</h3><div id="preparation"></div></div></div><wa-details id="readiness-details" class="understanding"><summary slot="summary">查看预订与待核验事项</summary><div id="readiness"></div></wa-details></section>
+      </div>
+          <section id="feedback-section" class="feedback-section" hidden aria-labelledby="feedback-title"><div><h2 id="feedback-title">想问什么，<br>或改哪里。</h2><p id="feedback-guidance">锁定的安排会保留。新版本准备好前，这份方案一直在。</p><p>刚找到的收藏、订单或旧 AI 对话，也可以直接补进来，不必重新开始。</p></div><form id="feedback-form"><div id="message-response" class="message-response" aria-live="polite" hidden></div><label for="feedback">你的问题、调整意见或补充答案 <span class="optional">可只补材料</span></label><textarea id="feedback" rows="3" maxlength="4000" placeholder="比如：第二天想晚一点出门。博物馆保留，其他安排可以一起调整。"></textarea><div id="pending-materials" aria-label="待指派材料" hidden></div><wa-details id="revision-materials" class="materials"><summary slot="summary">补充链接、订单文件或图片</summary><div id="revise-materials" class="material-body material-composer"><label for="revision-links">新增公开链接 <span class="optional">最多 5 条</span></label><textarea id="revision-links" class="links-input" rows="2" maxlength="10000" placeholder="每行一条公开链接；不登录，不读取私人账号"></textarea><label for="revision-evidence">新增订单文字或笔记</label><textarea id="revision-evidence" rows="3" maxlength="20000" placeholder="只放新补充的材料，不必重复之前的内容"></textarea><div class="image-drop-heading"><button id="choose-revision-documents" class="secondary-button" type="button">添加行程表 / 订单 / AI 对话</button></div><input id="revision-documents" type="file" accept=".xlsx,.pdf,.eml,.txt,.md,.csv,.json,.zip" multiple hidden><ul id="revision-document-list" class="image-list" aria-label="待提交补充文件"></ul><div id="revision-image-input-wrap" class="image-dropzone" tabindex="0" role="group" aria-label="添加或粘贴补充图片" aria-describedby="revision-image-help revision-vision-note"><div class="image-drop-heading"><button id="choose-revision-images" class="secondary-button" type="button">添加截图 / 照片</button><span>也可粘贴或拖到这里</span></div><input id="revision-images" type="file" accept="image/jpeg,image/png,image/webp" multiple hidden><p id="revision-image-help" class="field-hint">最多 3 张 · 上传前本地压缩</p><p id="revision-vision-note" class="field-hint"></p><ul id="revision-image-list" class="image-list" aria-label="待提交补充图片"></ul></div></div></wa-details><p id="revision-material-status" class="material-status" role="status" aria-live="polite"></p><p id="revision-draft-status" class="material-status" role="status" aria-live="polite">文字与材料会自动保存为草稿 · 仅在此浏览器</p><div class="feedback-footer"><span id="lock-count"></span><button id="revise" class="primary-button" type="submit"><span id="revise-label">更新这份方案</span> <span aria-hidden="true">↗</span></button></div></form></section>
+        <wa-details id="workspace-records" class="workspace-records"><summary slot="summary">材料、来源与方案依据 <span>需要时再展开</span></summary>
+          <section id="intake-panel" class="intake-panel" aria-labelledby="intake-title" hidden><div class="intake-heading"><div><h2 id="intake-title">材料与当前理解</h2></div><p id="intake-state" role="status"></p></div><p id="intake-overview" class="intake-overview"></p><wa-details id="intake-details" open><summary id="intake-summary">查看材料与当前理解</summary><div class="intake-layout"><aside><h3>材料收据</h3><ul id="material-receipts" class="material-receipts"></ul><p class="field-hint">读到网页文本，不代表官方已证实、订单有效或现在可订。</p></aside><div id="intake-content"></div></div></wa-details></section>
+          <wa-details id="legacy-understanding" class="understanding"><summary slot="summary">查看方案理解与待补充信息</summary><div id="understanding-content"></div></wa-details>
+          <section id="supply-section" class="supply-section" aria-labelledby="supply-title"><div class="section-heading"><div><h2 id="supply-title">具体地点与来源</h2></div><p>来源页面不等于实时报价或可订库存。</p></div><div id="supplies" class="supplies"></div></section>
+          <div id="model-meta" class="model-meta"></div>
+        </wa-details>
+    </section>
+  </main>
+  <footer class="page-footer"><span>原子旅行 · 从想法，到出发。</span><span>本地私密任务原型 · 此浏览器可恢复 · <span id="code-version" data-state="loading">代码版本读取中</span></span></footer>
+  <div id="announcer" class="sr-only" role="status" aria-live="polite"></div>
+</body>
+</html>

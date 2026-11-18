@@ -1,0 +1,153 @@
+/* A portable trip folio for travelers: see the route, open one day, know what remains.
+   VARIANCE 3 / MOTION 1 / DENSITY 6. Existing paper, green ink and type are invariant.
+   Attention: real preparation gaps → day-by-day sequence → concrete choices.
+   Signature: the same numbered journey reads as overview, daily use and saved folio.
+   Primary action: open the relevant day. Green means selection, never completion.
+   Content remains still; 120ms press feedback is the only motion, optional below.
+   The table-like day sequence becomes stacked ledger entries at narrow widths. */
+.handbook-nav{display:flex;align-items:center;justify-content:space-between;gap:16px;border-block:1px solid var(--line);padding:8px 0;margin-bottom:24px;min-width:0}
+.handbook-views{display:flex;gap:4px;min-width:0;flex-wrap:wrap}
+.handbook-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.handbook-copy-panel{margin:0 0 24px;padding:18px 20px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);min-width:0}
+.handbook-copy-panel[hidden]{display:none!important}
+.handbook-copy-panel>label{font-size:14px;margin-bottom:4px}
+.handbook-copy-actions{display:flex;gap:8px 18px;align-items:center;flex-wrap:wrap;margin:10px 0}
+.handbook-copy-text{display:block;width:100%;min-height:260px;max-height:60vh;padding:14px;font:13px/1.85 var(--body);color:var(--ink);background:var(--paper);white-space:pre-wrap;overflow-wrap:anywhere;resize:vertical}
+.handbook-copy-panel button:focus-visible,.handbook-copy-text:focus-visible{outline:3px solid #ad5c25;outline-offset:3px}
+.handbook-tab,.handbook-download,.handbook-button,.handbook-text-button,.handbook-day-open{font-family:var(--body);min-height:44px;min-width:44px;color:var(--ink);cursor:pointer;transition:background-color 120ms ease,transform 120ms ease;line-height:1.65}
+.handbook-tab{border:0;border-bottom:2px solid transparent;background:transparent;padding:10px 16px;font-size:14px;white-space:nowrap}
+.handbook-tab[aria-pressed=true]{border-color:var(--accent);color:var(--accent);font-weight:600;background:var(--soft)}
+.handbook-tab:hover:not(:disabled),.handbook-download:hover:not(:disabled),.handbook-day-open:hover:not(:disabled),.handbook-text-button:hover:not(:disabled){background:var(--soft)}
+.handbook-download{border:1px solid var(--line);border-radius:var(--radius);padding:8px 14px;background:var(--surface);font-size:12px;flex-shrink:0}
+.handbook-nav button:focus-visible,.handbook-panel button:focus-visible,.handbook-panel a:focus-visible,.handbook-panel summary:focus-visible{outline:3px solid #ad5c25;outline-offset:3px}
+.handbook-nav button:active:not(:disabled),.handbook-panel button:active:not(:disabled){transform:translateY(1px)}
+.handbook-nav button:disabled{opacity:.5;cursor:not-allowed}
+.handbook-panel{padding:2px 0 24px;min-width:0;overflow-wrap:anywhere}
+.handbook-panel[hidden]{display:none!important}
+.handbook-heading{display:flex;align-items:baseline;justify-content:space-between;gap:24px;margin-bottom:18px}
+.handbook-heading h2{font:500 27px/1.5 var(--display);letter-spacing:-.025em}
+.handbook-heading>.handbook-note{max-width:430px;font-size:11px;margin:0;line-height:1.85}
+.handbook-note{font-size:12px;line-height:1.85;color:var(--muted);margin:6px 0 0;white-space:pre-line}
+.handbook-readiness{background:#efe7d8;border-left:2px solid #a26d3c;padding:16px 20px;margin-bottom:22px}
+.handbook-readiness h3{font-size:14px;font-weight:600;line-height:1.7}
+.handbook-readiness>.handbook-note{font-size:12px;color:#705638;max-width:90em}
+.handbook-text-button{border:0;background:transparent;font-size:12px;padding:9px 0;text-decoration:underline;text-underline-offset:4px;text-align:left}
+.handbook-readiness .handbook-text-button{color:#785126;margin-top:3px;padding-right:14px}
+.handbook-days{padding:0;margin:0;list-style:none;border-top:1px solid var(--line)}
+.handbook-day-row{display:grid;grid-template-columns:112px minmax(0,1fr) auto;gap:23px;padding:20px 0;border-bottom:1px solid var(--line);align-items:start}
+.handbook-day-index{font-size:13px;color:var(--accent);font-variant-numeric:tabular-nums;padding-top:2px}
+.handbook-day-index>span{display:block;font-size:11px;color:var(--muted);margin-top:5px}
+.handbook-day-body{min-width:0}
+.handbook-day-body h3{font:500 20px/1.6 var(--display);margin:0}
+.handbook-day-body>.handbook-note{font-size:11px;margin-top:5px}
+.handbook-day-sequence{font-size:13px;line-height:1.9;margin:7px 0 0;color:#425b50}
+.handbook-day-open{border:0;background:transparent;padding:8px 0 8px 10px;font-size:12px;color:var(--accent);text-decoration:underline;text-underline-offset:4px;white-space:nowrap}
+.handbook-choices{padding:25px 0 13px;max-width:100%}
+.handbook-choices>h3{font:500 21px/1.6 var(--display);margin-bottom:14px}
+.handbook-choice{display:grid;grid-template-columns:112px minmax(0,1fr);gap:23px;border-top:1px solid var(--line);padding:12px 0}
+.handbook-choice-kind{font-size:12px;color:var(--muted);padding-top:1px}
+.handbook-choice>div>p{font-size:13px;line-height:1.8;margin:0}
+.handbook-choice-meta{display:flex;align-items:baseline;gap:4px 16px;flex-wrap:wrap}
+.handbook-choice-detail{font-size:11px;max-width:100%;min-width:0}
+.handbook-choice-detail>summary{min-height:44px;padding:11px 0;font-size:11px;color:var(--muted);cursor:pointer}
+.handbook-choice-detail[open]{flex-basis:100%}
+.handbook-choice-detail>.handbook-note{font-size:12px;margin-bottom:10px}
+.handbook-status{font-size:10px;font-weight:400;color:var(--muted);display:block;line-height:1.8;margin-top:5px}
+.handbook-empty{font-size:13px;color:var(--muted);padding:20px 0}
+.handbook-preparation-group{margin:23px 0 27px}
+.handbook-preparation-group>h3{font:500 22px/1.5 var(--display)}
+.handbook-preparation-group>.handbook-note{margin-bottom:16px;max-width:70em}
+.handbook-preparation-row{border-top:1px solid var(--line);padding:15px 0}
+.handbook-preparation-title{display:flex;align-items:baseline;justify-content:space-between;gap:20px}
+.handbook-preparation-title h4{font-size:14px;font-weight:600;line-height:1.8;margin:0}
+.handbook-preparation-title .handbook-status{font-size:10px;flex-shrink:0;margin:0}
+.handbook-preparation-row>.handbook-note{max-width:85em}
+.handbook-list{font-size:13px;line-height:1.9;padding-left:21px;margin:10px 0 0;max-width:85em}
+.handbook-list>li+li{margin-top:5px}
+.handbook-sources{display:flex;flex-wrap:wrap;gap:0 20px;margin-top:5px}
+.handbook-source{display:inline-flex;align-items:center;min-height:44px;min-width:44px;font-size:12px;color:var(--accent);text-underline-offset:4px;max-width:100%;overflow-wrap:anywhere}
+.handbook-research-gaps{padding:18px 20px 3px;background:#f0eadf;border-left:2px solid #aa7748}
+.handbook-research-gaps>.handbook-note{color:#705638}
+.handbook-research-gaps .handbook-preparation-row{border-top-color:#d8cbb8}
+.handbook-other{border-top:1px solid var(--line);padding-top:4px}
+.handbook-other>summary{font-size:13px;min-height:44px;padding:11px 0;color:var(--muted);cursor:pointer}
+.handbook-warnings{padding-top:20px;border-top:1px solid var(--line);margin-top:20px}
+.handbook-warnings>h3{font-size:14px}
+.handbook-warnings .handbook-list{font-size:12px;color:var(--muted)}
+
+/* Limited shell overrides: keep the existing source media and feedback visible,
+   reduce the above-the-fold hero so the usable handbook is easy to reach. */
+#plan-content .story{padding:23px 0 24px;grid-template-columns:minmax(0,1.25fr) minmax(260px,.75fr);gap:6%}
+#plan-content .story-copy h1{font-size:clamp(32px,3.1vw,44px);line-height:1.35;margin:11px 0 15px}
+#plan-content .story-copy>.summary{font-size:14px;line-height:1.85;max-width:45em}
+#plan-content .story-intention{font-size:12px;line-height:1.85;margin-top:12px}
+#plan-content .hero-media{aspect-ratio:1.8;max-height:238px}
+#plan-content .hero-figure{min-height:0}
+#plan-content .hero-figure figcaption{font-size:10px;line-height:1.7}
+#plan-content .hero-figure figcaption .image-credit{font-size:9px}
+#plan-content .story-text-only{display:block}
+#plan-content .itinerary-section{padding-top:0;border-top:0}
+#plan-content .itinerary-section>.section-heading{margin-bottom:15px}
+#plan-content .itinerary-section .section-heading h2{font-size:27px}
+#plan-content .item-body>.handbook-action{font-size:14px;color:var(--ink);line-height:1.85;margin-top:8px}
+#plan-content .item-body>.handbook-logistics,#plan-content .item-body>.handbook-entry{font-size:12px;color:var(--muted);line-height:1.8;margin-top:6px}
+#plan-content .handbook-item-photo{margin:13px 0 4px}
+#plan-content .handbook-item-photo>img{width:100%;height:180px;aspect-ratio:auto;object-fit:cover}
+#plan-content .handbook-item-photo figcaption{font-size:10px;line-height:1.7}
+#plan-content .item-detail-drawer{margin-top:3px}
+#plan-content .item-detail-drawer>summary{font-size:12px;min-height:44px;padding:10px 0;line-height:1.8;color:var(--accent)}
+#plan-content .item-detail-drawer .experience-photo>img{max-height:180px;object-fit:cover}
+#plan-content .item-detail-drawer .experience-background{font-size:12px}
+#plan-content .feedback-section{grid-template-columns:minmax(190px,.45fr) minmax(0,1fr);gap:5%;padding:24px 28px;margin-top:18px}
+#plan-content .feedback-section h2{font-size:25px;line-height:1.5}
+#plan-content .feedback-section>div>p{font-size:12px;line-height:1.8;margin-top:9px}
+#plan-content .feedback-section textarea{min-height:94px;font-size:14px}
+
+@media(max-width:1000px){
+ .handbook-heading{display:block}.handbook-heading>.handbook-note{max-width:none;margin-top:6px}
+ .handbook-day-row{grid-template-columns:88px minmax(0,1fr) auto;gap:18px}
+ .handbook-choice{grid-template-columns:88px minmax(0,1fr);gap:18px}
+ #plan-content .story{gap:4%;grid-template-columns:minmax(0,1.15fr) minmax(230px,.85fr)}
+}
+@media(max-width:740px){
+ .handbook-nav{display:block;margin-bottom:19px;padding:5px 0 9px}
+ .handbook-views{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2px}
+ .handbook-tab{font-size:13px;padding:10px 6px}
+ .handbook-download{display:block;width:100%;margin-top:7px;font-size:12px;text-align:center}
+ .handbook-actions{gap:8px}.handbook-actions .handbook-download{flex:1;width:auto;padding-inline:8px;min-width:120px}
+ .handbook-copy-panel{padding:14px 12px;margin-bottom:19px}.handbook-copy-text{font-size:12px;padding:11px;min-height:240px}
+ .handbook-copy-actions .handbook-download{width:auto;margin:0}
+ .handbook-heading{margin-bottom:15px}.handbook-heading h2{font-size:25px}.handbook-heading>.handbook-note{font-size:11px}
+ .handbook-panel{padding-bottom:15px}.handbook-readiness{padding:13px 14px;margin-bottom:18px}
+ .handbook-readiness>.handbook-note{font-size:11px}.handbook-readiness h3{font-size:13px}
+ .handbook-day-row{grid-template-columns:66px minmax(0,1fr);gap:4px 14px;padding:17px 0 8px}
+ .handbook-day-index{font-size:12px;grid-row:1 / 3}.handbook-day-index>span{font-size:10px}
+ .handbook-day-body h3{font-size:19px}.handbook-day-sequence{font-size:12px;margin-top:5px}
+ .handbook-day-body>.handbook-note{font-size:10px;line-height:1.8}
+ .handbook-day-open{grid-column:2;justify-self:start;padding:8px 8px 8px 0;font-size:12px}
+ .handbook-choices{padding-top:21px}.handbook-choices>h3{font-size:20px;margin-bottom:12px}
+ .handbook-choice{grid-template-columns:66px minmax(0,1fr);gap:14px}.handbook-choice>div>p{font-size:12px}
+ .handbook-choice-kind{font-size:11px}.handbook-note{font-size:11px}
+ .handbook-preparation-group{margin-top:21px}.handbook-preparation-group>h3{font-size:21px}
+ .handbook-preparation-title{display:block}.handbook-preparation-title h4{font-size:13px}
+ .handbook-preparation-title .handbook-status{font-size:10px;margin-top:3px}
+ .handbook-preparation-row{padding:13px 0}.handbook-list{font-size:12px;padding-left:18px}.handbook-source{font-size:11px}
+ .handbook-research-gaps{padding:16px 13px 3px}.handbook-other>summary{font-size:12px}
+ #plan-content .story{display:flex;gap:18px;padding:18px 0 20px}
+ #plan-content .story-copy h1{font-size:28px;line-height:1.4;margin:10px 0 12px}
+ #plan-content .story-copy>.summary{font-size:13px;line-height:1.85}
+ #plan-content .hero-media{aspect-ratio:1.95;max-height:200px}
+ #plan-content .itinerary-section .section-heading h2{font-size:25px}
+ #plan-content .item-body>.handbook-action{font-size:13px}
+ #plan-content .item-body>.handbook-logistics,#plan-content .item-body>.handbook-entry{font-size:11px}
+ #plan-content .handbook-item-photo>img{height:150px}
+ #plan-content .handbook-item-photo figcaption{font-size:9px}
+ #plan-content .item-detail-drawer>summary{font-size:11px}
+ #plan-content .feedback-section{grid-template-columns:1fr;padding:20px 16px;gap:15px}
+ #plan-content .feedback-section h2{font-size:23px}
+ #plan-content .feedback-section>div>p{font-size:11px;max-width:none}
+}
+@media(prefers-reduced-motion:reduce){
+ .handbook-nav button,.handbook-panel button{transition:none!important;animation:none!important}
+ .handbook-nav button:active:not(:disabled),.handbook-panel button:active:not(:disabled){transform:none}
+}

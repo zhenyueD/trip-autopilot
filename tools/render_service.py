@@ -33,9 +33,9 @@ sys.path.insert(0, str(ROOT))
 
 from packages.travel_agent.supply_rendered_reader import RenderedReader
 
-MAIN_RESEARCH = Path("/Users/duan/Documents/kimi/Workspaces/旅游agent/research")
-DEFAULT_OUT = str(MAIN_RESEARCH / "external-render-captures")
-BRIDGE = MAIN_RESEARCH / "render-bridge"
+from packages.travel_agent.supply_render_queue import BRIDGE
+
+DEFAULT_OUT = os.environ.get("TRAVEL_RENDER_OUTPUT", str(BRIDGE.parent / "render-captures"))
 _lock = threading.Lock()
 
 

@@ -1,0 +1,58 @@
+/* Extend the existing Studio comparison rhythm; candidate judgment stays in view. */
+.supply-mode .comparison-view { padding-bottom: 30px; }
+.supply-mode .comparison-case-picker select { min-width: 0; }
+.supply-mode .comparison-hero { max-width: 880px; }
+.supply-framing { margin-top: 22px; border-left: 3px solid var(--accent); padding-left: 20px; font-size: 19px; line-height: 1.75; }
+.supply-research-actions { display: flex; gap: 12px 20px; align-items: center; flex-wrap: wrap; }
+.supply-budget { flex-basis: 100%; color: var(--muted); font-size: 12px; }
+.supply-mode .comparison-status { min-height: 44px; margin: 8px 0 20px; }
+.supply-selection-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 12px 24px; margin-bottom: 20px; flex-wrap: wrap; }
+.supply-selection-heading p { font-size: 13px; color: var(--muted); }
+.supply-candidate { position: relative; }
+.supply-candidate[data-selected="true"] { border-color: var(--accent); }
+.supply-candidate .comparison-option-heading { align-items: flex-start; }
+.supply-candidate h3 { font-size: 22px; font-weight: 500; line-height: 1.45; margin: 5px 0 0; }
+.supply-suggested { font-size: 12px; color: var(--muted); flex-shrink: 0; padding-top: 3px; }
+.supply-fit { font-size: 16px; line-height: 1.8; margin-top: 4px; }
+.supply-tradeoff { font-size: 14px; line-height: 1.8; color: var(--muted); margin: 14px 0 0; }
+.supply-tradeoff strong { color: var(--ink); font-weight: 500; }
+.supply-conditions { margin-top: 18px; padding-top: 15px; border-top: 1px solid var(--border); }
+.supply-conditions p, .supply-conditions li { font-size: 13px; line-height: 1.8; color: var(--muted); }
+.supply-conditions ul { margin: 7px 0 0; padding-left: 18px; }
+.supply-risk { font-weight: 500; }
+.supply-candidate details { font-size: 13px; margin-top: 14px; color: var(--muted); }
+.supply-candidate summary { min-height: 44px; padding-block: 11px; cursor: pointer; }
+.supply-claims { list-style: none; padding: 0; margin: 0 0 12px; }
+.supply-claims li { border-top: 1px solid var(--border); padding: 12px 0; }
+.supply-claim-text { color: var(--ink); font-size: 14px; line-height: 1.8; }
+.supply-claim-state, .supply-claim-uncertainty { font-size: 12px; line-height: 1.8; margin-top: 5px; }
+.supply-source-reference { color: var(--link); display: inline-flex; align-items: center; min-height: 44px; font-size: 12px; text-underline-offset: 3px; }
+.supply-pick { display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 12px 0 0; margin: auto 0 0; font-size: 14px; font-weight: 500; cursor: pointer; }
+.supply-pick input { flex-shrink: 0; width: 18px; height: 18px; margin: 0; accent-color: var(--accent); }
+.supply-pick:has(input:disabled) { cursor: default; color: var(--muted); }
+.supply-pick:focus-within { outline: 2px solid var(--accent); outline-offset: 4px; }
+.supply-off-list { border-left: 2px solid var(--border); padding-left: 20px; margin: 24px 0 0; }
+.supply-off-list h3 { font-size: 16px; font-weight: 500; margin-bottom: 5px; }
+.supply-off-list p { font-size: 14px; line-height: 1.8; color: var(--muted); }
+.supply-export { border-top: 1px solid var(--border); margin-top: 32px; padding-top: 24px; }
+.supply-selected { font-size: 15px; margin-bottom: 15px; }
+.supply-export-note { color: var(--muted); font-size: 12px; margin-top: 12px; line-height: 1.8; }
+.supply-export-receipt { background: var(--soft); border-radius: 8px; padding: 16px 20px; margin-top: 16px; font-size: 14px; line-height: 1.8; }
+.supply-mode .comparison-evidence summary { cursor: pointer; padding-block: 12px; }
+.supply-mode .comparison-evidence ul { line-height: 1.85; }
+.supply-source-meta { display: block; color: var(--muted); font-size: 12px; margin-bottom: 10px; }
+.supply-mode button:disabled { cursor: default; }
+.supply-mode .page-footer { margin-top: 24px; }
+@media (max-width: 740px) {
+  .supply-mode .header-context { font-size: 11px; max-width: 110px; text-align: right; }
+  .supply-mode .comparison-case-picker label { display: block; }
+  .supply-framing { font-size: 17px; padding-left: 15px; margin-top: 18px; }
+  .supply-research-actions { gap: 10px 18px; }
+  .supply-research-actions .primary-button, .supply-export .primary-button { width: 100%; justify-content: center; }
+  .supply-selection-heading { margin-bottom: 16px; gap: 8px; }
+  .supply-selection-heading h2 { font-size: 21px; }
+  .supply-candidate h3 { font-size: 20px; }
+  .supply-off-list { padding-left: 15px; }
+  .supply-export { margin-top: 26px; padding-top: 20px; }
+  .supply-export-receipt { padding: 14px 16px; }
+}

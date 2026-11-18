@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>原子旅行 · Atom Travel — 把一句想法变成为你写的行程</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="./app.css?v=20260913d">
+</head>
+<body>
+
+<!-- 顶栏 -->
+<header id="topbar">
+  <div class="brand">
+    <span class="brand-mark">◈</span>
+    <span class="brand-name">原子旅行</span>
+    <span class="brand-sub">ATOM TRAVEL</span>
+  </div>
+  <div class="topbar-right">
+    <a href="./studio.html" class="ghost-btn">进入新旅行工作区 →</a>
+    <span id="llm-dot" class="llm-dot hidden" title=""></span>
+    <span id="mock-badge" class="mock-badge hidden">演示模式（未连接后端）</span>
+    <button id="btn-restart" class="ghost-btn hidden">↺ 重新输入</button>
+  </div>
+</header>
+
+<!-- 首屏：意图输入 -->
+<section id="screen-landing" class="screen">
+  <div class="hero">
+    <div class="hero-glow"></div>
+    <h1 class="hero-title">把一句想法，<br>变成一份<span class="grad">为你写的</span>行程</h1>
+    <p class="hero-sub">每个安排都带一行理由 · 点「换一个」只重算这一站，其余纹丝不动</p>
+    <div class="intent-box">
+      <textarea id="intent-input" rows="2"
+        placeholder="想怎么玩，随便说——哪怕只有半句「想去看海」也行"></textarea>
+      <button id="btn-go" class="cta">生成行程 <span class="cta-arrow">→</span></button>
+    </div>
+    <div class="chips" id="chips">
+      <button class="chip" data-text="清明想和女朋友去大阪，5天，拍照和美食为主，人均1万左右">🌸 清明想和女朋友去大阪，5天，拍照和美食为主，人均1万左右</button>
+      <button class="chip" data-text="过年想带爸妈去个不累暖和的地方，大概5天">🧧 过年想带爸妈去个不累暖和的地方，大概5天</button>
+      <button class="chip" data-text="特种兵穷游曼谷3天">⚡ 特种兵穷游曼谷3天</button>
+    </div>
+    <p class="hero-foot" id="hero-foot">目的地自动识别 · 已支持城市持续增加中</p>
+  </div>
+</section>
+
+<!-- 骨架态：生成中 -->
+<section id="screen-loading" class="screen hidden">
+  <div class="loading-wrap">
+    <div class="loading-head">
+      <h2 id="loading-title">在帮你搭行程骨架，马上好…</h2>
+      <span id="loading-dest" class="dest-tag hidden"></span>
+    </div>
+    <div id="skeleton-cards" class="skeleton-cards"></div>
+    <div class="stage-ticker">
+      <span class="ticker-dot"></span>
+      <span id="stage-text">正在解析你的意图…</span>
+    </div>
+  </div>
+</section>
+
+<!-- 主界面 -->
+<section id="screen-plan" class="screen hidden">
+  <div id="swap-banner" class="swap-banner hidden">
+    <span id="swap-banner-text"></span>
+    <button id="swap-banner-close" class="banner-close" aria-label="关闭">✕</button>
+  </div>
+  <!-- V1.1 P3：顾问矛盾说明 banner（conflict_note_zh，顾问口吻） -->
+  <div id="advisor-banner" class="advisor-banner hidden">
+    <span class="advisor-avatar">💬</span>
+    <span id="advisor-banner-text"></span>
+    <button id="advisor-banner-close" class="banner-close" aria-label="关闭">✕</button>
+  </div>
+  <div id="view-toggle" class="view-toggle">
+    <button class="vt-btn active" data-view="timeline">📋 行程</button>
+    <button class="vt-btn" data-view="map">🗺️ 地图</button>
+  </div>
+  <div class="plan-layout">
+    <aside id="timeline-pane">
+      <div id="plan-meta"></div>
+      <nav id="day-tabs"></nav>
+      <div id="day-summary"></div>
+      <div id="timeline"></div>
+      <!-- V1.1 P4：顾问对话（会话内，不持久化） -->
+      <div id="chat-pane">
+        <div id="chat-log" class="hidden"></div>
+        <div id="chat-input-row">
+          <input id="chat-input" type="text"
+            placeholder="随便说，比如：第二天想睡懒觉 / 留半天买手办 / 不想去人多的地方…" autocomplete="off">
+          <button id="chat-send" aria-label="发送">↑</button>
+        </div>
+      </div>
+    </aside>
+    <div id="map-pane">
+      <div id="map"></div>
+      <!-- V1.1 P1：行程 / 探索 模式切换（沿用窄屏分段切换思路） -->
+      <div id="map-mode" class="map-mode">
+        <button class="mm-btn active" data-mode="plan">🗺 行程</button>
+        <button class="mm-btn" data-mode="explore">🧭 探索<span id="want-count" class="want-count hidden"></span></button>
+      </div>
+      <div id="map-legend"></div>
+      <!-- V1.1 P1：点位详情卡（探索模式点击点位弹出） -->
+      <div id="atom-card" class="atom-card hidden"></div>
+    </div>
+  </div>
+</section>
+
+<!-- V1.1 P2：生成过程演出（全屏覆盖；每一帧来自真实 generation_trace） -->
+<section id="screen-show" class="screen hidden">
+  <div id="show-map"></div>
+  <div id="show-caption">
+    <div id="show-phase">正在铺开所有体验原子…</div>
+    <div id="show-reason"></div>
+  </div>
+  <button id="show-skip" class="ghost-btn">跳过 »</button>
+</section>
+
+<!-- 确认对话框（requires_confirmation） -->
+<div id="confirm-overlay" class="confirm-overlay hidden">
+  <div class="confirm-dialog">
+    <h3>这次替换会牵一动二</h3>
+    <p class="confirm-lead" id="confirm-lead"></p>
+    <ul id="confirm-list" class="confirm-list"></ul>
+    <div class="confirm-actions">
+      <button id="confirm-cancel" class="ghost-btn">保持原计划</button>
+      <button id="confirm-ok" class="cta small">确认替换</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="./mock.js?v=20260913d"></script>
+<script src="./app.js?v=20260913d"></script>
+</body>
+</html>

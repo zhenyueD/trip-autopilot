@@ -1,0 +1,18 @@
+.revision-receipt { margin: 24px 0; padding: clamp(20px, 4vw, 32px); border: 1px solid var(--line, #dedbd3); border-radius: 12px; background: #FFFFFF; }
+.revision-receipt[hidden] { display: none; }
+.revision-receipt h2 { margin: 0 0 20px; font-size: 1.45rem; }
+.revision-receipt h3 { margin: 0 0 10px; font-size: 1.05rem; }
+.revision-receipt h4 { margin: 0 0 8px; font-size: 1rem; }
+.revision-receipt p { margin: 8px 0; line-height: 1.7; overflow-wrap: anywhere; white-space: pre-wrap; }
+.revision-receipt > section, .revision-receipt > aside { margin-top: 24px; }
+.receipt-judgment { padding: 16px 20px; border-left: 2px solid #D2D2D7; background: none; border-radius: 0; }
+.receipt-suggestion-label { display: inline-block; font-size: .8rem; color: #6E6E73; font-weight: 600; }
+.receipt-judgment > p { font-size: 1.1rem; }
+.receipt-diff summary, .receipt-citations summary { cursor: pointer; padding: 10px 0; text-decoration: underline; text-underline-offset: 3px; }
+.receipt-diff-row { padding: 16px 0; border-top: 1px solid var(--line, #dedbd3); }
+.receipt-diff-columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.receipt-diff-columns > div { min-width: 0; }
+.receipt-alternative { padding: 16px 0; border-bottom: 1px solid var(--line, #dedbd3); }
+.revision-receipt blockquote { margin: 8px 0; padding-left: 12px; border-left: 2px solid #D2D2D7; overflow-wrap: anywhere; white-space: pre-wrap; }
+.receipt-next-action button { max-width: 100%; white-space: normal; }
+@media (max-width: 600px) { .receipt-diff-columns { grid-template-columns: 1fr; } .receipt-judgment { padding: 16px; } }
