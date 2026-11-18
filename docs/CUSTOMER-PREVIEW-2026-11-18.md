@@ -1,14 +1,14 @@
 ---
 type: delivery-note
 date: 2026-11-18
-status: pending-live-acceptance
+status: deployed-live-acceptance-in-progress
 tags: [trip-autopilot, customer-preview]
 source: tools/start_customer_preview.py
 ---
 
 # 临时 HTTPS 验收说明
 
-本说明对应 2026-11-18 候选交付版本。历史版本已有生成、修订、手册、双 PDF 与同浏览器恢复的通过记录；**本轮从新数据目录、临时 HTTPS 入口开始的完整验收尚待完成**。以下命令与候选启动脚本对齐，不表示部署或真跑已成功。
+本说明对应 2026-11-18 候选交付版本。历史版本已有生成、修订、手册、双 PDF 与同浏览器恢复的通过记录；**本轮隔离 HTTPS 部署和真实 Chromium 登录已完成，新数据目录的生成与修订验收正在进行**。2026-11-18 临时入口由运行者私下提供，口令不公开。以下命令与实际启动脚本对齐。
 
 ## 1. 准备运行环境
 
@@ -54,7 +54,7 @@ python tools/start_customer_preview.py \
 
 | 步骤 | 需要看到的结果 | 本轮状态 |
 | --- | --- | --- |
-| 登录保护 | 未登录的应用、静态资源、API 和下载路径被拦截；正确口令进入产品 | 待 HTTPS 实测 |
+| 登录保护 | 未登录的应用、静态资源、API 和下载路径被拦截；正确口令进入产品 | 已通过真实 HTTPS/Chromium 登录及认证边界检查 |
 | 首次生成 | 从空数据目录提交一个新行程，最终保存可读手册，并记录总耗时 | 待实测 |
 | HTML 展示 | 产品中的 iframe 显示当前行程、当前版本保存的 HTML，内容完整 | 待实测 |
 | 同会话修订 | 在该行程输入修改要求，保存新版本，检查要求是否落实及修订耗时 | 待实测 |

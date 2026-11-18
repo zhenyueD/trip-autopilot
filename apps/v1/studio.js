@@ -49,7 +49,7 @@
   window.TravelJourney.mount();
   window.TravelHandbook.mount({
     onDay: index => { state.day = index; renderDays(currentPlan()); },
-    onView: view => { if (view === 'daily') requestAnimationFrame(refreshMapLayout); window.TravelChrome?.syncView?.(view); },
+    onView: view => { if (view === 'daily') requestAnimationFrame(refreshMapLayout); window.TravelChrome?.syncView?.(view); window.TravelSavedHandbook?.syncView?.(view); },
     announce
   });
   window.TravelChrome?.mount({ onDay: index => { state.day = index; renderDays(currentPlan()); } });

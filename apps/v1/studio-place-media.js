@@ -342,8 +342,10 @@
     ctx.entities = projectEntities(result?.entities);
     // The single-session service has no /media manifest endpoint. Reuse the
     // media already saved in the presented document instead: same photos the
-    // handbook and PDFs ship, already vetted with source attribution.
-    if (!ctx.entities.some(entity => publicPhoto(ctx, entity)) && typeof ctx.helpers.savedMediaRequest === 'function') {
+    // handbook and PDFs ship, already vetted with source attribution. Only when
+    // a plan exists to bind places to — otherwise the gallery has no surface.
+    if (rows(planFor(ctx.trip).days).length && !ctx.entities.some(entity => publicPhoto(ctx, entity))
+      && typeof ctx.helpers.savedMediaRequest === 'function') {
       const html = await schedule(ctx, () => ctx.helpers.savedMediaRequest('GET'));
       if (current === ctx && typeof html === 'string' && html.includes('<img')) {
         const saved = savedEntitiesFromDocument(html, planFor(ctx.trip));

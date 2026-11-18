@@ -104,5 +104,30 @@
     return true;
   }
 
-  return { update, handbookURL, artifactURL };
+  // Reading-view tabs drive the saved document: the presented handbook already
+  // carries the vetted photos with source captions, so a tab switches the
+  // reading position instead of re-rendering anything. Sections are looked up
+  // by class; missing sections fall back gracefully.
+  const SECTION_FOR_VIEW = { daily: 'section.trip-days', prepare: 'section.predeparture-confirmation' };
+  function syncView(view) {
+    const panel = globalThis.document?.getElementById?.('saved-handbook');
+    const frame = panel && !panel.hidden ? panel.querySelector?.('iframe') : null;
+    if (!frame) return false;
+    const scroll = () => {
+      try {
+        const doc = frame.contentDocument; const win = frame.contentWindow;
+        if (!doc || !win) return false;
+        const selector = SECTION_FOR_VIEW[view];
+        const target = selector ? doc.querySelector(selector) || doc.querySelector('section.trip-todo') : null;
+        const top = target ? target.getBoundingClientRect().top + win.scrollY - 12 : 0;
+        win.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+        return true;
+      } catch { return false; }
+    };
+    if (scroll()) return true;
+    frame.addEventListener('load', () => scroll(), { once: true });
+    return false;
+  }
+
+  return { update, handbookURL, artifactURL, syncView };
 });
